@@ -26,9 +26,12 @@ triage findings; it is not part of dispatch.
 
 One worker owns one TileOPs branch through contract discovery, implementation,
 measurement, PR, CI, and review follow-up. It does not dispatch another agent.
-It may edit only its TileOPs worktree and its own round-state directory.
-TileFoundry is an installed tool, not a source tree the worker may inspect or
-modify.
+Its Agent Session starts in its round-state directory, which is the only place
+for HIR, runtime twins, profiler scripts, baselines, experiments, and evidence.
+The TileOPs worktree is a publication target, not the development workspace: its
+final diff may contain only kernel implementation under `src/tileops/kernels/`
+and necessary correctness tests under `tests/kernels/`. TileFoundry is an
+installed tool, not a source tree the worker may inspect or modify.
 
 ## Admitted Environment
 
@@ -52,8 +55,8 @@ modify.
    the pane's current worktree or round directory into that worker's persistent
    container. Put long commands in round-local `evidence/*.sh`; never reconstruct
    the container name, Docker invocation, GPU lock, or absolute container path
-   in worker commands. `tileops-run` also supplies the loop runtime `PYTHONPATH`;
-   workers must not repeat it with `env PYTHONPATH=...`.
+   in worker commands. `tileops-run` also supplies the loop and TileOPs Python
+   roots; workers must not repeat them with `env PYTHONPATH=...` or `sys.path`.
 5. Worktrees and containers isolate code and packages, not GPUs. `tileops-run`
    serializes commands against the physical GPU through the shared `/ci-cache`.
    Native CUPTI attribution fails closed; CUDA-event fallback is diagnostic only.
@@ -103,6 +106,8 @@ A TileOPs PR may use the `foundry` origin only when all of these are present and
 - a profiler-driven lower-level primitive experiment and its measured verdict;
 - a substantive base-to-head change to the executed `@T.prim_func`, `@T.macro`,
   or equivalent generated kernel body; and
+- a base-to-head diff containing only `src/tileops/kernels/**` and necessary
+  `tests/kernels/**`; and
 - a valid `findings.json`, which may contain an empty list.
 
 Open a performance PR only through `scripts/open_tileops_pr.sh`; it runs this
@@ -110,8 +115,9 @@ gate, verifies the production kernel diff, renders the public body, and then
 calls GitHub. `render_pr.py` also refuses a scaffolded round whose provenance is
 incomplete.
 
-Configuration, dispatch, wrapper, allocation, workload, benchmark, or test-only
-changes do not qualify. If the exact production twin cannot pass, the HIR never
+Configuration, dispatch, wrapper, allocation, workload, benchmark, manifest,
+or Op-wrapper changes are forbidden in the performance branch; test-only changes
+do not qualify. If the exact production twin cannot pass, the HIR never
 reaches an explicit placed form, or no kernel body changed, the round may still
 produce useful findings but opens no `[Perf][foundry]` PR.
 

@@ -21,6 +21,9 @@ class KernelDiffTests(unittest.TestCase):
             "@T.prim_func\ndef main(a):\n    a[0] = 1\n\ndef dispatch():\n    return 1\n",
             encoding="utf-8",
         )
+        self.benchmark = self.repo / "benchmarks/ops/bench_example.py"
+        self.benchmark.parent.mkdir(parents=True)
+        self.benchmark.write_text("MODE = 'contract'\n", encoding="utf-8")
         subprocess.run(["git", "add", "."], cwd=self.repo, check=True)
         subprocess.run(["git", "commit", "-qm", "base"], cwd=self.repo, check=True)
         self.base = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=self.repo, text=True).strip()
@@ -38,6 +41,31 @@ class KernelDiffTests(unittest.TestCase):
         head = self._commit(
             "@T.prim_func\ndef main(a):\n    a[0] = 2\n\ndef dispatch():\n    return 1\n"
         )
+        check_kernel_diff(
+            self.repo, self.base, head, "src/tileops/kernels/example.py:main"
+        )
+
+    def test_kernel_change_with_benchmark_change_fails(self):
+        self.path.write_text(
+            "@T.prim_func\ndef main(a):\n    a[0] = 2\n",
+            encoding="utf-8",
+        )
+        self.benchmark.write_text("MODE = 'candidate'\n", encoding="utf-8")
+        subprocess.run(["git", "add", "."], cwd=self.repo, check=True)
+        subprocess.run(["git", "commit", "-qm", "change"], cwd=self.repo, check=True)
+        head = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=self.repo, text=True
+        ).strip()
+        with self.assertRaisesRegex(KernelDiffError, "benchmarks/ops/bench_example.py"):
+            check_kernel_diff(
+                self.repo, self.base, head, "src/tileops/kernels/example.py:main"
+            )
+
+    def test_kernel_change_with_kernel_correctness_test_passes(self):
+        test_path = self.repo / "tests/kernels/test_example.py"
+        test_path.parent.mkdir(parents=True)
+        test_path.write_text("def test_kernel():\n    assert True\n", encoding="utf-8")
+        head = self._commit("@T.prim_func\ndef main(a):\n    a[0] = 2\n")
         check_kernel_diff(
             self.repo, self.base, head, "src/tileops/kernels/example.py:main"
         )

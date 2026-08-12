@@ -6,7 +6,11 @@ set -euo pipefail
 : "${TILEOPS_ROUND_HOST:?source the worker environment before using tileops-run}"
 : "${TILEOPS_ROUND_SLUG:?source the worker environment before using tileops-run}"
 : "${TILEOPS_WORKER_CONTAINER:?source the worker environment before using tileops-run}"
-container_pythonpath=${TILEOPS_WORKER_PYTHONPATH:-/workspace/tileops-foundry-loop}
+container_pythonpath=${TILEOPS_WORKER_PYTHONPATH:-/workspace/tileops-foundry-loop:/workspace/tileops}
+case ":$container_pythonpath:" in
+    *:/workspace/tileops:*) ;;
+    *) container_pythonpath="$container_pythonpath:/workspace/tileops" ;;
+esac
 
 host_cwd=$(pwd -P)
 case "$host_cwd" in

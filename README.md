@@ -52,9 +52,11 @@ TileFoundry source checkout.
 
 Before Foreman starts each Agent Session, it sources the versioned worker
 environment into that pane. It adds the repository's `tileops-run` wrapper to
-that session's `PATH`; the wrapper prefixes unchanged commands and maps the
-current host directory into the worker's persistent container. Nothing is
-installed into a user bin directory or added to the container image.
+that session's `PATH` and moves the session to its round directory. The wrapper
+prefixes unchanged commands and maps that directory into the worker's persistent
+container. The TileOPs worktree remains only as a kernel/test patch target, and
+the final gate rejects changes elsewhere. Nothing is installed into a user bin
+directory or added to the container image.
 
 The first pilot's raw outputs and human adjudication are archived in
 [trials/2026-08-12-five-round-pilot/](trials/2026-08-12-five-round-pilot/README.md).

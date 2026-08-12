@@ -11,6 +11,9 @@ class KernelDiffError(ValueError):
     """The declared kernel body does not establish a performance-PR change."""
 
 
+_ALLOWED_CHANGE_ROOTS = ("src/tileops/kernels/", "tests/kernels/")
+
+
 def _git_source(repo: Path, revision: str, path: str) -> str | None:
     process = subprocess.run(
         ["git", "show", f"{revision}:{path}"],
@@ -24,6 +27,30 @@ def _git_source(repo: Path, revision: str, path: str) -> str | None:
     if "does not exist" in process.stderr or "exists on disk, but not in" in process.stderr:
         return None
     raise KernelDiffError(process.stderr.strip() or f"cannot read {revision}:{path}")
+
+
+def _changed_paths(repo: Path, base: str, head: str) -> list[str]:
+    process = subprocess.run(
+        ["git", "diff", "--name-only", "-z", base, head],
+        cwd=repo,
+        check=False,
+        capture_output=True,
+    )
+    if process.returncode != 0:
+        detail = process.stderr.decode(errors="replace").strip()
+        raise KernelDiffError(detail or f"cannot compare {base} to {head}")
+    return [value.decode(errors="replace") for value in process.stdout.split(b"\0") if value]
+
+
+def _check_change_scope(repo: Path, base: str, head: str) -> None:
+    changed = _changed_paths(repo, base, head)
+    disallowed = [path for path in changed if not path.startswith(_ALLOWED_CHANGE_ROOTS)]
+    if disallowed:
+        rendered = ", ".join(disallowed)
+        raise KernelDiffError(
+            "performance branch changes files outside kernel implementation and kernel "
+            f"correctness tests: {rendered}"
+        )
 
 
 def _decorator_name(decorator: ast.expr) -> str:
@@ -63,6 +90,7 @@ def _kernel_body(source: str | None, symbol: str, revision: str, path: str) -> s
 
 
 def check_kernel_diff(repo: Path, base: str, head: str, declaration: str) -> None:
+    _check_change_scope(repo, base, head)
     try:
         path, symbol = declaration.rsplit(":", 1)
     except ValueError as error:

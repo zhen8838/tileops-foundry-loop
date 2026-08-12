@@ -34,7 +34,7 @@ TILEOPS_WORKER_CONTAINER=$(
 ) || return
 FOREMAN_WORKTREE=$(cd "$FOREMAN_WORKTREE" && pwd -P) || return
 TILEOPS_ROUND_HOST=$(cd "$TILEOPS_ROUND_HOST" && pwd -P) || return
-TILEOPS_WORKER_PYTHONPATH=/workspace/tileops-foundry-loop
+TILEOPS_WORKER_PYTHONPATH=/workspace/tileops-foundry-loop:/workspace/tileops
 export FOREMAN_WORKTREE TILEOPS_WORKER_CONTAINER TILEOPS_ROUND_HOST TILEOPS_ROUND_SLUG
 export TILEOPS_WORKER_PYTHONPATH
 
@@ -42,3 +42,5 @@ case ":$PATH:" in
     *":$TILEOPS_FOUNDRY_LOOP_ROOT/scripts:"*) ;;
     *) export PATH="$TILEOPS_FOUNDRY_LOOP_ROOT/scripts:$PATH" ;;
 esac
+
+cd "$TILEOPS_ROUND_HOST" || return
