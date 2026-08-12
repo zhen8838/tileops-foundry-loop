@@ -112,7 +112,7 @@ def _geomean(values: list[float]) -> float:
 def _ratio_marker(ratio: float) -> str:
     # GitHub strips arbitrary text colors. Numeric entities render as stable
     # red/green markers in both light and dark themes.
-    return "&#x1F534;" if ratio > 1.0 else "&#x1F7E2;"
+    return "&#x1F7E2;" if ratio > 1.0 else "&#x1F534;"
 
 
 def _performance_cell(latency: float, ratio: float, noise_pct: float | None = None) -> str:
@@ -394,8 +394,8 @@ Operator: `{data['operator']}`
 
 Method: {data['method']}
 
-Ratio in comparator columns: implementation / candidate. &#x1F534; > 1 means the candidate is faster;
-&#x1F7E2; <= 1 means it is not.
+Ratio in comparator columns: implementation / candidate. &#x1F7E2; > 1 means the candidate is faster;
+&#x1F534; <= 1 means it is not.
 
 {_performance_table(data)}
 

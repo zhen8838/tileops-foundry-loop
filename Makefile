@@ -13,4 +13,6 @@ example:
 		--output-dir examples/fused-moe
 
 scaffold-example:
-	uv run python scripts/new_round.py --slug example --scope GEMM --operator ExampleOp
+	uv run python scripts/new_round.py --slug example --scope GEMM --operator ExampleOp \
+		--baseline "external baseline" --tileops-repo ../TileOPs \
+		--tilefoundry-repo ../TileFoundry

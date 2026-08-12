@@ -4,9 +4,10 @@ Read and follow `PLAYBOOK.md`. This plan supplies only the concrete operator
 set and same-contract external baselines. Do not use or substitute a GQA
 operator.
 
-Pin the official image from `config/defaults.env` across the goal. Dispatch
-each listed round to a Foreman solo agent using `gpt-5.6-sol` at `high` effort,
-in this order:
+Pin the official image from `config/defaults.env` across the goal. On explicit
+human request, prepare and dispatch the next listed round to one Foreman solo
+agent using `gpt-5.6-sol` at `high` effort. Do not monitor it or dispatch a later
+row in the same main-agent turn.
 
 | Round | Scope | TileOPs operator | Strongest same-contract baseline |
 | ---: | --- | --- | --- |
@@ -16,5 +17,5 @@ in this order:
 | 4 | `Mamba` | `Mamba2FwdOp` | `mamba_ssm` `mamba_chunk_scan_combined` |
 | 5 | `FFT` | `FFTC2COp` | `torch.fft.fft` backed by cuFFT |
 
-Use the Playbook's round completion, gap repair, and final reporting criteria
-without modification.
+Use the Playbook's round completion and reporting criteria without modification.
+Collect TileFoundry findings later; repair is deliberately outside this plan.

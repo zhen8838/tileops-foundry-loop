@@ -1,6 +1,6 @@
 # Round report: {{OPERATOR}}
 
-Governing contract: `$TILEOPS_FOUNDRY_LOOP_ROOT/PLAYBOOK.md`
+Completion is governed by the provenance and PR gates in `PLAYBOOK.md`.
 
 ## Result
 
@@ -8,54 +8,45 @@ Governing contract: `$TILEOPS_FOUNDRY_LOOP_ROOT/PLAYBOOK.md`
 - Branch, commits, and PR:
 - Candidate vs incumbent geometric mean:
 - Candidate vs strongest external geometric mean:
-- Per-row SOTA condition:
 
-## Provenance
+## Environment
 
-- TileOPs/TileFoundry commits:
-- Image tag/digest and container:
-- GPU/driver:
-- CUDA, PyTorch, TileLang, CUPTI:
-- External baseline versions:
+- TileOPs base/head:
+- TileFoundry wheel commit/version/SHA-256:
+- Image tag/digest, GPU, driver, CUDA, PyTorch, TileLang, CUPTI:
 
-## Blind candidate
+## Contract
 
-- Gate timestamp and source audit:
-- Immutable candidate record:
-- HIR checks:
-- Correctness and latency:
-- Limitations:
+- Manifest, workload/reference, public Op, tests, and benchmark read:
+- Inputs, outputs, layouts, dtypes, math, mutation, and tolerances:
 
-## Final implementation
+## TileFoundry Provenance
 
-- Production route:
-- Incumbent ideas adopted after the gate:
+- Final placed HIR and selector:
+- Production `@runtime_module` twin and exact TileLang route:
+- `check` report:
+- Analyze/schedule reports:
+- Decision trace:
 
-## Correctness
+## Kernel And Primitive Work
 
-- Commands and results:
-- Tolerances:
-- Raw evidence:
+- Changed `@T.prim_func`/`@T.macro`:
+- Profiler bottleneck:
+- Lower-level primitive experiments and measured verdicts:
+- Tuning budget and failed candidates:
 
-## Performance
+## Correctness And Performance
 
-- `pr-data.json`:
-- Raw samples and timing metadata:
-- Noise/repetition results:
-- Geometric means and profiler evidence:
+- Commands, tolerances, and raw evidence:
+- Per-workload candidate/incumbent/external samples and noise:
+- Geometric means and SOTA condition:
 
-## Tuning and failures
+## Findings
 
-- Search budget and compile/GPU time:
-- Failed approaches and rejection reasons:
+- `findings.json`:
+- Minimal reproducers:
 
-## TileFoundry gaps
+## Risks And PR Status
 
-| ID | Classification | Status | Reproducer | Affected workloads | Workaround cost | Expected vs actual | Owner |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-
-## Risks and PR status
-
-- Residual correctness/performance risk:
-- CI and review:
-- Mergeability:
+- Residual risk:
+- CI, review, and mergeability:

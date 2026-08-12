@@ -1,16 +1,20 @@
 from tilefoundry import func, module
-from tilefoundry.dsl import ConstTensor, Tensor, tf
+from tilefoundry.dsl import Mesh, Tensor, Topology, tf
 from tilefoundry.target import CudaTarget
 
 
-M, N, K = 1, 4096, 4096
+N = 132 * 128
 
 
-@module(entry="kernel", target=CudaTarget("nvidia.h200_sxm"))
+@module(
+    entry="kernel",
+    target=CudaTarget("nvidia.h200_sxm"),
+    topologies=(Topology("cta", 132), Topology("thread", 128)),
+)
 class OperatorModule:
     @func
-    def kernel(
-        x: Tensor[(M, K), "bf16"],
-        weight: ConstTensor[(K, N), "bf16"],
-    ) -> Tensor[(M, N), "bf16"]:
-        return tf.matmul(x, weight)
+    def kernel(x: Tensor[(N,), "f32"]) -> Tensor[(N,), "f32"]:
+        with Mesh(("cta", "thread"), (132, 128), ("block", "lane")) as mesh:
+            local = tf.reshard(x, (N @ (mesh.block, mesh.lane),), "rmem")
+            result = tf.square(local)
+            return tf.reshard(result, (N @ (mesh.block, mesh.lane),), "gmem")

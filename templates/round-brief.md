@@ -1,53 +1,13 @@
-# Round brief: {{OPERATOR}}
+# {{OPERATOR}}
 
-Governing contract: `$TILEOPS_FOUNDRY_LOOP_ROOT/PLAYBOOK.md`
+Run the worker loop and pass every gate in `PLAYBOOK.md`.
 
-## Identity
-
-- Slug: `{{SLUG}}`
 - Scope: `{{SCOPE}}`
-- TileOPs base commit:
-- TileFoundry commit:
-- Official runner image and digest:
-- Strongest same-contract external baseline:
+- Strongest same-contract external baseline: {{BASELINE}}
+- TileOPs base: `{{TILEOPS_BASE}}`
+- TileFoundry wheel commit: `{{TILEFOUNDRY_COMMIT}}`
+- Host round directory: `{{ROUND_DIR}}`
+- Container round directory: `/workspace/tileops-loop-state/{{SLUG}}`
 
-## Contract sources
-
-- `tileops.manifest` entry:
-- Workload/reference:
-- Public Op wrapper:
-- Correctness tests:
-- Benchmark:
-- Blind-forbidden incumbent files:
-
-## Operator contract
-
-- Inputs:
-- Outputs:
-- Shapes and layouts:
-- Dtypes and accumulation:
-- Optional values and mutation:
-- Return and dispatch/fallback behavior:
-- Numerical tolerances:
-
-## Mathematics
-
-- Definition:
-- Rounding:
-
-## Primary workloads
-
-| Label | Dimensions | Dtype | Boundary/tail property |
-| --- | --- | --- | --- |
-
-## TileFoundry problem
-
-- HIR source: `authored_hir.py`
-- Semantic notes:
-
-## Evaluation
-
-- Correctness commands:
-- Benchmark command:
-- Profiler command:
-- Workload-specific evaluation notes:
+Make this operator SOTA on H200 with a new TileLang kernel. The public Op,
+manifest workloads, correctness surface, and benchmark are the contract.

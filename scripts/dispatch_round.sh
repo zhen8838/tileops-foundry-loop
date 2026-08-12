@@ -16,7 +16,9 @@ brief=$3
     exit 2
 }
 
+"$repo_dir/scripts/build_tilefoundry_wheel.sh" >/dev/null
+
 foreman assign solo --project tileops \
-    --prompt "Set TILEOPS_FOUNDRY_LOOP_ROOT=$repo_dir. Read and follow $repo_dir/PLAYBOOK.md as the round agent, then execute the brief at $brief." \
+    --prompt "Execute the closed TileFoundry optimization loop in $brief. Use $repo_dir/PLAYBOOK.md for gates. Do not edit TileFoundry or dispatch another agent." \
     --task "$task" --branch "$branch" \
     --kind codex --model gpt-5.6-sol --effort high

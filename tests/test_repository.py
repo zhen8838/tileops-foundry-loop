@@ -47,6 +47,20 @@ class RepositoryStructureTests(unittest.TestCase):
         for private_fragment in ("/home/", "/Users/", "qihang"):
             self.assertNotIn(private_fragment, text)
 
+    def test_tilefoundry_runtime_delta_cannot_replace_runner_core(self):
+        text = (ROOT / "config/tilefoundry-runtime-requirements.txt").read_text(
+            encoding="utf-8"
+        )
+        for package in ("torch", "tilelang", "cuda", "vllm", "flashinfer"):
+            self.assertNotIn(package, text.lower())
+
+    def test_foreman_integration_is_versioned(self):
+        for relative in (
+            "integrations/foreman/post-worktree.sh",
+            "integrations/foreman/solo.md",
+        ):
+            self.assertTrue((ROOT / relative).is_file(), relative)
+
 
 if __name__ == "__main__":
     unittest.main()

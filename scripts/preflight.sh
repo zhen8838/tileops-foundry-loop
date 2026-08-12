@@ -19,6 +19,7 @@ image=${TILEOPS_RUNNER_IMAGE:?TILEOPS_RUNNER_IMAGE is required}
 artifact_dir="$repo_dir/artifacts/preflight/$(date +%Y%m%d-%H%M%S)"
 mkdir -p "$artifact_dir"
 
+"$repo_dir/scripts/build_tilefoundry_wheel.sh" | tee "$artifact_dir/tilefoundry-wheel.txt"
 docker pull "$image" | tee "$artifact_dir/docker-pull.log"
 docker image inspect "$image" --format '{{json .RepoDigests}} {{.Id}}' \
     | tee "$artifact_dir/image.txt"
@@ -30,5 +31,10 @@ docker image inspect "$image" --format '{{json .RepoDigests}} {{.Id}}' \
     | tee "$artifact_dir/runner-image.log"
 "$repo_dir/scripts/tileops-container.sh" python /workspace/tileops-foundry-loop/scripts/preflight_gpu.py \
     | tee "$artifact_dir/gpu.json"
+"$repo_dir/scripts/tileops-container.sh" python -c \
+    'import importlib.metadata as m, json, pathlib, tilefoundry; print(json.dumps({"version": m.version("tilefoundry"), "module": str(pathlib.Path(tilefoundry.__file__).resolve())}))' \
+    | tee "$artifact_dir/tilefoundry-installed.json"
+"$repo_dir/scripts/tileops-container.sh" tilefoundry --help \
+    | tee "$artifact_dir/tilefoundry-help.txt" >/dev/null
 
 echo "$artifact_dir"

@@ -44,9 +44,9 @@ class PRContractTests(unittest.TestCase):
         rendered = render_pr(self.data, DATA_PATH)
         self.assertIn("| 3.0439 |", rendered.body)
         self.assertNotIn("1.0000x", rendered.body)
-        self.assertIn("**3.1617<br>&#x1F534;&nbsp;1.0387x**", rendered.body)
-        self.assertIn("2.9422<br>&#x1F7E2;&nbsp;0.9666x", rendered.body)
-        self.assertIn("**5.47541<br>&#x1F534;&nbsp;1.0075x**", rendered.body)
+        self.assertIn("**3.1617<br>&#x1F7E2;&nbsp;1.0387x**", rendered.body)
+        self.assertIn("2.9422<br>&#x1F534;&nbsp;0.9666x", rendered.body)
+        self.assertIn("**5.47541<br>&#x1F7E2;&nbsp;1.0075x**", rendered.body)
 
     def test_public_body_omits_private_evidence_and_paths(self):
         rendered = render_pr(self.data, DATA_PATH)

@@ -1,139 +1,145 @@
 # TileOPs Foundry Loop Playbook
 
-This file is the single normative contract for the repository. Concrete plans,
-round briefs, reports, scripts, and examples may reference it; they must not
-restate or override it.
+This file is the repository's single normative workflow contract. Plans contain
+operator choices, templates contain fillable evidence, and scripts enforce this
+contract without redefining it.
 
 ## Roles
 
-- The main agent selects operators, extracts public contracts, admits the
-  environment, orders rounds, consolidates gaps, and classifies results.
-- Exactly one solo agent owns each TileOPs round from implementation through
-  tests, commit, push, PR, CI, and review follow-up. It must not dispatch
-  another agent.
-- Retest and human-review work returns to the same round agent and worktree.
-- Agents open and maintain PRs but never merge them.
+### Main agent
 
-## Environment
+The main agent is a setup-and-dispatch agent. It does exactly four things:
 
-1. Set `TILEOPS_FOUNDRY_LOOP_ROOT` to this checkout and source `.env`.
-2. Run `scripts/preflight.sh` before the first round and whenever the runner
-   image digest changes. Do not install or upgrade packages in an admitted
-   round environment.
-3. Run TileOPs Python and GPU commands through
-   `scripts/tileops-container.sh`. Each TileOPs worktree owns one persistent,
-   image-pinned container.
-4. Worktrees and containers isolate source and editable installs, not GPUs.
-   Wrap every performance run, and correctness runs that compile many kernels,
-   with `scripts/with_gpu_lock.sh <gpu> ...`.
-5. An image change creates a new environment schema. Recreate stale
-   containers, rerun stack/baseline/CUPTI admission, and append retest evidence
-   without overwriting old measurements.
+1. Pin the TileOPs base, the TileFoundry commit, and the official runner image.
+2. Build and admit one TileFoundry wheel, then prepare one isolated TileOPs
+   worktree and persistent container per round.
+3. Create the round state and dispatch exactly one Foreman solo worker per
+   operator.
+4. Return the task, worktree, container, and pane handles, then stop.
 
-Native CUPTI attribution is required for claim-bearing measurements and fails
-closed. CUDA-event fallback is diagnostic only and cannot support a SOTA or
-performance claim.
+It does not extract the operator contract, choose a kernel design, inspect a
+worker's worktree, poll `foreman status`, relay messages, restart workers, watch
+CI, edit PRs, or repair TileFoundry. A later human-directed task may collect and
+triage findings; it is not part of dispatch.
 
-## Round Protocol
+### Round worker
 
-### Contract extraction
+One worker owns one TileOPs branch through contract discovery, implementation,
+measurement, PR, CI, and review follow-up. It does not dispatch another agent.
+It may edit only its TileOPs worktree and its own round-state directory.
+TileFoundry is an installed tool, not a source tree the worker may inspect or
+modify.
 
-The main agent reads the operator through `tileops.manifest`, then its
-workload/reference, public Op wrapper, correctness tests, and benchmark. The
-round brief records exact inputs, outputs, shapes, layouts, dtypes, mutation,
-math, accumulation/rounding, tolerances, dispatch/fallback behavior, primary
-workloads, strongest same-contract external baseline, and evaluation commands.
+## Admitted Environment
 
-Do not derive a brief from the incumbent TileLang kernel body.
+1. `scripts/build_tilefoundry_wheel.sh` builds a wheel from the exact admitted
+   TileFoundry Git commit, outside the checkout, and records the commit and
+   SHA-256. Dirty checkout contents cannot enter the wheel.
+2. Each persistent TileOPs container installs that wheel and the versioned,
+   wheel-only runtime delta in `config/tilefoundry-runtime-requirements.txt`,
+   both with `--no-deps`. This fills packages absent from the official runner
+   without replacing its CUDA, Torch, TileLang, or baseline stack. The
+   TileFoundry checkout is not mounted. The worker uses the installed
+   `tilefoundry` command, including `tutorial`, `spec`, `models`, `check`,
+   `analyze`, and `schedule`.
+3. `scripts/preflight.sh` admits the official runner image, wheel, GPU stack,
+   native CUPTI path, and baseline imports before dispatch. Do not install or
+   upgrade round dependencies afterward.
+4. Foreman's post-worktree hook starts one image-pinned container per worktree.
+   Repeated commands use `docker exec` in that container. Worktrees and
+   containers isolate code and packages, not GPUs.
+5. Claim-bearing correctness and performance runs use
+   `scripts/with_gpu_lock.sh`. Native CUPTI attribution fails closed; CUDA-event
+   fallback is diagnostic only.
 
-Create a round with:
+## Worker Loop
 
-```bash
-uv run python scripts/new_round.py \
-  --slug <slug> --scope <TileOPs-scope> --operator <OpClass>
-```
+The dispatch prompt stays short because the installed CLI teaches the workflow.
+The worker repeats this loop until it reaches the performance target or has an
+evidence-bound blocker:
 
-### Blind gate
+1. Discover the contract from `tileops.manifest`, workload/reference, public Op,
+   tests, and benchmark. Do not inspect the incumbent kernel body until the first
+   correct production runtime twin is recorded.
+2. Ask the installed `tilefoundry` command how to describe and optimize the
+   operator. Author the HIR rather than copying a graph supplied by the prompt.
+3. Write the actual production TileLang path as an `@runtime_module` twin of the
+   HIR and run `tilefoundry check` against it. A detached Torch/evaluator twin
+   does not establish provenance.
+4. Run `analyze` and `schedule`, change the HIR or implementation in response,
+   and repeat. The final HIR must state the chosen topology, mesh/sharding, and
+   `gmem` to `smem`/`rmem`/`tmem` movement explicitly.
+5. Profile the production path. Use the TileOps kernel corpus and the installed
+   TileLang surface to test architecture-appropriate lower-level primitives,
+   such as vectorized copies, pipelining/asynchronous movement, explicit layouts,
+   warp collectives, MMA/WGMMA, or atomics. The bottleneck decides which
+   primitive is relevant; no primitive is mandatory for every operator. While
+   the candidate trails the external baseline, at least one profiler-motivated
+   lower-level experiment is mandatory.
+6. Preserve every TileFoundry limitation as a structured finding with a minimal
+   reproducer. Do not edit TileFoundry, open a TileFoundry branch, or propose a
+   repair from this round.
 
-Before recording the first correct TileFoundry-derived candidate, the round
-agent may inspect only the contract sources above, TileFoundry specifications
-and examples, and unrelated TileLang examples. It must not read, search,
-import-inspect, disassemble, or otherwise expose the incumbent kernel body.
+## Foundry Provenance Gate
 
-Record an immutable `first-candidate.md` containing the source audit, authored
-HIR, correctness, latency, and limitations. Incumbent inspection is allowed
-only afterward for diagnosis and optimization. The report identifies every
-idea adopted from it; an incumbent-derived route must never be presented as
-TileFoundry-generated.
+A TileOPs PR may use the `foundry` origin only when all of these are present and
+`scripts/check_round.py` passes:
 
-### Implementation and evidence
+- `authored_hir.py`: the exact final `@module`, with explicit `Mesh` or
+  `ShardLayout`, `reshard`, local storage, and return to `gmem`;
+- `runtime_twin.py`: an `@runtime_module`/`@runtime_func` wrapper that calls the
+  exact production TileLang path measured and proposed in the PR;
+- a passing machine-readable `tilefoundry check` report for that twin;
+- attempted compute-cost, memory, roofline, timeline, and schedule evidence;
+  an unavailable surface needs a matching finding, not a silent omission;
+- a decision trace mapping TileFoundry analysis/schedule facts to concrete HIR
+  and TileLang choices;
+- a profiler-driven lower-level primitive experiment and its measured verdict;
+- a substantive base-to-head change to the executed `@T.prim_func`, `@T.macro`,
+  or equivalent generated kernel body; and
+- a valid `findings.json`, which may contain an empty list.
 
-- Deliver a real TileLang kernel produced through the TileFoundry workflow. It
-  must not call an external baseline or dispatch to the incumbent.
-- A `[Perf][foundry]` PR must contain a substantive change to the executed
-  TileLang kernel body produced in the current round. Changes limited to
-  dispatch, operator wrappers, allocation, configuration constants/defaults,
-  workload selection, benchmarks, or tests do not qualify, even when they live
-  in a file under `src/tileops/kernels/`.
-- Before opening a performance PR, record the base-to-head kernel diff and name
-  the changed `@T.prim_func`, macro, or equivalent generated kernel body in the
-  round report. If that evidence is absent, classify the round as `no
-  improvement`, open no performance PR, and retain the analysis as a failed
-  round. Do not relabel incumbent selection or orchestration as a
-  TileFoundry-generated kernel.
-- Enforce that gate before push with:
+Open a performance PR only through `scripts/open_tileops_pr.sh`; it runs this
+gate, verifies the production kernel diff, renders the public body, and then
+calls GitHub. `render_pr.py` also refuses a scaffolded round whose provenance is
+incomplete.
 
-  ```bash
-  uv run python scripts/check_kernel_diff.py \
-    --repo "$TILEOPS_ROOT" --base <admitted-base> --head HEAD \
-    --kernel <relative-kernel-path>:<prim-func-or-macro-name>
-  ```
+Configuration, dispatch, wrapper, allocation, workload, benchmark, or test-only
+changes do not qualify. If the exact production twin cannot pass, the HIR never
+reaches an explicit placed form, or no kernel body changed, the round may still
+produce useful findings but opens no `[Perf][foundry]` PR.
 
-  A passing check is necessary, not sufficient: the report must still connect
-  the changed body to the authored HIR and the measured candidate route.
-- Preserve the public Op contract and every supported manifest workload,
-  including boundary and tail cases.
-- Correctness across the supported surface is a hard precondition for a PR.
-- Keep exact commands, tolerances, raw logs/JUnit, profiler output,
-  `profile_run.log`, tuning budget, failed approaches, residual risks, commits,
-  PR state, and CI state in the internal round report and artifact directory.
+## Correctness And Performance
 
-### Performance contract
+Preserve the public Op contract and every supported manifest workload, including
+tails and boundary cases. Correctness across that surface is a PR precondition.
 
-Measure candidate, incumbent, and every runnable same-contract external
-baseline in the same container, process, GPU, inputs, precision contract,
-warmup policy, timing harness, and implementation order policy. Synchronize
-correctly and exclude compilation/tuning from steady-state latency.
-
-Report every primary manifest workload. Do not remove slow rows, loosen
-tolerances, change layouts, precompute runtime work, or time less work. Repeat
-runs to quantify noise.
+Measure candidate, base-commit incumbent, and every runnable same-contract
+external baseline in the same container, process, GPU, inputs, precision
+contract, warmup policy, timing harness, and implementation-order policy.
+Synchronize correctly and exclude compilation, tuning, conversion, and setup
+unless the contract includes them. Report every primary workload and repeated-run
+noise.
 
 Classify the result as exactly one of:
 
-- `measured SOTA`: candidate is no slower than the fastest runnable external
-  baseline within measured noise on every primary workload, and has strictly
-  lower geometric-mean latency.
-- `improvement without SOTA`: correct and independently useful, but misses the
-  SOTA condition.
-- `no improvement`: no independently useful performance result; open no
-  performance PR and preserve reproducible blocker evidence instead.
+- `measured SOTA`: no primary row is slower than the fastest runnable external
+  baseline beyond measured noise, and candidate geometric-mean latency is lower;
+- `improvement without SOTA`: correct and independently useful, but misses that
+  condition; or
+- `no improvement`: no reviewable performance result, so no performance PR.
 
-An external baseline is unrunnable only with an import/runtime reproducer and
-exact environment facts. A fallback never counts as SOTA evidence.
+## TileFoundry Findings
 
-## TileFoundry Gaps
+`findings.json` records only behavior reproduced against the admitted wheel.
+Each finding contains a classification (`semantic-blocker`,
+`lowering/codegen-blocker`, `runtime-blocker`, `performance-blocker`, or
+`ergonomics`), minimal reproducer, expected and actual behavior, affected
+workloads, workaround cost, and likely public owning surface. Internal source
+paths and speculative fixes are not findings.
 
-Record only demonstrated current-checkout capability gaps. For each gap keep a
-minimal HIR/TIR/CLI reproducer, expected and actual behavior, affected
-workloads, measured workaround cost, likely owning module, and whether it is
-new, duplicate, or an enhancement. Classify it as one of:
-
-`semantic-blocker`, `lowering/codegen-blocker`, `runtime-blocker`,
-`performance-blocker`, or `ergonomics`.
-
-A valid semantic and fair workaround is allowed. An unimplemented optimization
-idea is not automatically a TileFoundry bug.
+Collect findings later with `scripts/collect_findings.py`. Deduplication, priority,
+and any TileFoundry repair are a separate human-authorized goal.
 
 ## TileOPs PR Contract
 
@@ -143,77 +149,26 @@ The title is:
 [<Type>][foundry][<Scope>] <imperative description>
 ```
 
-`<Type>` is the honest TileOPs change type (`Perf` for a delivered performance
-kernel, `Fix` for a correctness fix, and so on). `foundry` is the origin slot
-introduced by merged TileOPs PR
-[#1894](https://github.com/tile-ai/TileOPs/pull/1894), and `<Scope>` is the
-operator family such as `GEMM`, `MoE`, `Mamba`, or `FFT`. Use the origin only
-for a genuinely TileFoundry-generated change.
-
-The public body contains exactly these sections in order:
+The public body contains exactly these sections:
 
 1. `Summary`
-2. `TileFoundry Description`: one Python block containing the exact `@module`
-   class, with no imports, filename, path, or separately printed entrypoint
-3. `Performance`: environment, method, and every primary workload against the
-   candidate, incumbent, and every runnable external baseline. Each
-   candidate column shows latency only. Every comparator column combines
-   latency and `implementation / candidate` on two lines, with the marker and
-   ratio kept on one non-breaking line. The incumbent cells are bold. A red
-   marker denotes a ratio above one (candidate speedup); a green marker denotes
-   a ratio at or below one.
-4. `Result And Limitations`: classification, per-row exceptions, noise, and
-   remaining limitations
+2. `TileFoundry Description`: the exact final `@module` class in one Python block,
+   with no imports, filenames, paths, or separately printed entrypoint
+3. `Performance`: environment, method, and every primary workload. The candidate
+   column shows latency only. Each comparator cell has latency on the first line
+   and `implementation / candidate` on the second. Incumbent cells are bold. A
+   green marker means ratio greater than one and therefore a faster candidate; a
+   red marker means ratio at or below one.
+4. `Result And Limitations`
 
-Correctness commands, reproduction commands, artifacts, filenames, and local
-paths are internal evidence and must not appear in the public body.
+Correctness commands, reproducer commands, artifacts, and local paths stay in the
+internal report. `pr-data.json` is the sole structured PR input and
+`authored_hir.py` is the sole public program source. Generate the body with
+`scripts/render_pr.py`; do not hand-edit its table.
 
-`pr-data.json` is the sole structured PR input. `authored_hir.py` is the sole
-program source; the renderer extracts its unique top-level `@module` class and
-strips file-level imports. Generate and validate instead of hand-editing
-tables:
+## Archive
 
-```bash
-uv run python scripts/render_pr.py rounds/<slug>/pr-data.json \
-  --output-dir rounds/<slug>
-uv run python scripts/check_pr.py rounds/<slug>/pr-data.json
-```
-
-The renderer owns the input schema, section layout, ratios, geometric means,
-and leak checks. `templates/pr-data.json` is the fillable starter; the rendered
-example under `examples/` is the visual reference.
-
-## Trial Archive
-
-At the end of a multi-round attempt, import the round state into a dated
-directory under `trials/` with `scripts/archive_trial.py`. Preserve briefs,
-reports, authored HIR, structured PR data, benchmark/profiler evidence,
-reproducers, and failure records. The archive command must redact host paths
-and personal email addresses, reject credential-like content, and omit binary
-tensors, caches, Git bundles, and other non-reviewable generated state. Add a
-retrospective that distinguishes kernel-generation failures from correct
-kernels that missed the performance or review bar.
-
-## Review and Retest
-
-For human review, restate each comment as a concrete contract, correctness,
-performance, or presentation requirement. Reproduce technical claims, make the
-smallest coherent change, rerun affected correctness and the full primary
-performance distribution when runtime behavior changes, update internal
-evidence and `pr-data.json`, regenerate the body, reply with evidence, and own
-CI until the PR is mergeable.
-
-For a runner-image retest, rebase when the old base has stale stack assertions;
-record the new image digest and full stack; rerun official admission,
-PR-relevant correctness, and the same comparison contract; compare every
-workload with old evidence; attribute deltas only when isolated; update code
-only for a genuine compatibility, correctness, or review issue.
-
-## Multi-Round Completion
-
-Run rounds sequentially unless the concrete plan says otherwise. After all
-rounds, deduplicate demonstrated gaps and select at most one coherent
-TileFoundry repair batch that unlocks the largest useful surface. The repair
-agent owns its PR through tests, CI, and review. Rerun minimal reproducers and
-affected TileOPs benchmarks after repair, and distinguish measured SOTA,
-improvement without SOTA, and no improvement in the final summary.
+Use `scripts/archive_trial.py` only after human adjudication. It redacts machine
+paths and personal addresses, rejects credential-like content, and omits binary
+or duplicate generated state. Historical worker claims remain evidence, not
+automatic endorsement.

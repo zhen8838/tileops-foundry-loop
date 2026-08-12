@@ -10,8 +10,16 @@ import os
 import statistics
 import sys
 import traceback
+from pathlib import Path
 
 import torch
+
+
+# This script is mounted from the loop repository, so Python would otherwise
+# omit the TileOPs worktree root from sys.path.
+tileops_root = Path.cwd()
+if (tileops_root / "benchmarks").is_dir() and str(tileops_root) not in sys.path:
+    sys.path.insert(0, str(tileops_root))
 
 
 # Some baseline initialization replaces process stdout. Keep the caller's

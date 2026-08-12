@@ -13,6 +13,7 @@ PLAYBOOK.md             Normative workflow and agent prompt
 plans/                  Concrete operator goals only
 config/                 Shared defaults and machine environment example
 scripts/                Container, preflight, dispatch, and PR commands
+integrations/           Thin Foreman hook and prompt adapters
 templates/              Fillable round records and PR input
 examples/               Rendered PR reference
 trials/                 Sanitized multi-round outputs and retrospectives
@@ -24,13 +25,30 @@ tests/                  Contract tests
 
 ```bash
 cp config/local.env.example .env
-# Edit machine-local paths, then read PLAYBOOK.md completely.
+# Edit machine-local paths, then:
+source .env
+# Read PLAYBOOK.md completely.
 ```
 
 The reusable five-round goal is [plans/five-round.md](plans/five-round.md).
 The generated public result is visible in
 [examples/fused-moe/pr-body.md](examples/fused-moe/pr-body.md). Run
 `make check test` after repository changes.
+
+The main agent prepares but does not monitor a round:
+
+```bash
+./scripts/preflight.sh
+uv run python scripts/new_round.py --slug <slug> --scope <scope> \
+  --operator <operator> --baseline '<same-contract baseline>' \
+  --tileops-repo "$TILEOPS_REPO" --tilefoundry-repo "$TILEFOUNDRY_REPO" \
+  --root "$TILEOPS_LOOP_STATE_ROOT"
+./scripts/dispatch_round.sh <task> perf/<task> "$TILEOPS_LOOP_STATE_ROOT/<slug>/brief.md"
+```
+
+Foreman's project hook creates one persistent container per worker worktree.
+The container installs the admitted TileFoundry wheel and never mounts the
+TileFoundry source checkout.
 
 The first pilot's raw outputs and human adjudication are archived in
 [trials/2026-08-12-five-round-pilot/](trials/2026-08-12-five-round-pilot/README.md).

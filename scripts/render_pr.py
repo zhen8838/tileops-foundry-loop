@@ -11,6 +11,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT))
 
 from tileops_foundry_loop.pr import PRContractError, load_data, render_pr  # noqa: E402
+from tileops_foundry_loop.round import RoundError, validate_round  # noqa: E402
 
 
 def main() -> int:
@@ -22,8 +23,10 @@ def main() -> int:
     data_path = args.data.resolve()
     output_dir = (args.output_dir or data_path.parent).resolve()
     try:
+        if (data_path.parent / "provenance.json").exists():
+            validate_round(data_path.parent)
         rendered = render_pr(load_data(data_path), data_path)
-    except PRContractError as error:
+    except (PRContractError, RoundError) as error:
         parser.error(str(error))
 
     output_dir.mkdir(parents=True, exist_ok=True)

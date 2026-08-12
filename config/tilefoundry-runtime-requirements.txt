@@ -1,0 +1,9 @@
+# Exact TileFoundry dependencies absent from the official TileOPs runner.
+# Installed with --no-deps so the admitted compute stack is untouched.
+absl-py==2.5.0
+graphviz==0.21
+immutabledict==4.3.1
+isl-python==0.1.10
+jinja2==3.1.6
+ortools==9.15.6755
+pandas==3.0.5
