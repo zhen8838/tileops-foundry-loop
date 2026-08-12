@@ -28,10 +28,11 @@ One worker owns one TileOPs branch through contract discovery, implementation,
 measurement, PR, CI, and review follow-up. It does not dispatch another agent.
 Its Agent Session starts in its round-state directory, which is the only place
 for HIR, runtime twins, profiler scripts, baselines, experiments, and evidence.
-The TileOPs worktree is a publication target, not the development workspace: its
-final diff may contain only kernel implementation under `src/tileops/kernels/`
-and necessary correctness tests under `tests/kernels/`. TileFoundry is an
-installed tool, not a source tree the worker may inspect or modify.
+The TileOPs worktree is a publication target, not the development workspace. Its
+final diff may contain kernel implementation under `src/tileops/kernels/`,
+shape-aware production selection under `src/tileops/ops/`, and their necessary
+correctness tests. TileFoundry is an installed tool, not a source tree the
+worker may inspect or modify.
 
 ## Admitted Environment
 
@@ -106,8 +107,9 @@ A TileOPs PR may use the `foundry` origin only when all of these are present and
 - a profiler-driven lower-level primitive experiment and its measured verdict;
 - a substantive base-to-head change to the executed `@T.prim_func`, `@T.macro`,
   or equivalent generated kernel body; and
-- a base-to-head diff containing only `src/tileops/kernels/**` and necessary
-  `tests/kernels/**`; and
+- a base-to-head diff containing only kernel implementation, shape-aware
+  production dispatch, and their correctness tests; any changed public Op
+  signature fails the gate; and
 - a valid `findings.json`, which may contain an empty list.
 
 Open a performance PR only through `scripts/open_tileops_pr.sh`; it runs this
@@ -115,9 +117,15 @@ gate, verifies the production kernel diff, renders the public body, and then
 calls GitHub. `render_pr.py` also refuses a scaffolded round whose provenance is
 incomplete.
 
-Configuration, dispatch, wrapper, allocation, workload, benchmark, manifest,
-or Op-wrapper changes are forbidden in the performance branch; test-only changes
-do not qualify. If the exact production twin cannot pass, the HIR never
+Production dispatch may select kernels, fusion boundaries, and configurations
+from contract-owned shapes such as routed rows per local expert, H/F, alignment,
+and available parallelism. The unchanged manifest benchmark must reach this
+selection through normal Op construction; evaluation code must not pass a
+candidate-only switch. Dispatch must preserve the public Op signature, math,
+outputs, and supported workload surface. Configuration outside the production
+kernel/Op implementation, allocation shortcuts, workload, benchmark, reference,
+or manifest changes are forbidden; test-only changes do not qualify. If the
+exact production twin cannot pass, the HIR never
 reaches an explicit placed form, or no kernel body changed, the round may still
 produce useful findings but opens no `[Perf][foundry]` PR.
 

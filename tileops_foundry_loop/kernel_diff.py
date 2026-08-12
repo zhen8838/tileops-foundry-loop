@@ -11,7 +11,12 @@ class KernelDiffError(ValueError):
     """The declared kernel body does not establish a performance-PR change."""
 
 
-_ALLOWED_CHANGE_ROOTS = ("src/tileops/kernels/", "tests/kernels/")
+_ALLOWED_CHANGE_ROOTS = (
+    "src/tileops/kernels/",
+    "src/tileops/ops/",
+    "tests/kernels/",
+    "tests/ops/",
+)
 
 
 def _git_source(repo: Path, revision: str, path: str) -> str | None:
@@ -48,9 +53,69 @@ def _check_change_scope(repo: Path, base: str, head: str) -> None:
     if disallowed:
         rendered = ", ".join(disallowed)
         raise KernelDiffError(
-            "performance branch changes files outside kernel implementation and kernel "
-            f"correctness tests: {rendered}"
+            "performance branch changes files outside kernel implementation, production "
+            f"dispatch, and their correctness tests: {rendered}"
         )
+
+
+def _public_surface(source: str | None, revision: str, path: str) -> dict[str, str]:
+    if source is None:
+        return {}
+    try:
+        tree = ast.parse(source)
+    except SyntaxError as error:
+        raise KernelDiffError(f"cannot parse {revision}:{path}: {error}") from error
+
+    surface: dict[str, str] = {}
+    for node in tree.body:
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and not node.name.startswith("_"):
+            surface[node.name] = ast.dump(
+                ast.Tuple(
+                    elts=[node.args, node.returns or ast.Constant(None), *node.decorator_list],
+                    ctx=ast.Load(),
+                ),
+                include_attributes=False,
+            )
+        elif isinstance(node, ast.ClassDef) and not node.name.startswith("_"):
+            surface[node.name] = ast.dump(
+                ast.Tuple(elts=[*node.bases, *node.keywords, *node.decorator_list], ctx=ast.Load()),
+                include_attributes=False,
+            )
+            for member in node.body:
+                if not isinstance(member, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    continue
+                if member.name.startswith("_") and member.name not in {"__init__", "__call__"}:
+                    continue
+                surface[f"{node.name}.{member.name}"] = ast.dump(
+                    ast.Tuple(
+                        elts=[
+                            member.args,
+                            member.returns or ast.Constant(None),
+                            *member.decorator_list,
+                        ],
+                        ctx=ast.Load(),
+                    ),
+                    include_attributes=False,
+                )
+        elif isinstance(node, (ast.Assign, ast.AnnAssign)):
+            targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+            if any(isinstance(target, ast.Name) and target.id == "__all__" for target in targets):
+                value = node.value if node.value is not None else ast.Constant(None)
+                surface["__all__"] = ast.dump(value, include_attributes=False)
+    return surface
+
+
+def _check_ops_public_surfaces(repo: Path, base: str, head: str) -> None:
+    for path in _changed_paths(repo, base, head):
+        if not path.startswith("src/tileops/ops/") or not path.endswith(".py"):
+            continue
+        before = _public_surface(_git_source(repo, base, path), base, path)
+        after = _public_surface(_git_source(repo, head, path), head, path)
+        if before != after:
+            changed = sorted(set(before) ^ set(after) | {key for key in before.keys() & after if before[key] != after[key]})
+            raise KernelDiffError(
+                f"production dispatch changes public Op surface in {path}: {', '.join(changed)}"
+            )
 
 
 def _decorator_name(decorator: ast.expr) -> str:
@@ -91,6 +156,7 @@ def _kernel_body(source: str | None, symbol: str, revision: str, path: str) -> s
 
 def check_kernel_diff(repo: Path, base: str, head: str, declaration: str) -> None:
     _check_change_scope(repo, base, head)
+    _check_ops_public_surfaces(repo, base, head)
     try:
         path, symbol = declaration.rsplit(":", 1)
     except ValueError as error:

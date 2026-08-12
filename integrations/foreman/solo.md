@@ -10,8 +10,11 @@ experiments, and all evidence here. Prefix commands that need the admitted TileO
 with `tileops-run`, such as `tileops-run tilefoundry analyze ...` or `tileops-run python ...`.
 The wrapper maps the current round directory into the persistent container and supplies both loop
 and TileOPs Python roots; never add `PYTHONPATH` or `sys.path` manually. Treat the TileOPs worktree
-only as the final patch target. Its base-to-head diff may contain only `src/tileops/kernels/**`
-and necessary `tests/kernels/**`; never change benchmarks, manifests, workloads, Op wrappers, or
-dispatch to improve a result.
+only as the final patch target. Its base-to-head diff may contain kernel implementation under
+`src/tileops/kernels/**`, shape-aware production dispatch under `src/tileops/ops/**`, and their
+necessary kernel/Op correctness tests. The unchanged manifest benchmark must reach dispatch through
+normal Op construction; never pass it a candidate-only switch. Dispatch may choose a fusion boundary
+or kernel from contract shapes, but must preserve the public Op signature and math. Never change
+benchmarks, manifests, workloads, references, or evaluation plumbing to improve a result.
 
 {solo_notes}

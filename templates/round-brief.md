@@ -12,5 +12,8 @@ Run the worker loop and pass every gate in `PLAYBOOK.md`.
 Make this operator SOTA on H200 with a new TileLang kernel. The public Op,
 manifest workloads, correctness surface, and benchmark are the contract.
 Work from this round directory. The TileOPs worktree is only the final kernel
-patch target; do not change the contract, benchmark, manifest, workload, wrapper,
-or dispatch.
+and production-dispatch patch target. Shape-aware dispatch may select different
+kernels or fusion boundaries while preserving the public Op signature and math.
+The unchanged benchmark must reach it through normal Op construction, without a
+candidate-only switch. Do not change the contract, benchmark, manifest, workload,
+reference, or evaluation path.

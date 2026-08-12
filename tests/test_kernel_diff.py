@@ -24,6 +24,17 @@ class KernelDiffTests(unittest.TestCase):
         self.benchmark = self.repo / "benchmarks/ops/bench_example.py"
         self.benchmark.parent.mkdir(parents=True)
         self.benchmark.write_text("MODE = 'contract'\n", encoding="utf-8")
+        self.op = self.repo / "src/tileops/ops/example.py"
+        self.op.parent.mkdir(parents=True)
+        self.op.write_text(
+            "class ExampleOp:\n"
+            "    def __init__(self, size: int):\n"
+            "        self.kernel = 'small' if size < 8 else 'large'\n"
+            "\n"
+            "    def forward(self, value):\n"
+            "        return value\n",
+            encoding="utf-8",
+        )
         subprocess.run(["git", "add", "."], cwd=self.repo, check=True)
         subprocess.run(["git", "commit", "-qm", "base"], cwd=self.repo, check=True)
         self.base = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=self.repo, text=True).strip()
@@ -69,6 +80,37 @@ class KernelDiffTests(unittest.TestCase):
         check_kernel_diff(
             self.repo, self.base, head, "src/tileops/kernels/example.py:main"
         )
+
+    def test_kernel_change_with_internal_production_dispatch_passes(self):
+        self.op.write_text(
+            "class ExampleOp:\n"
+            "    def __init__(self, size: int):\n"
+            "        self.kernel = 'fused' if size < 4 else 'throughput'\n"
+            "\n"
+            "    def forward(self, value):\n"
+            "        return self.kernel, value\n",
+            encoding="utf-8",
+        )
+        head = self._commit("@T.prim_func\ndef main(a):\n    a[0] = 2\n")
+        check_kernel_diff(
+            self.repo, self.base, head, "src/tileops/kernels/example.py:main"
+        )
+
+    def test_production_dispatch_cannot_change_public_signature(self):
+        self.op.write_text(
+            "class ExampleOp:\n"
+            "    def __init__(self, size: int, force_fused: bool = False):\n"
+            "        self.kernel = 'fused' if force_fused else 'throughput'\n"
+            "\n"
+            "    def forward(self, value):\n"
+            "        return value\n",
+            encoding="utf-8",
+        )
+        head = self._commit("@T.prim_func\ndef main(a):\n    a[0] = 2\n")
+        with self.assertRaisesRegex(KernelDiffError, "public Op surface.*ExampleOp.__init__"):
+            check_kernel_diff(
+                self.repo, self.base, head, "src/tileops/kernels/example.py:main"
+            )
 
     def test_dispatch_only_change_fails(self):
         head = self._commit(
