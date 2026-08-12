@@ -50,6 +50,12 @@ Foreman's project hook creates one persistent container per worker worktree.
 The container installs the admitted TileFoundry wheel and never mounts the
 TileFoundry source checkout.
 
+Before Foreman starts each Agent Session, it sources the versioned worker
+environment into that pane. It adds the repository's `tileops-run` wrapper to
+that session's `PATH`; the wrapper prefixes unchanged commands and maps the
+current host directory into the worker's persistent container. Nothing is
+installed into a user bin directory or added to the container image.
+
 The first pilot's raw outputs and human adjudication are archived in
 [trials/2026-08-12-five-round-pilot/](trials/2026-08-12-five-round-pilot/README.md).
 

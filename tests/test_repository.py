@@ -53,13 +53,44 @@ class RepositoryStructureTests(unittest.TestCase):
         )
         for package in ("torch", "tilelang", "cuda", "vllm", "flashinfer"):
             self.assertNotIn(package, text.lower())
+        self.assertIn("python-dateutil==", text)
+
+    def test_preflight_checks_dependency_closure_and_real_tool_surfaces(self):
+        preflight = (ROOT / "scripts/preflight.sh").read_text(encoding="utf-8")
+        for script in (
+            "check_tilefoundry_environment.py",
+            "preflight_tilefoundry.py",
+        ):
+            self.assertIn(script, preflight)
 
     def test_foreman_integration_is_versioned(self):
         for relative in (
             "integrations/foreman/post-worktree.sh",
             "integrations/foreman/solo.md",
+            "integrations/foreman/worker-env.sh",
         ):
             self.assertTrue((ROOT / relative).is_file(), relative)
+        solo = (ROOT / "integrations/foreman/solo.md").read_text(encoding="utf-8")
+        self.assertIn("`tileops-run`", solo)
+        self.assertIn("tileops-run tilefoundry analyze", solo)
+
+    def test_worker_wrapper_uses_sourced_path_not_local_install(self):
+        env = (ROOT / "integrations/foreman/worker-env.sh").read_text(encoding="utf-8")
+        wrapper = (ROOT / "scripts/tileops-run").read_text(encoding="utf-8")
+        self.assertIn('export PATH="$TILEOPS_FOUNDRY_LOOP_ROOT/scripts:$PATH"', env)
+        self.assertIn("docker exec", wrapper)
+        self.assertIn("with_gpu_lock.sh", wrapper)
+        for unwanted in ("trun()", "tround()", "tf()", "gpu()", "tfgpu()"):
+            self.assertNotIn(unwanted, env)
+        self.assertNotIn(".local/bin", env)
+        self.assertNotIn(".local/bin", wrapper)
+
+    def test_dispatch_records_round_before_foreman_starts(self):
+        dispatch = (ROOT / "scripts/dispatch_round.sh").read_text(encoding="utf-8")
+        self.assertLess(
+            dispatch.index("write_worker_admission.sh"),
+            dispatch.index("foreman assign"),
+        )
 
 
 if __name__ == "__main__":

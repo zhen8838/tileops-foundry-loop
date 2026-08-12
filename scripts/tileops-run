@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+(( $# > 0 )) || { echo "usage: tileops-run COMMAND [ARG...]" >&2; exit 2; }
+: "${FOREMAN_WORKTREE:?source the worker environment before using tileops-run}"
+: "${TILEOPS_ROUND_HOST:?source the worker environment before using tileops-run}"
+: "${TILEOPS_ROUND_SLUG:?source the worker environment before using tileops-run}"
+: "${TILEOPS_WORKER_CONTAINER:?source the worker environment before using tileops-run}"
+
+host_cwd=$(pwd -P)
+case "$host_cwd" in
+    "$FOREMAN_WORKTREE")
+        container_cwd=/workspace/tileops
+        ;;
+    "$FOREMAN_WORKTREE"/*)
+        relative=${host_cwd#"$FOREMAN_WORKTREE"/}
+        container_cwd=/workspace/tileops/$relative
+        ;;
+    "$TILEOPS_ROUND_HOST")
+        container_cwd=/workspace/tileops-loop-state/$TILEOPS_ROUND_SLUG
+        ;;
+    "$TILEOPS_ROUND_HOST"/*)
+        relative=${host_cwd#"$TILEOPS_ROUND_HOST"/}
+        container_cwd=/workspace/tileops-loop-state/$TILEOPS_ROUND_SLUG/$relative
+        ;;
+    *)
+        echo "tileops-run: cd below $FOREMAN_WORKTREE or $TILEOPS_ROUND_HOST first" >&2
+        exit 2
+        ;;
+esac
+
+exec docker exec --workdir "$container_cwd" "$TILEOPS_WORKER_CONTAINER" \
+    /workspace/tileops-foundry-loop/scripts/with_gpu_lock.sh 0 "$@"

@@ -33,7 +33,6 @@ fi
 image_library_path=$(docker image inspect "$image" --format '{{range .Config.Env}}{{println .}}{{end}}' 2>/dev/null \
     | sed -n 's/^LD_LIBRARY_PATH=//p')
 container_library_path="/usr/local/lib${image_library_path:+:$image_library_path}"
-
 worktree=$(git rev-parse --show-toplevel 2>/dev/null || true)
 if [[ ! -f "$worktree/src/tileops/__init__.py" ]]; then
     worktree=$default_tileops
@@ -148,6 +147,7 @@ ensure_container() {
             --env PYTHONUNBUFFERED=1 \
             --env "TILEFOUNDRY_WHEEL_COMMIT=$tilefoundry_wheel_commit" \
             --env "TILEFOUNDRY_WHEEL_SHA256=$tilefoundry_wheel_sha256" \
+            --env "TILEOPS_PHYSICAL_GPU=$gpu" \
             --env "LD_LIBRARY_PATH=$container_library_path" \
             "$image" sleep infinity >/dev/null
     fi
@@ -163,8 +163,8 @@ ensure_container() {
             --root-user-action=ignore --no-deps --force-reinstall "$container_wheel"
         docker exec "$container_name" python -c \
             'import cupti, pathlib, tilefoundry; p=pathlib.Path(tilefoundry.__file__).resolve(); assert "/workspace/tilefoundry" not in str(p), p'
-        docker exec "$container_name" python -c \
-            'import importlib.metadata as m; from packaging.requirements import Requirement; from packaging.version import Version; reqs=[Requirement(x) for x in m.requires("tilefoundry") or ()]; bad=[str(r) for r in reqs if (not r.marker or r.marker.evaluate()) and Version(m.version(r.name)) not in r.specifier]; assert not bad, bad'
+        docker exec "$container_name" python \
+            /workspace/tileops-foundry-loop/scripts/check_tilefoundry_environment.py
         docker exec "$container_name" tilefoundry --help >/dev/null
         docker exec "$container_name" touch "$marker"
     fi

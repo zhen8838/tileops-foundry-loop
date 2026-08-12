@@ -34,6 +34,15 @@ docker image inspect "$image" --format '{{json .RepoDigests}} {{.Id}}' \
 "$repo_dir/scripts/tileops-container.sh" python -c \
     'import importlib.metadata as m, json, pathlib, tilefoundry; print(json.dumps({"version": m.version("tilefoundry"), "module": str(pathlib.Path(tilefoundry.__file__).resolve())}))' \
     | tee "$artifact_dir/tilefoundry-installed.json"
+"$repo_dir/scripts/tileops-container.sh" bash -lc \
+    'python -m pip check > /tmp/tilefoundry-loop-pip-check.log 2>&1 || true; cat /tmp/tilefoundry-loop-pip-check.log' \
+    | tee "$artifact_dir/pip-check.log"
+"$repo_dir/scripts/tileops-container.sh" python \
+    /workspace/tileops-foundry-loop/scripts/check_tilefoundry_environment.py \
+    | tee "$artifact_dir/tilefoundry-dependency-closure.json"
+"$repo_dir/scripts/tileops-container.sh" python \
+    /workspace/tileops-foundry-loop/scripts/preflight_tilefoundry.py \
+    | tee "$artifact_dir/tilefoundry-analysis-schedule.json"
 "$repo_dir/scripts/tileops-container.sh" tilefoundry --help \
     | tee "$artifact_dir/tilefoundry-help.txt" >/dev/null
 

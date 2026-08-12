@@ -17,6 +17,7 @@ brief=$3
 }
 
 "$repo_dir/scripts/build_tilefoundry_wheel.sh" >/dev/null
+"$repo_dir/scripts/write_worker_admission.sh" "$task" "$brief"
 
 foreman assign solo --project tileops \
     --prompt "Execute the closed TileFoundry optimization loop in $brief. Use $repo_dir/PLAYBOOK.md for gates. Do not edit TileFoundry or dispatch another agent." \

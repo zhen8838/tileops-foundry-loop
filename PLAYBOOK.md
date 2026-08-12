@@ -46,11 +46,16 @@ modify.
    native CUPTI path, and baseline imports before dispatch. Do not install or
    upgrade round dependencies afterward.
 4. Foreman's post-worktree hook starts one image-pinned container per worktree.
-   Repeated commands use `docker exec` in that container. Worktrees and
-   containers isolate code and packages, not GPUs.
-5. Claim-bearing correctness and performance runs use
-   `scripts/with_gpu_lock.sh`. Native CUPTI attribution fails closed; CUDA-event
-   fallback is diagnostic only.
+   Before starting or restarting the Agent Session, Foreman sources the worker
+   environment into its pane and adds the repository's `tileops-run` wrapper to
+   that session's `PATH`. Prefix unchanged commands with `tileops-run`; it maps
+   the pane's current worktree or round directory into that worker's persistent
+   container. Put long commands in round-local `evidence/*.sh`; never reconstruct
+   the container name, Docker invocation, GPU lock, or absolute container path
+   in worker commands.
+5. Worktrees and containers isolate code and packages, not GPUs. `tileops-run`
+   serializes commands against the physical GPU through the shared `/ci-cache`.
+   Native CUPTI attribution fails closed; CUDA-event fallback is diagnostic only.
 
 ## Worker Loop
 

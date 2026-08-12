@@ -13,7 +13,13 @@ if [[ ! "$gpu" =~ ^[0-9]+$ ]]; then
     exit 2
 fi
 
-lock_root=${TILEOPS_FOUNDRY_LOOP_LOCK_ROOT:-/tmp/tileops-foundry-loop-locks}
+gpu=${TILEOPS_PHYSICAL_GPU:-$gpu}
+if [[ -d /ci-cache ]]; then
+    default_lock_root=/ci-cache/gpu-locks
+else
+    default_lock_root=${XDG_RUNTIME_DIR:-/tmp}/tileops-foundry-loop-locks
+fi
+lock_root=${TILEOPS_FOUNDRY_LOOP_LOCK_ROOT:-$default_lock_root}
 mkdir -p "$lock_root"
 exec 9>"$lock_root/gpu-$gpu.lock"
 flock 9
