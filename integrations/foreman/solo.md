@@ -10,6 +10,6 @@ admitted TileOPs environment with `tileops-run`, such as `tileops-run tilefoundr
 or `tileops-run python ...`. It preserves the original command and maps your current host
 directory into the worker's persistent container. Put long or repeated commands in round-local
 `evidence/*.sh`; do not reconstruct the container name, Docker invocation, GPU lock, or absolute
-container path.
+container path. The wrapper already supplies the loop runtime `PYTHONPATH`; never add it manually.
 
 {solo_notes}

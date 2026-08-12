@@ -52,7 +52,8 @@ modify.
    the pane's current worktree or round directory into that worker's persistent
    container. Put long commands in round-local `evidence/*.sh`; never reconstruct
    the container name, Docker invocation, GPU lock, or absolute container path
-   in worker commands.
+   in worker commands. `tileops-run` also supplies the loop runtime `PYTHONPATH`;
+   workers must not repeat it with `env PYTHONPATH=...`.
 5. Worktrees and containers isolate code and packages, not GPUs. `tileops-run`
    serializes commands against the physical GPU through the shared `/ci-cache`.
    Native CUPTI attribution fails closed; CUDA-event fallback is diagnostic only.

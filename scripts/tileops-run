@@ -6,6 +6,7 @@ set -euo pipefail
 : "${TILEOPS_ROUND_HOST:?source the worker environment before using tileops-run}"
 : "${TILEOPS_ROUND_SLUG:?source the worker environment before using tileops-run}"
 : "${TILEOPS_WORKER_CONTAINER:?source the worker environment before using tileops-run}"
+container_pythonpath=${TILEOPS_WORKER_PYTHONPATH:-/workspace/tileops-foundry-loop}
 
 host_cwd=$(pwd -P)
 case "$host_cwd" in
@@ -29,5 +30,6 @@ case "$host_cwd" in
         ;;
 esac
 
-exec docker exec --workdir "$container_cwd" "$TILEOPS_WORKER_CONTAINER" \
+exec docker exec --env "PYTHONPATH=$container_pythonpath" \
+    --workdir "$container_cwd" "$TILEOPS_WORKER_CONTAINER" \
     /workspace/tileops-foundry-loop/scripts/with_gpu_lock.sh 0 "$@"

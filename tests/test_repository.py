@@ -78,7 +78,9 @@ class RepositoryStructureTests(unittest.TestCase):
         env = (ROOT / "integrations/foreman/worker-env.sh").read_text(encoding="utf-8")
         wrapper = (ROOT / "scripts/tileops-run").read_text(encoding="utf-8")
         self.assertIn('export PATH="$TILEOPS_FOUNDRY_LOOP_ROOT/scripts:$PATH"', env)
+        self.assertIn("TILEOPS_WORKER_PYTHONPATH=/workspace/tileops-foundry-loop", env)
         self.assertIn("docker exec", wrapper)
+        self.assertIn('--env "PYTHONPATH=$container_pythonpath"', wrapper)
         self.assertIn("with_gpu_lock.sh", wrapper)
         for unwanted in ("trun()", "tround()", "tf()", "gpu()", "tfgpu()"):
             self.assertNotIn(unwanted, env)
