@@ -1,0 +1,13 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+artifacts/
+rounds/*/artifacts/
+rounds/*/pr-title.txt
+rounds/*/pr-body.md
+!rounds/.gitkeep

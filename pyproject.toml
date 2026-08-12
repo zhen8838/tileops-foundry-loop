@@ -1,0 +1,14 @@
+[project]
+name = "tileops-foundry-loop"
+version = "0.1.0"
+description = "Reproducible TileFoundry-to-TileOPs kernel optimization workflow"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = []
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

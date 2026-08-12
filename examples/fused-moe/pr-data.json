@@ -1,0 +1,61 @@
+{
+  "subject": "Reduce sparse fused-MoE launch waste on H200",
+  "type": "Perf",
+  "scope": "MoE",
+  "operator": "FusedMoEExpertsNopadPersistent3WGFwdOp",
+  "classification": "improvement without SOTA",
+  "summary": [
+    "Select the lower-waste BM64/stage2 fused gate/up template for sparse routed rows.",
+    "Remove one redundant output clear while preserving the public fallback, activation, and expert-parallel behavior.",
+    "Compare the candidate, exact TileOPs incumbent, and vLLM Triton on every primary manifest workload."
+  ],
+  "environment": {
+    "image": "ghcr.io/tile-ai/tileops-runner:cu132-torch2.13-tl-afcebed1-dev",
+    "digest": "sha256:2590888968a870216e1ea076829b909e62e9053608f6a65d5ab5ecd7eb5561f7",
+    "gpu": "NVIDIA H200",
+    "driver": "595.71.05",
+    "cuda": "13.2",
+    "torch": "2.13.0+cu132",
+    "tilelang": "0.1.11+cu132.gitafcebed1",
+    "vllm": "0.27.1",
+    "timer": "native CUPTI"
+  },
+  "method": "Candidate, incumbent, and vLLM ran in one process on common inputs with identical BF16 work, L2 reset/input rotation, adaptive repeats, and forward/reverse drift balancing. Compilation was excluded and CUPTI failure was fail-closed.",
+  "dimensions": ["T", "E", "K", "H", "F"],
+  "comparators": [
+    {"id": "candidate", "label": "TileFoundry candidate", "role": "candidate"},
+    {"id": "incumbent", "label": "TileOPs incumbent", "role": "incumbent"},
+    {"id": "vllm", "label": "vLLM Triton", "role": "external"}
+  ],
+  "workloads": [
+    {
+      "label": "qwen3-235b-decode",
+      "dimensions": {"T": 512, "E": 128, "K": 8, "H": 7168, "F": 2048},
+      "dtype": "bfloat16",
+      "results": {"candidate": {"median_ms": 3.0439}, "incumbent": {"median_ms": 3.1617}, "vllm": {"median_ms": 2.9422}}
+    },
+    {
+      "label": "qwen3-235b-prefill",
+      "dimensions": {"T": 4096, "E": 128, "K": 8, "H": 7168, "F": 2048},
+      "dtype": "bfloat16",
+      "results": {"candidate": {"median_ms": 6.0151}, "incumbent": {"median_ms": 5.7425}, "vllm": {"median_ms": 6.7984}}
+    },
+    {
+      "label": "deepseek-v3-decode",
+      "dimensions": {"T": 512, "E": 256, "K": 8, "H": 7168, "F": 2048},
+      "dtype": "bfloat16",
+      "results": {"candidate": {"median_ms": 5.8042}, "incumbent": {"median_ms": 6.1058}, "vllm": {"median_ms": 5.5988}}
+    },
+    {
+      "label": "deepseek-v3-prefill",
+      "dimensions": {"T": 4096, "E": 256, "K": 8, "H": 7168, "F": 2048},
+      "dtype": "bfloat16",
+      "results": {"candidate": {"median_ms": 8.21}, "incumbent": {"median_ms": 8.1078}, "vllm": {"median_ms": 8.5403}}
+    }
+  ],
+  "limitations": [
+    "Classification is improvement without SOTA: the candidate geometric mean is lower than incumbent and vLLM, but both decode rows remain slower than vLLM and both prefill rows remain slower than the incumbent.",
+    "The public default remains unchanged; the specialization only applies where its measured contract holds.",
+    "A general runtime vector IndexSelect lowering remains a demonstrated TileFoundry gap and is not hidden by the PR."
+  ]
+}
