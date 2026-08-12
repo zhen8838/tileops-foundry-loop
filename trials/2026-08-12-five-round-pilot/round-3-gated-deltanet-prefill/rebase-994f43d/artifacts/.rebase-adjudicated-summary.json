@@ -1,0 +1,1460 @@
+{
+  "row_count": 26,
+  "adjudicated": [
+    "131072,64,bfloat16",
+    "131072,64,float16"
+  ],
+  "rows_candidate_slower_than_fla": [],
+  "rows_candidate_slower_than_incumbent": [
+    "32768,16,float16",
+    "32768,32,float16",
+    "32768,64,float16",
+    "65536,16,float16",
+    "65536,32,bfloat16",
+    "65536,48,bfloat16",
+    "65536,48,float16",
+    "65536,64,bfloat16",
+    "131072,16,float16",
+    "131072,32,bfloat16",
+    "131072,64,float16"
+  ],
+  "geomean_ms": {
+    "candidate": 1.892976611223498,
+    "incumbent": 1.9287909314078202,
+    "fla": 4.062777861795371
+  },
+  "rows": [
+    {
+      "selector": "4096,16,bfloat16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 16,
+        "seq_len": 4096
+      },
+      "dtype": "torch.bfloat16",
+      "candidate": 0.6436949999999999,
+      "incumbent": 0.863247,
+      "fla": 0.8384015,
+      "main_candidate": 0.6436949999999999,
+      "main_incumbent": 0.863247,
+      "main_fla": 0.8384015,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.0048828125,
+          "max_state_abs": 0.004638671875,
+          "peak_allocated_delta_bytes": 27526144
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 110362624
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.0048828125,
+          "max_state_abs": 0.004638671875,
+          "peak_allocated_delta_bytes": 35389952
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          0.621361,
+          0.6503844999999999
+        ],
+        "incumbent": [
+          0.8584004999999999,
+          0.8652340000000001
+        ],
+        "fla": [
+          0.837439,
+          0.838802
+        ]
+      }
+    },
+    {
+      "selector": "4096,16,float16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 16,
+        "seq_len": 4096
+      },
+      "dtype": "torch.float16",
+      "candidate": 0.6169275000000001,
+      "incumbent": 0.816527,
+      "fla": 0.8288630000000001,
+      "main_candidate": 0.6169275000000001,
+      "main_incumbent": 0.816527,
+      "main_fla": 0.8288630000000001,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.000579833984375,
+          "max_state_abs": 0.0003662109375,
+          "peak_allocated_delta_bytes": 27527168
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 110362624
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.000579833984375,
+          "max_state_abs": 0.0003662109375,
+          "peak_allocated_delta_bytes": 35390976
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          0.5996790000000001,
+          0.6403195
+        ],
+        "incumbent": [
+          0.806207,
+          0.8499665000000001
+        ],
+        "fla": [
+          0.82579,
+          0.831583
+        ]
+      }
+    },
+    {
+      "selector": "32768,16,bfloat16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 16,
+        "seq_len": 32768
+      },
+      "dtype": "torch.bfloat16",
+      "candidate": 1.053266,
+      "incumbent": 1.062402,
+      "fla": 1.723123,
+      "main_candidate": 1.053266,
+      "main_incumbent": 1.062402,
+      "main_fla": 1.723123,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.0059814453125,
+          "max_state_abs": 0.0030517578125,
+          "peak_allocated_delta_bytes": 213385728
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 875560960
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.0059814453125,
+          "max_state_abs": 0.0030517578125,
+          "peak_allocated_delta_bytes": 221774336
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          0.990082,
+          1.0559699999999999
+        ],
+        "incumbent": [
+          1.034657,
+          1.0686740000000001
+        ],
+        "fla": [
+          1.7057155000000002,
+          1.7305155
+        ]
+      }
+    },
+    {
+      "selector": "32768,16,float16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 16,
+        "seq_len": 32768
+      },
+      "dtype": "torch.float16",
+      "candidate": 1.041378,
+      "incumbent": 0.991553,
+      "fla": 1.7210595,
+      "main_candidate": 1.041378,
+      "main_incumbent": 0.991553,
+      "main_fla": 1.7210595,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00115966796875,
+          "max_state_abs": 0.000396728515625,
+          "peak_allocated_delta_bytes": 213386240
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 875560960
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00115966796875,
+          "max_state_abs": 0.000396728515625,
+          "peak_allocated_delta_bytes": 221774336
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          0.980482,
+          1.0633620000000001
+        ],
+        "incumbent": [
+          0.9873460000000001,
+          1.0640815
+        ],
+        "fla": [
+          1.7099225000000002,
+          1.8882919999999999
+        ]
+      }
+    },
+    {
+      "selector": "32768,32,bfloat16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 32,
+        "seq_len": 32768
+      },
+      "dtype": "torch.bfloat16",
+      "candidate": 1.327395,
+      "incumbent": 1.329539,
+      "fla": 2.210422,
+      "main_candidate": 1.327395,
+      "main_incumbent": 1.329539,
+      "main_fla": 2.210422,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.0072021484375,
+          "max_state_abs": 0.005859375,
+          "peak_allocated_delta_bytes": 443548160
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 1751121920
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.0072021484375,
+          "max_state_abs": 0.005859375,
+          "peak_allocated_delta_bytes": 443548160
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          1.3065795,
+          1.329123
+        ],
+        "incumbent": [
+          1.312995,
+          1.3330915
+        ],
+        "fla": [
+          2.2064055000000002,
+          2.215878
+        ]
+      }
+    },
+    {
+      "selector": "32768,32,float16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 32,
+        "seq_len": 32768
+      },
+      "dtype": "torch.float16",
+      "candidate": 1.331523,
+      "incumbent": 1.261875,
+      "fla": 2.2028855,
+      "main_candidate": 1.331523,
+      "main_incumbent": 1.261875,
+      "main_fla": 2.2028855,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00140380859375,
+          "max_state_abs": 0.000518798828125,
+          "peak_allocated_delta_bytes": 443548160
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 1751121920
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00140380859375,
+          "max_state_abs": 0.000518798828125,
+          "peak_allocated_delta_bytes": 443548160
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          1.324035,
+          1.3434590000000002
+        ],
+        "incumbent": [
+          1.249635,
+          1.268771
+        ],
+        "fla": [
+          2.2008375,
+          2.2060695
+        ]
+      }
+    },
+    {
+      "selector": "32768,48,bfloat16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 48,
+        "seq_len": 32768
+      },
+      "dtype": "torch.bfloat16",
+      "candidate": 1.577413,
+      "incumbent": 1.6097489999999999,
+      "fla": 2.859577,
+      "main_candidate": 1.577413,
+      "main_incumbent": 1.6097489999999999,
+      "main_fla": 2.859577,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00830078125,
+          "max_state_abs": 0.006103515625,
+          "peak_allocated_delta_bytes": 665321984
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 2626682880
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00830078125,
+          "max_state_abs": 0.006103515625,
+          "peak_allocated_delta_bytes": 665321984
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          1.5365644999999999,
+          1.6097335
+        ],
+        "incumbent": [
+          1.588293,
+          1.610693
+        ],
+        "fla": [
+          2.839353,
+          2.8677215
+        ]
+      }
+    },
+    {
+      "selector": "32768,48,float16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 48,
+        "seq_len": 32768
+      },
+      "dtype": "torch.float16",
+      "candidate": 1.604037,
+      "incumbent": 1.608917,
+      "fla": 2.8673045000000004,
+      "main_candidate": 1.604037,
+      "main_incumbent": 1.608917,
+      "main_fla": 2.8673045000000004,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.001129150390625,
+          "max_state_abs": 0.0005340576171875,
+          "peak_allocated_delta_bytes": 665321984
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 2626682880
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.001129150390625,
+          "max_state_abs": 0.0005340576171875,
+          "peak_allocated_delta_bytes": 665321984
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          1.587925,
+          1.608997
+        ],
+        "incumbent": [
+          1.5456679999999998,
+          1.6138765000000002
+        ],
+        "fla": [
+          2.8495929999999996,
+          2.8707605000000003
+        ]
+      }
+    },
+    {
+      "selector": "32768,64,bfloat16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 64,
+        "seq_len": 32768
+      },
+      "dtype": "torch.bfloat16",
+      "candidate": 1.6924535,
+      "incumbent": 1.752294,
+      "fla": 3.5271645,
+      "main_candidate": 1.6924535,
+      "main_incumbent": 1.752294,
+      "main_fla": 3.5271645,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.009033203125,
+          "max_state_abs": 0.00390625,
+          "peak_allocated_delta_bytes": 828375552
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 3502243840
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.009033203125,
+          "max_state_abs": 0.00390625,
+          "peak_allocated_delta_bytes": 828375552
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          1.66943,
+          1.7859580000000002
+        ],
+        "incumbent": [
+          1.748646,
+          1.8009985000000002
+        ],
+        "fla": [
+          3.5269565,
+          3.5279965
+        ]
+      }
+    },
+    {
+      "selector": "32768,64,float16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 64,
+        "seq_len": 32768
+      },
+      "dtype": "torch.float16",
+      "candidate": 1.821815,
+      "incumbent": 1.7306945,
+      "fla": 3.5405565,
+      "main_candidate": 1.821815,
+      "main_incumbent": 1.7306945,
+      "main_fla": 3.5405565,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.001129150390625,
+          "max_state_abs": 0.000518798828125,
+          "peak_allocated_delta_bytes": 828375552
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 3502243840
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.001129150390625,
+          "max_state_abs": 0.000518798828125,
+          "peak_allocated_delta_bytes": 828375552
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          1.754598,
+          1.840454
+        ],
+        "incumbent": [
+          1.7107575000000002,
+          1.813318
+        ],
+        "fla": [
+          3.5405085,
+          3.542013
+        ]
+      }
+    },
+    {
+      "selector": "65536,16,bfloat16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 16,
+        "seq_len": 65536
+      },
+      "dtype": "torch.bfloat16",
+      "candidate": 1.2690905000000001,
+      "incumbent": 1.297923,
+      "fla": 2.6102455,
+      "main_candidate": 1.2690905000000001,
+      "main_incumbent": 1.297923,
+      "main_fla": 2.6102455,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.010498046875,
+          "max_state_abs": 0.002197265625,
+          "peak_allocated_delta_bytes": 441975296
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 1750073344
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.010498046875,
+          "max_state_abs": 0.002197265625,
+          "peak_allocated_delta_bytes": 441975296
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          1.2440185000000001,
+          1.280003
+        ],
+        "incumbent": [
+          1.242818,
+          1.3624990000000001
+        ],
+        "fla": [
+          2.6080375,
+          2.8137175
+        ]
+      }
+    },
+    {
+      "selector": "65536,16,float16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 16,
+        "seq_len": 65536
+      },
+      "dtype": "torch.float16",
+      "candidate": 1.3061470000000002,
+      "incumbent": 1.253347,
+      "fla": 2.6260535000000003,
+      "main_candidate": 1.3061470000000002,
+      "main_incumbent": 1.253347,
+      "main_fla": 2.6260535000000003,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00091552734375,
+          "max_state_abs": 0.000457763671875,
+          "peak_allocated_delta_bytes": 441975808
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 1750073344
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00091552734375,
+          "max_state_abs": 0.000457763671875,
+          "peak_allocated_delta_bytes": 441975296
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          1.2429305000000002,
+          1.3580185
+        ],
+        "incumbent": [
+          1.226818,
+          1.300739
+        ],
+        "fla": [
+          2.588725,
+          2.7821654999999996
+        ]
+      }
+    },
+    {
+      "selector": "65536,32,bfloat16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 32,
+        "seq_len": 65536
+      },
+      "dtype": "torch.bfloat16",
+      "candidate": 1.774469,
+      "incumbent": 1.7451570000000003,
+      "fla": 3.91097,
+      "main_candidate": 1.774469,
+      "main_incumbent": 1.7451570000000003,
+      "main_fla": 3.91097,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.0089111328125,
+          "max_state_abs": 0.0023193359375,
+          "peak_allocated_delta_bytes": 850395648
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 3500146688
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.0089111328125,
+          "max_state_abs": 0.0023193359375,
+          "peak_allocated_delta_bytes": 850395648
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          1.6727565,
+          1.8095884999999998
+        ],
+        "incumbent": [
+          1.646132,
+          1.7845005
+        ],
+        "fla": [
+          3.9105705000000004,
+          3.9116905
+        ]
+      }
+    },
+    {
+      "selector": "65536,32,float16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 32,
+        "seq_len": 65536
+      },
+      "dtype": "torch.float16",
+      "candidate": 1.7277485000000001,
+      "incumbent": 1.7671405000000002,
+      "fla": 3.9003135,
+      "main_candidate": 1.7277485000000001,
+      "main_incumbent": 1.7671405000000002,
+      "main_fla": 3.9003135,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.0009765625,
+          "max_state_abs": 0.0003662109375,
+          "peak_allocated_delta_bytes": 850395648
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 3500146688
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.0009765625,
+          "max_state_abs": 0.0003662109375,
+          "peak_allocated_delta_bytes": 850395648
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          1.668469,
+          1.836133
+        ],
+        "incumbent": [
+          1.6756515,
+          1.819588
+        ],
+        "fla": [
+          3.900054,
+          3.9003140000000003
+        ]
+      }
+    },
+    {
+      "selector": "65536,48,bfloat16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 48,
+        "seq_len": 65536
+      },
+      "dtype": "torch.bfloat16",
+      "candidate": 2.3923595,
+      "incumbent": 2.38164,
+      "fla": 5.600530000000001,
+      "main_candidate": 2.3923595,
+      "main_incumbent": 2.38164,
+      "main_fla": 5.600530000000001,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.009521484375,
+          "max_state_abs": 0.0048828125,
+          "peak_allocated_delta_bytes": 1275593216
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 5250220032
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.009521484375,
+          "max_state_abs": 0.0048828125,
+          "peak_allocated_delta_bytes": 1275593216
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          2.3799275,
+          2.4130475
+        ],
+        "incumbent": [
+          2.1923435000000002,
+          2.383208
+        ],
+        "fla": [
+          5.5999705,
+          5.602738
+        ]
+      }
+    },
+    {
+      "selector": "65536,48,float16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 48,
+        "seq_len": 65536
+      },
+      "dtype": "torch.float16",
+      "candidate": 2.385352,
+      "incumbent": 2.375112,
+      "fla": 5.6200975,
+      "main_candidate": 2.385352,
+      "main_incumbent": 2.375112,
+      "main_fla": 5.6200975,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.001129150390625,
+          "max_state_abs": 0.0003662109375,
+          "peak_allocated_delta_bytes": 1275593216
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 5250220032
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.001129150390625,
+          "max_state_abs": 0.0003662109375,
+          "peak_allocated_delta_bytes": 1275593216
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          2.3559435000000004,
+          2.3991110000000004
+        ],
+        "incumbent": [
+          2.1897184999999997,
+          2.4035279999999997
+        ],
+        "fla": [
+          5.61197,
+          5.633106
+        ]
+      }
+    },
+    {
+      "selector": "65536,64,bfloat16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 64,
+        "seq_len": 65536
+      },
+      "dtype": "torch.bfloat16",
+      "candidate": 2.919339,
+      "incumbent": 2.914923,
+      "fla": 7.0742970000000005,
+      "main_candidate": 2.919339,
+      "main_incumbent": 2.914923,
+      "main_fla": 7.0742970000000005,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.0087890625,
+          "max_state_abs": 0.004638671875,
+          "peak_allocated_delta_bytes": 1650459136
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 7000293376
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.0087890625,
+          "max_state_abs": 0.004638671875,
+          "peak_allocated_delta_bytes": 1650459136
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          2.8992430000000002,
+          2.940123
+        ],
+        "incumbent": [
+          2.9057385,
+          2.9381699999999995
+        ],
+        "fla": [
+          7.0722495,
+          7.1131785
+        ]
+      }
+    },
+    {
+      "selector": "65536,64,float16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 64,
+        "seq_len": 65536
+      },
+      "dtype": "torch.float16",
+      "candidate": 2.889194,
+      "incumbent": 2.8949705,
+      "fla": 7.114538,
+      "main_candidate": 2.889194,
+      "main_incumbent": 2.8949705,
+      "main_fla": 7.114538,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00140380859375,
+          "max_state_abs": 0.00091552734375,
+          "peak_allocated_delta_bytes": 1650459136
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 7000293376
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00140380859375,
+          "max_state_abs": 0.00091552734375,
+          "peak_allocated_delta_bytes": 1650459136
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          2.7081215,
+          2.928267
+        ],
+        "incumbent": [
+          2.889034,
+          2.902091
+        ],
+        "fla": [
+          7.114378,
+          7.120025999999999
+        ]
+      }
+    },
+    {
+      "selector": "131072,16,bfloat16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 16,
+        "seq_len": 131072
+      },
+      "dtype": "torch.bfloat16",
+      "candidate": 1.7655880000000002,
+      "incumbent": 1.7924200000000001,
+      "fla": 4.9988275,
+      "main_candidate": 1.7655880000000002,
+      "main_incumbent": 1.7924200000000001,
+      "main_fla": 4.9988275,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.009033203125,
+          "max_state_abs": 0.001708984375,
+          "peak_allocated_delta_bytes": 848822784
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 3499098112
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.009033203125,
+          "max_state_abs": 0.001708984375,
+          "peak_allocated_delta_bytes": 848822784
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          1.70322,
+          1.834853
+        ],
+        "incumbent": [
+          1.6903234999999999,
+          1.830004
+        ],
+        "fla": [
+          4.9982355,
+          5.003884
+        ]
+      }
+    },
+    {
+      "selector": "131072,16,float16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 16,
+        "seq_len": 131072
+      },
+      "dtype": "torch.float16",
+      "candidate": 1.8489000000000002,
+      "incumbent": 1.83786,
+      "fla": 5.0140910000000005,
+      "main_candidate": 1.8489000000000002,
+      "main_incumbent": 1.83786,
+      "main_fla": 5.0140910000000005,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.001068115234375,
+          "max_state_abs": 0.000244140625,
+          "peak_allocated_delta_bytes": 848823296
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 3499098112
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.001068115234375,
+          "max_state_abs": 0.000244140625,
+          "peak_allocated_delta_bytes": 848822784
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          1.8108510000000002,
+          1.8714600000000001
+        ],
+        "incumbent": [
+          1.7455720000000001,
+          1.861588
+        ],
+        "fla": [
+          5.0122985,
+          5.0185224999999996
+        ]
+      }
+    },
+    {
+      "selector": "131072,32,bfloat16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 32,
+        "seq_len": 131072
+      },
+      "dtype": "torch.bfloat16",
+      "candidate": 2.9279764999999998,
+      "incumbent": 2.921576,
+      "fla": 7.837174,
+      "main_candidate": 2.9279764999999998,
+      "main_incumbent": 2.921576,
+      "main_fla": 7.837174,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00927734375,
+          "max_state_abs": 0.0087890625,
+          "peak_allocated_delta_bytes": 1697645056
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 6998196224
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00927734375,
+          "max_state_abs": 0.0087890625,
+          "peak_allocated_delta_bytes": 1697645056
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          2.8664245,
+          2.934552
+        ],
+        "incumbent": [
+          2.856568,
+          2.950089
+        ],
+        "fla": [
+          7.833446,
+          7.8662304999999995
+        ]
+      }
+    },
+    {
+      "selector": "131072,32,float16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 32,
+        "seq_len": 131072
+      },
+      "dtype": "torch.float16",
+      "candidate": 2.9081680000000003,
+      "incumbent": 2.9286164999999995,
+      "fla": 7.838358,
+      "main_candidate": 2.9081680000000003,
+      "main_incumbent": 2.9286164999999995,
+      "main_fla": 7.838358,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00103759765625,
+          "max_state_abs": 0.00042724609375,
+          "peak_allocated_delta_bytes": 1697645056
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 6998196224
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00103759765625,
+          "max_state_abs": 0.00042724609375,
+          "peak_allocated_delta_bytes": 1697645056
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          2.9063125000000003,
+          2.9275125
+        ],
+        "incumbent": [
+          2.9170480000000003,
+          2.929192
+        ],
+        "fla": [
+          7.825990000000001,
+          7.840198
+        ]
+      }
+    },
+    {
+      "selector": "131072,48,bfloat16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 48,
+        "seq_len": 131072
+      },
+      "dtype": "torch.bfloat16",
+      "candidate": 4.056286,
+      "incumbent": 4.057566,
+      "fla": 11.2042785,
+      "main_candidate": 4.056286,
+      "main_incumbent": 4.057566,
+      "main_fla": 11.2042785,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.01171875,
+          "max_state_abs": 0.00390625,
+          "peak_allocated_delta_bytes": 2546467328
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 10497294336
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.01171875,
+          "max_state_abs": 0.00390625,
+          "peak_allocated_delta_bytes": 2546467328
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          4.0390055,
+          4.068446
+        ],
+        "incumbent": [
+          4.03763,
+          4.0694065
+        ],
+        "fla": [
+          11.1896385,
+          11.2082465
+        ]
+      }
+    },
+    {
+      "selector": "131072,48,float16",
+      "adjudicated": false,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 48,
+        "seq_len": 131072
+      },
+      "dtype": "torch.float16",
+      "candidate": 4.008701,
+      "incumbent": 4.0204455,
+      "fla": 11.223702,
+      "main_candidate": 4.008701,
+      "main_incumbent": 4.0204455,
+      "main_fla": 11.223702,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00146484375,
+          "max_state_abs": 0.0004425048828125,
+          "peak_allocated_delta_bytes": 2546467328
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 10497294336
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00146484375,
+          "max_state_abs": 0.0004425048828125,
+          "peak_allocated_delta_bytes": 2546467328
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          3.9703175,
+          4.0188935
+        ],
+        "incumbent": [
+          3.992685,
+          4.033773500000001
+        ],
+        "fla": [
+          11.212965,
+          11.2351885
+        ]
+      }
+    },
+    {
+      "selector": "131072,64,bfloat16",
+      "adjudicated": true,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 64,
+        "seq_len": 131072
+      },
+      "dtype": "torch.bfloat16",
+      "candidate": 4.905357500000001,
+      "incumbent": 4.940269499999999,
+      "fla": 14.3233525,
+      "main_candidate": 19.0133845,
+      "main_incumbent": 18.965269999999997,
+      "main_fla": 32.178359,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.01416015625,
+          "max_state_abs": 0.0054931640625,
+          "peak_allocated_delta_bytes": 3294627840
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 13996392448
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.01416015625,
+          "max_state_abs": 0.0054931640625,
+          "peak_allocated_delta_bytes": 3294627328
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          4.8850695,
+          5.0024619999999995
+        ],
+        "incumbent": [
+          4.877197000000001,
+          4.9984935
+        ],
+        "fla": [
+          14.287175000000001,
+          14.3369655
+        ]
+      }
+    },
+    {
+      "selector": "131072,64,float16",
+      "adjudicated": true,
+      "shape": {
+        "batch": 1,
+        "chunk_size": 64,
+        "dim_k": 128,
+        "dim_v": 128,
+        "heads": 64,
+        "seq_len": 131072
+      },
+      "dtype": "torch.float16",
+      "candidate": 4.9308245,
+      "incumbent": 4.912328500000001,
+      "fla": 14.303144500000002,
+      "main_candidate": 5.1002585,
+      "main_incumbent": 5.0964670000000005,
+      "main_fla": 14.348981,
+      "errors": {
+        "candidate": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00128173828125,
+          "max_state_abs": 0.000518798828125,
+          "peak_allocated_delta_bytes": 3294627840
+        },
+        "fla": {
+          "max_o_abs": 0.0,
+          "max_state_abs": 0.0,
+          "peak_allocated_delta_bytes": 13996392448
+        },
+        "incumbent": {
+          "kernel": "GatedDeltaNetPrefillFwdKernel",
+          "max_o_abs": 0.00128173828125,
+          "max_state_abs": 0.000518798828125,
+          "peak_allocated_delta_bytes": 3294627328
+        }
+      },
+      "timing": [
+        "cupti"
+      ],
+      "trial_ranges": {
+        "candidate": [
+          4.8809685,
+          5.0183765
+        ],
+        "incumbent": [
+          4.906153,
+          5.11548
+        ],
+        "fla": [
+          14.2962645,
+          14.3171605
+        ]
+      }
+    }
+  ],
+  "geomean_speedup_vs_incumbent": 1.018919578811475,
+  "geomean_speedup_vs_fla": 2.146237749429695
+}

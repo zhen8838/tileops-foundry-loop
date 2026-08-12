@@ -1,0 +1,422 @@
+DaCumsumFwdKernel initialized with config: {'block_h': 4, 'threads': 1024}
+2026-08-11 20:16:39  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:117): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:16:39  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:121): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:16:39  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:128): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:16:39  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:131): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:16:39  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-2, -1]`
+2026-08-11 20:16:42  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+CBProducerKernel initialized with config: {'block_l': 64, 'block_s': 64, 'block_n': 64, 'threads': 128}
+2026-08-11 20:16:43  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-1]`
+[20:16:43] $TMP_PATH Warning: Data race detected: `cb(bb, bc, 0, l_abs, s_abs)`is written by multiple threads in loop (ll, ss), Example:
+  bb = 0
+  bc = 0
+  bcg_tmp = 0
+  bx = 0
+  by = 0
+  l0 = 0
+  l_abs = 0
+  ll = 0
+  ll_OTHER_ = 1
+  s0 = 0
+  s_abs = 0
+  ss = 0
+  ss_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:16:47  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+SSDChunkStateFwdKernel initialized with config: {'block_n': 128, 'block_p': 64, 'block_l': 32, 'threads': 128}
+2026-08-11 20:16:47  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-1]`
+[20:16:47] $TMP_PATH Warning: Data race detected: `out(bz, bc, bh, p_idx, n_idx)`is written by multiple threads in loop (pp, nn), Example:
+  bc = 0
+  bh = 0
+  bx = 0
+  bz = 0
+  n_idx = 0
+  nn = 1
+  nn_OTHER_ = 0
+  p_idx = 0
+  pp = 0
+  pp_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:16:51  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+SSDStatePassingFwdKernel initialized with config: {'block_d': 64, 'threads': 128, 'vectorize': False}
+2026-08-11 20:16:51  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-2, -1]`
+[20:16:51] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:16:51] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:16:55  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+SSDChunkScanFwdKernel initialized with config: {'block_l': 64, 'block_p': 64, 'block_n': 64, 'block_s': 64, 'threads': 128, 'num_stages': 3}
+2026-08-11 20:16:55  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:16:55  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-1]`
+[20:16:55] $TMP_PATH Warning: Data race detected: `out(bz, chunk_start + l_abs, bz, p_abs)`is written by multiple threads in loop (ll,), Example:
+  bl = 0
+  by = 0
+  bz = 0
+  bz$1 = 0
+  chunk_start = 0
+  l_abs = 0
+  ll = 0
+  ll_OTHER_ = 1
+  p_abs = 0
+  p_abs_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:17:03  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+DaCumsumFwdKernel initialized with config: {'block_h': 4, 'threads': 1024}
+2026-08-11 20:17:22  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:117): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:17:22  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:121): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:17:22  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:128): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:17:22  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:131): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:17:22  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-2, -1]`
+2026-08-11 20:17:26  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+CBProducerKernel initialized with config: {'block_l': 64, 'block_s': 64, 'block_n': 64, 'threads': 128}
+2026-08-11 20:17:26  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-1]`
+[20:17:26] $TMP_PATH Warning: Data race detected: `cb(bb, bc, 0, l_abs, s_abs)`is written by multiple threads in loop (ll, ss), Example:
+  bb = 0
+  bc = 0
+  bcg_tmp = 0
+  bx = 0
+  by = 0
+  l0 = 0
+  l_abs = 0
+  ll = 1
+  ll_OTHER_ = 0
+  s0 = 0
+  s_abs = 0
+  ss = 1
+  ss_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:17:30  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+SSDChunkStateFwdKernel initialized with config: {'block_n': 128, 'block_p': 64, 'block_l': 32, 'threads': 128}
+2026-08-11 20:17:31  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-1]`
+[20:17:31] $TMP_PATH Warning: Data race detected: `out(bz, bc, bh, p_idx, n_idx)`is written by multiple threads in loop (pp, nn), Example:
+  bc = 0
+  bh = 0
+  bx = 0
+  bz = 0
+  n_idx = 0
+  nn = 1
+  nn_OTHER_ = 0
+  p_idx = 0
+  pp = 1
+  pp_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:17:34  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+SSDStatePassingFwdKernel initialized with config: {'block_d': 64, 'threads': 128, 'vectorize': False}
+2026-08-11 20:17:35  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-2, -1]`
+[20:17:35] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:17:35] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:17:38  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+SSDChunkScanFwdKernel initialized with config: {'block_l': 64, 'block_p': 64, 'block_n': 64, 'block_s': 64, 'threads': 128, 'num_stages': 3}
+2026-08-11 20:17:39  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:17:39  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-1]`
+[20:17:39] $TMP_PATH Warning: Data race detected: `out(bz, chunk_start + l_abs, bz, p_abs)`is written by multiple threads in loop (ll,), Example:
+  bl = 0
+  by = 0
+  bz = 0
+  bz$1 = 0
+  chunk_start = 0
+  l_abs = 0
+  ll = 1
+  ll_OTHER_ = 0
+  p_abs = 0
+  p_abs_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:17:46  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+{
+  "baseline_signature": "(x, dt, A, B, C, chunk_size, D=None, z=None, dt_bias=None, initial_states=None, seq_idx=None, cu_seqlens=None, dt_softplus=False, dt_limit=(0.0, inf), return_final_states=False, return_varlen_states=False)",
+  "manifest_entry": {
+    "ref_api": "none",
+    "family": "mamba",
+    "status": "spec-only",
+    "signature": {
+      "inputs": {
+        "x": {
+          "dtype": "float16 | bfloat16",
+          "shape": "[B, S, H, P]"
+        },
+        "dt": {
+          "dtype": "float32",
+          "shape": "[B, S, H]"
+        },
+        "A": {
+          "dtype": "float32",
+          "shape": "[H]"
+        },
+        "B": {
+          "dtype": "same_as(x)",
+          "shape": "[B, S, G, N]"
+        },
+        "C": {
+          "dtype": "same_as(x)",
+          "shape": "[B, S, G, N]"
+        }
+      },
+      "outputs": {
+        "y": {
+          "dtype": "float32",
+          "shape": "[B, S, H, P]"
+        },
+        "final_states": {
+          "dtype": "float32",
+          "shape": "[B, H, P, N]"
+        }
+      },
+      "params": {
+        "chunk_size": {
+          "type": "int",
+          "default": 256
+        },
+        "dt_softplus": {
+          "type": "bool",
+          "default": true
+        }
+      },
+      "shape_rules": [
+        "S % chunk_size == 0",
+        "H % G == 0"
+      ]
+    },
+    "workloads": [
+      {
+        "x_shape": [
+          1,
+          2048,
+          80,
+          64
+        ],
+        "dt_shape": [
+          1,
+          2048,
+          80
+        ],
+        "A_shape": [
+          80
+        ],
+        "B_shape": [
+          1,
+          2048,
+          1,
+          128
+        ],
+        "C_shape": [
+          1,
+          2048,
+          1,
+          128
+        ],
+        "dtypes": [
+          "bfloat16"
+        ],
+        "label": "mamba2-2p7b-b1-s2k"
+      },
+      {
+        "x_shape": [
+          1,
+          8192,
+          64,
+          64
+        ],
+        "dt_shape": [
+          1,
+          8192,
+          64
+        ],
+        "A_shape": [
+          64
+        ],
+        "B_shape": [
+          1,
+          8192,
+          1,
+          128
+        ],
+        "C_shape": [
+          1,
+          8192,
+          1,
+          128
+        ],
+        "dtypes": [
+          "float16"
+        ],
+        "label": "mamba2-1p3b-b1-s8k"
+      }
+    ],
+    "roofline": {
+      "func": "tileops.perf.formulas.mamba2_fwd_roofline"
+    },
+    "source": {
+      "kernel": "tileops/ops/mamba2_fwd.py",
+      "op": "tileops/ops/mamba2_fwd.py",
+      "test": "tests/ops/test_mamba.py",
+      "bench": "benchmarks/ops/bench_mamba2_e2e.py",
+      "bench_manifest_driven": false
+    }
+  },
+  "rows": [
+    {
+      "label": "mamba2-2p7b-b1-s2k",
+      "dtype": "torch.bfloat16",
+      "official_native": {
+        "y_shape": [
+          1,
+          2048,
+          80,
+          64
+        ],
+        "y_dtype": "torch.bfloat16",
+        "state_shape": [
+          1,
+          80,
+          64,
+          128
+        ],
+        "state_dtype": "torch.float32",
+        "finite": true
+      },
+      "contract_outputs": {
+        "y_dtype": "torch.float32",
+        "state_dtype": "torch.float32"
+      },
+      "incumbent_vs_official": {
+        "y_max_abs": 0.0021830499172210693,
+        "y_mean_abs": 4.150232416577637e-05,
+        "y_allclose_atol_2e_2_rtol_1e_3": true,
+        "state_max_abs": 0.0012737587094306946,
+        "state_mean_abs": 2.9306451324373484e-05,
+        "state_allclose_atol_2e_2_rtol_1e_3": true
+      },
+      "latency_ms": {
+        "official_contract_samples": [
+          1.4446719884872437,
+          1.3711680173873901,
+          1.3275840282440186,
+          1.4731199741363525,
+          1.3653440475463867,
+          1.206272006034851,
+          1.2636799812316895,
+          1.2081600427627563,
+          1.1182080507278442,
+          1.0762239694595337
+        ],
+        "official_contract_median": 1.295632004737854,
+        "official_contract_p10": 1.1182080507278442,
+        "official_contract_p90": 1.4446719884872437,
+        "incumbent_samples": [
+          0.7978559732437134,
+          0.7631040215492249,
+          0.7045760154724121,
+          0.698527991771698,
+          0.6844159960746765,
+          0.6396160125732422,
+          0.6309120059013367,
+          0.6958079934120178,
+          0.6215680241584778,
+          0.6090880036354065
+        ],
+        "incumbent_median": 0.6901119947433472,
+        "incumbent_p10": 0.6215680241584778,
+        "incumbent_p90": 0.7631040215492249
+      }
+    },
+    {
+      "label": "mamba2-1p3b-b1-s8k",
+      "dtype": "torch.float16",
+      "official_native": {
+        "y_shape": [
+          1,
+          8192,
+          64,
+          64
+        ],
+        "y_dtype": "torch.float16",
+        "state_shape": [
+          1,
+          64,
+          64,
+          128
+        ],
+        "state_dtype": "torch.float32",
+        "finite": true
+      },
+      "contract_outputs": {
+        "y_dtype": "torch.float32",
+        "state_dtype": "torch.float32"
+      },
+      "incumbent_vs_official": {
+        "y_max_abs": 0.0002168416976928711,
+        "y_mean_abs": 4.7140893002506346e-06,
+        "y_allclose_atol_2e_2_rtol_1e_3": true,
+        "state_max_abs": 9.872764348983765e-05,
+        "state_mean_abs": 3.3438211630709702e-06,
+        "state_allclose_atol_2e_2_rtol_1e_3": true
+      },
+      "latency_ms": {
+        "official_contract_samples": [
+          1.4398399591445923,
+          1.4168959856033325,
+          1.4856640100479126,
+          1.4553600549697876,
+          1.396672010421753,
+          1.3652479648590088,
+          1.4995839595794678,
+          1.4152640104293823,
+          1.3853759765625,
+          1.3556480407714844
+        ],
+        "official_contract_median": 1.4160799980163574,
+        "official_contract_p10": 1.3652479648590088,
+        "official_contract_p90": 1.4856640100479126,
+        "incumbent_samples": [
+          1.0081919431686401,
+          0.9799680113792419,
+          1.0037440061569214,
+          0.983456015586853,
+          0.9878079891204834,
+          0.9798719882965088,
+          1.0362880229949951,
+          0.9377920031547546,
+          0.9362239837646484,
+          0.9155840277671814
+        ],
+        "incumbent_median": 0.9817120134830475,
+        "incumbent_p10": 0.9362239837646484,
+        "incumbent_p90": 1.0081919431686401
+      }
+    }
+  ]
+}

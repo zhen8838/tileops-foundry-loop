@@ -1,0 +1,81 @@
+MoePermuteNopadKernel initialized with config: {'threads': 1024}
+MoeGroupedGemmPersistent3WGFusedActKernel initialized with config: {'block_m': 128, 'block_n': 128, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 1}
+GroupedGemmPersistent3WGKernel initialized with config: {'block_m': 128, 'block_n': 256, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 8}
+MoeUnpermuteKernel initialized with config: {}
+MoePermuteNopadKernel initialized with config: {'threads': 1024}
+2026-08-11 17:04:02  [TileLang:tilelang.cache.kernel_cache:WARNING] (kernel_cache.py:347): Found kernel '_scan_main' in memory cache. For better performance, consider using `@tilelang.jit` instead of direct kernel caching.
+2026-08-11 17:04:02  [TileLang:tilelang.cache.kernel_cache:WARNING] (kernel_cache.py:347): Found kernel '_gather_main' in memory cache. For better performance, consider using `@tilelang.jit` instead of direct kernel caching.
+GroupedGemmPersistent3WGKernel initialized with config: {'block_m': 128, 'block_n': 256, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 8}
+SiluAndMulFwdKernel initialized with config: {'strategy': 'explicit_parallel', 'threads': 128, 'num_per_thread': 8}
+GroupedGemmPersistent3WGKernel initialized with config: {'block_m': 128, 'block_n': 256, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 8}
+MoeUnpermuteKernel initialized with config: {}
+WARNING 08-11 17:04:02 [fused_moe.py:1090] Using default MoE config. Performance might be sub-optimal! Config file not found at /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/fused_moe/configs/E=128,N=2048,device_name=NVIDIA_H200.json
+.MoePermuteNopadKernel initialized with config: {'threads': 1024}
+2026-08-11 17:04:05  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_scan_main` with `out_idx=[]`
+2026-08-11 17:04:08  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_scan_main`
+2026-08-11 17:04:09  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gather_main` with `out_idx=[]`
+2026-08-11 17:04:12  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gather_main`
+MoeGroupedGemmPersistent3WGFusedActKernel initialized with config: {'block_m': 128, 'block_n': 128, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 1}
+2026-08-11 17:04:12  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemm_main_fused_coop` with `out_idx=[]`
+2026-08-11 17:04:17  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemm_main_fused_coop`
+GroupedGemmPersistent3WGKernel initialized with config: {'block_m': 128, 'block_n': 256, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 8}
+2026-08-11 17:04:18  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemm_main_v2_coop` with `out_idx=[]`
+2026-08-11 17:04:24  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemm_main_v2_coop`
+MoeUnpermuteKernel initialized with config: {}
+2026-08-11 17:04:24  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_unpermute_main` with `out_idx=[]`
+2026-08-11 17:04:28  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_unpermute_main`
+MoePermuteNopadKernel initialized with config: {'threads': 1024}
+2026-08-11 17:04:28  [TileLang:tilelang.cache.kernel_cache:WARNING] (kernel_cache.py:347): Found kernel '_scan_main' in memory cache. For better performance, consider using `@tilelang.jit` instead of direct kernel caching.
+2026-08-11 17:04:28  [TileLang:tilelang.cache.kernel_cache:WARNING] (kernel_cache.py:347): Found kernel '_gather_main' in memory cache. For better performance, consider using `@tilelang.jit` instead of direct kernel caching.
+GroupedGemmPersistent3WGKernel initialized with config: {'block_m': 128, 'block_n': 256, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 8}
+2026-08-11 17:04:28  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemm_main_v2_coop` with `out_idx=[]`
+2026-08-11 17:04:34  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemm_main_v2_coop`
+SiluAndMulFwdKernel initialized with config: {'strategy': 'explicit_parallel', 'threads': 128, 'num_per_thread': 8}
+2026-08-11 17:04:34  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[1]`
+2026-08-11 17:04:34  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+GroupedGemmPersistent3WGKernel initialized with config: {'block_m': 128, 'block_n': 256, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 8}
+MoeUnpermuteKernel initialized with config: {}
+.MoePermuteNopadKernel initialized with config: {'threads': 1024}
+2026-08-11 17:04:38  [TileLang:tilelang.cache.kernel_cache:WARNING] (kernel_cache.py:347): Found kernel '_gather_main' in memory cache. For better performance, consider using `@tilelang.jit` instead of direct kernel caching.
+MoeGroupedGemmPersistent3WGFusedActKernel initialized with config: {'block_m': 64, 'block_n': 128, 'block_k': 64, 'num_stages': 2, 'threads': 384, 'group_size_m': 1}
+GroupedGemmPersistent3WGKernel initialized with config: {'block_m': 128, 'block_n': 256, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 8}
+MoeUnpermuteKernel initialized with config: {}
+MoePermuteNopadKernel initialized with config: {'threads': 1024}
+2026-08-11 17:04:38  [TileLang:tilelang.cache.kernel_cache:WARNING] (kernel_cache.py:347): Found kernel '_scan_main' in memory cache. For better performance, consider using `@tilelang.jit` instead of direct kernel caching.
+2026-08-11 17:04:38  [TileLang:tilelang.cache.kernel_cache:WARNING] (kernel_cache.py:347): Found kernel '_gather_main' in memory cache. For better performance, consider using `@tilelang.jit` instead of direct kernel caching.
+GroupedGemmPersistent3WGKernel initialized with config: {'block_m': 128, 'block_n': 256, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 8}
+SiluAndMulFwdKernel initialized with config: {'strategy': 'explicit_parallel', 'threads': 128, 'num_per_thread': 8}
+2026-08-11 17:04:38  [TileLang:tilelang.cache.kernel_cache:WARNING] (kernel_cache.py:347): Found kernel 'main' in memory cache. For better performance, consider using `@tilelang.jit` instead of direct kernel caching.
+GroupedGemmPersistent3WGKernel initialized with config: {'block_m': 128, 'block_n': 256, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 8}
+MoeUnpermuteKernel initialized with config: {}
+WARNING 08-11 17:04:38 [fused_moe.py:1090] Using default MoE config. Performance might be sub-optimal! Config file not found at /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/fused_moe/configs/E=256,N=2048,device_name=NVIDIA_H200.json
+.MoePermuteNopadKernel initialized with config: {'threads': 1024}
+2026-08-11 17:04:41  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_scan_main` with `out_idx=[]`
+2026-08-11 17:04:44  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_scan_main`
+2026-08-11 17:04:45  [TileLang:tilelang.cache.kernel_cache:WARNING] (kernel_cache.py:347): Found kernel '_gather_main' in memory cache. For better performance, consider using `@tilelang.jit` instead of direct kernel caching.
+MoeGroupedGemmPersistent3WGFusedActKernel initialized with config: {'block_m': 128, 'block_n': 128, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 1}
+2026-08-11 17:04:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemm_main_fused_coop` with `out_idx=[]`
+2026-08-11 17:04:50  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemm_main_fused_coop`
+GroupedGemmPersistent3WGKernel initialized with config: {'block_m': 128, 'block_n': 256, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 8}
+2026-08-11 17:04:51  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemm_main_v2_coop` with `out_idx=[]`
+2026-08-11 17:04:56  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemm_main_v2_coop`
+MoeUnpermuteKernel initialized with config: {}
+MoePermuteNopadKernel initialized with config: {'threads': 1024}
+2026-08-11 17:04:57  [TileLang:tilelang.cache.kernel_cache:WARNING] (kernel_cache.py:347): Found kernel '_scan_main' in memory cache. For better performance, consider using `@tilelang.jit` instead of direct kernel caching.
+2026-08-11 17:04:57  [TileLang:tilelang.cache.kernel_cache:WARNING] (kernel_cache.py:347): Found kernel '_gather_main' in memory cache. For better performance, consider using `@tilelang.jit` instead of direct kernel caching.
+GroupedGemmPersistent3WGKernel initialized with config: {'block_m': 128, 'block_n': 256, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 8}
+2026-08-11 17:04:57  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemm_main_v2_coop` with `out_idx=[]`
+2026-08-11 17:05:02  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemm_main_v2_coop`
+SiluAndMulFwdKernel initialized with config: {'strategy': 'explicit_parallel', 'threads': 128, 'num_per_thread': 8}
+2026-08-11 17:05:03  [TileLang:tilelang.cache.kernel_cache:WARNING] (kernel_cache.py:347): Found kernel 'main' in memory cache. For better performance, consider using `@tilelang.jit` instead of direct kernel caching.
+GroupedGemmPersistent3WGKernel initialized with config: {'block_m': 128, 'block_n': 256, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 8}
+MoeUnpermuteKernel initialized with config: {}
+.Benchmark report saved to profile_run.log
+
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:362: 14 warnings
+  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:362: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+4 passed, 14 warnings in 70.25s (0:01:10)

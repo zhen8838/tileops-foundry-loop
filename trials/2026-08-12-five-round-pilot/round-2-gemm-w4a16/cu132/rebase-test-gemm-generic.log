@@ -1,0 +1,26 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.0.2, pluggy-1.6.0 -- /usr/bin/python
+cachedir: .pytest_cache
+rootdir: $CONTAINER_WORKSPACE/tileops
+configfile: pyproject.toml
+plugins: anyio-4.14.2, xdist-3.8.0, timeout-2.3.1
+collecting ... collected 15 items
+
+tests/ops/test_gemm.py::test_gemm[smoke-fp16-square] PASSED              [  6%]
+tests/ops/test_gemm.py::test_gemm[smoke-bf16-square] PASSED              [ 13%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-trans-b-small-m] PASSED      [ 20%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-nt-dense-ws] PASSED          [ 26%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-tuned-wide] PASSED           [ 33%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-tuned-wide-alt] PASSED       [ 40%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-thin-n] PASSED               [ 46%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-tuned-thin-n] PASSED         [ 53%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-tuned-thin-n-alt] PASSED     [ 60%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-trans-b-small-m] PASSED      [ 66%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-tuned-wide] PASSED           [ 73%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-tuned-wide-alt] PASSED       [ 80%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-thin-n] PASSED               [ 86%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-tuned-thin-n] PASSED         [ 93%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-tuned-thin-n-alt] PASSED     [100%]
+
+- generated xml file: $CONTAINER_WORKSPACE/tileops/.artifacts/cu132/rebase-test-gemm-generic.xml -
+============================== 15 passed in 4.54s ==============================

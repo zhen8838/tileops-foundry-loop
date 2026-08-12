@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="mamba2_blind_candidate" tests="2" failures="0"><testcase name="small_multi_chunk" /><testcase name="production_bf16" /></testsuite>

@@ -1,0 +1,30 @@
+Recorded: 2026-08-12 Asia/Shanghai
+PR: https://github.com/tile-ai/TileOPs/pull/1886
+rebased_commit=5fbb6a8
+base_commit=0d75579
+image_tag=ghcr.io/tile-ai/tileops-runner:cu132-torch2.13-tl-afcebed1-dev
+image_digest=sha256:2590888968a870216e1ea076829b909e62e9053608f6a65d5ab5ecd7eb5561f7
+container=tileops-d4fbbea95c75
+environment_schema=3
+physical_gpu_index=1
+gpu=NVIDIA H200
+gpu_capability=9.0
+gpu_uuid=GPU-3a3112ff-837c-3b87-38d1-cb203d656589
+driver=595.71.05
+cuda_toolkit=13.2.1
+nvcc=13.2.78
+python=3.12.13
+torch=2.13.0+cu132
+torch_cuda=13.2
+tilelang=0.1.11+cu132.gitafcebed1
+triton=3.7.1
+vllm=0.27.1
+cupti-python=13.2.0
+cuda-bindings=13.3.1
+apache-tvm-ffi=0.1.11
+flashinfer-python=0.6.16.post3
+flash-linear-attention=0.5.2
+mamba-ssm=2.3.2.post1
+deep-gemm=2.1.1+c9f8b34
+benchmark_fallback_allowed=0
+benchmark_timing=cupti

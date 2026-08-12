@@ -1,0 +1,20 @@
+{
+  "baseRefOid": "0d7557983c001e528938e17d548bd3404241bb31",
+  "comments": [],
+  "headRefOid": "5fbb6a81af8a9426b9139cc024549696b940c0ff",
+  "isDraft": false,
+  "mergeStateStatus": "BLOCKED",
+  "mergeable": "MERGEABLE",
+  "number": 1886,
+  "reviewDecision": "",
+  "reviewRequests": [
+    {
+      "type": "Team",
+      "name": "tileops-review",
+      "slug": "tile-ai/tileops-review"
+    }
+  ],
+  "reviews": [],
+  "state": "OPEN",
+  "url": "https://github.com/tile-ai/TileOPs/pull/1886"
+}

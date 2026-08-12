@@ -1,0 +1,12 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.0.2, pluggy-1.6.0 -- /usr/bin/python
+cachedir: .pytest_cache
+rootdir: $CONTAINER_WORKSPACE/tileops
+configfile: pyproject.toml
+plugins: anyio-4.14.2, xdist-3.8.0, timeout-2.3.1
+collecting ... collected 1 item
+
+tests/ops/test_gemm.py::test_gemm_fp8_block128_single_k_block_uses_block_kernel PASSED [100%]
+
+- generated xml file: $CONTAINER_WORKSPACE/tileops/.artifacts/round-2-gemm-w4a16/gemm-fp8-isolate.xml -
+============================== 1 passed in 2.38s ===============================

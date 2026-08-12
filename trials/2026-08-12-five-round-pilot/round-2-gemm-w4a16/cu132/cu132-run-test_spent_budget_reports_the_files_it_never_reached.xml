@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="2.144" timestamp="2026-08-12T01:14:27.321494+00:00" hostname="3211f6d63303"><testcase classname="benchmarks.tests.test_run_benchmarks" name="test_spent_budget_reports_the_files_it_never_reached" time="2.130" /></testsuite></testsuites>

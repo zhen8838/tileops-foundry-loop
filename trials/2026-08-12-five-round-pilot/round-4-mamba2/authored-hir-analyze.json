@@ -1,0 +1,1023 @@
+{
+  "calls": [
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 2
+        },
+        "flops_per_unit": {
+          "f32": 2
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "dt_t",
+            "read": 8,
+            "type": "f32[1,2] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "delta",
+            "read": 0,
+            "type": "f32[1,2] gmem",
+            "write": 8
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 8,
+            "write": 8
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "value": "delta"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 2
+        },
+        "flops_per_unit": {
+          "f32": 2
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "delta",
+            "read": 8,
+            "type": "f32[1,2] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "delta",
+            "read": 0,
+            "type": "f32[1,2] gmem",
+            "write": 8
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 8,
+            "write": 8
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "value": "delta"
+    },
+    {
+      "compute-cost": {
+        "flops": {},
+        "flops_per_unit": {},
+        "operands": [
+          {
+            "arg": 0,
+            "name": "A",
+            "read": 0,
+            "type": "f32[2] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "decay",
+            "read": 0,
+            "type": "f32[1,2] gmem",
+            "write": 0
+          }
+        ],
+        "traffic": {}
+      },
+      "roofline": {
+        "bound_by": "none",
+        "compute_ns": 0,
+        "ideal_ns": 0,
+        "memory_ns": 0
+      },
+      "value": "decay"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 2
+        },
+        "flops_per_unit": {
+          "f32": 2
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "delta",
+            "read": 8,
+            "type": "f32[1,2] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "decay",
+            "read": 8,
+            "type": "f32[1,2] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "decay",
+            "read": 0,
+            "type": "f32[1,2] gmem",
+            "write": 8
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 16,
+            "write": 8
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "value": "decay"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 2
+        },
+        "flops_per_unit": {
+          "f32": 2
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "decay",
+            "read": 8,
+            "type": "f32[1,2] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "decay",
+            "read": 0,
+            "type": "f32[1,2] gmem",
+            "write": 8
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 8,
+            "write": 8
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "value": "decay"
+    },
+    {
+      "compute-cost": {
+        "flops": {},
+        "flops_per_unit": {},
+        "operands": [
+          {
+            "arg": 0,
+            "name": "decay",
+            "read": 0,
+            "type": "f32[1,2] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "next_state",
+            "read": 0,
+            "type": "f32[1,2,1,1] gmem",
+            "write": 0
+          }
+        ],
+        "traffic": {}
+      },
+      "roofline": {
+        "bound_by": "none",
+        "compute_ns": 0,
+        "ideal_ns": 0,
+        "memory_ns": 0
+      },
+      "value": "next_state"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 512
+        },
+        "flops_per_unit": {
+          "f32": 512
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "next_state",
+            "read": 8,
+            "type": "f32[1,2,1,1] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "state",
+            "read": 2048,
+            "type": "f32[1,2,16,16] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "next_state",
+            "read": 0,
+            "type": "f32[1,2,16,16] gmem",
+            "write": 2048
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 2056,
+            "write": 2048
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "value": "next_state"
+    },
+    {
+      "compute-cost": {
+        "flops": {},
+        "flops_per_unit": {},
+        "operands": [
+          {
+            "arg": 0,
+            "name": "delta",
+            "read": 0,
+            "type": "f32[1,2] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "update",
+            "read": 0,
+            "type": "f32[1,2,1,1] gmem",
+            "write": 0
+          }
+        ],
+        "traffic": {}
+      },
+      "roofline": {
+        "bound_by": "none",
+        "compute_ns": 0,
+        "ideal_ns": 0,
+        "memory_ns": 0
+      },
+      "value": "update"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 32
+        },
+        "flops_per_unit": {
+          "f32": 32
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "x_t",
+            "read": 64,
+            "type": "f16[1,2,16] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "update",
+            "read": 0,
+            "type": "f32[1,2,16] gmem",
+            "write": 128
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 64,
+            "write": 128
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "value": "update"
+    },
+    {
+      "compute-cost": {
+        "flops": {},
+        "flops_per_unit": {},
+        "operands": [
+          {
+            "arg": 0,
+            "name": "update",
+            "read": 0,
+            "type": "f32[1,2,16] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "update",
+            "read": 0,
+            "type": "f32[1,2,16,1] gmem",
+            "write": 0
+          }
+        ],
+        "traffic": {}
+      },
+      "roofline": {
+        "bound_by": "none",
+        "compute_ns": 0,
+        "ideal_ns": 0,
+        "memory_ns": 0
+      },
+      "value": "update"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 32
+        },
+        "flops_per_unit": {
+          "f32": 32
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "update",
+            "read": 8,
+            "type": "f32[1,2,1,1] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "update",
+            "read": 128,
+            "type": "f32[1,2,16,1] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "update",
+            "read": 0,
+            "type": "f32[1,2,16,1] gmem",
+            "write": 128
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 136,
+            "write": 128
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "value": "update"
+    },
+    {
+      "compute-cost": {
+        "flops": {},
+        "flops_per_unit": {},
+        "operands": [
+          {
+            "arg": 0,
+            "name": "B_t",
+            "read": 32,
+            "type": "f16[1,1,16] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "B_heads",
+            "read": 0,
+            "type": "f16[1,2,16] gmem",
+            "write": 64
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 32,
+            "write": 64
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "memory",
+        "compute_ns": 0,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "value": "B_heads"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 32
+        },
+        "flops_per_unit": {
+          "f32": 32
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "B_heads",
+            "read": 64,
+            "type": "f16[1,2,16] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "update",
+            "read": 0,
+            "type": "f32[1,2,16] gmem",
+            "write": 128
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 64,
+            "write": 128
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "value": "update"
+    },
+    {
+      "compute-cost": {
+        "flops": {},
+        "flops_per_unit": {},
+        "operands": [
+          {
+            "arg": 0,
+            "name": "update",
+            "read": 0,
+            "type": "f32[1,2,16] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "update",
+            "read": 0,
+            "type": "f32[1,2,1,16] gmem",
+            "write": 0
+          }
+        ],
+        "traffic": {}
+      },
+      "roofline": {
+        "bound_by": "none",
+        "compute_ns": 0,
+        "ideal_ns": 0,
+        "memory_ns": 0
+      },
+      "value": "update"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 512
+        },
+        "flops_per_unit": {
+          "f32": 512
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "update",
+            "read": 128,
+            "type": "f32[1,2,16,1] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "update",
+            "read": 128,
+            "type": "f32[1,2,1,16] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "update",
+            "read": 0,
+            "type": "f32[1,2,16,16] gmem",
+            "write": 2048
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 256,
+            "write": 2048
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "value": "update"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 512
+        },
+        "flops_per_unit": {
+          "f32": 512
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "next_state",
+            "read": 2048,
+            "type": "f32[1,2,16,16] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "update",
+            "read": 2048,
+            "type": "f32[1,2,16,16] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "next_state",
+            "read": 0,
+            "type": "f32[1,2,16,16] gmem",
+            "write": 2048
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 4096,
+            "write": 2048
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "memory",
+        "compute_ns": 1,
+        "ideal_ns": 2,
+        "memory_ns": 2
+      },
+      "value": "next_state"
+    },
+    {
+      "compute-cost": {
+        "flops": {},
+        "flops_per_unit": {},
+        "operands": [
+          {
+            "arg": 0,
+            "name": "C_t",
+            "read": 32,
+            "type": "f16[1,1,16] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "C_heads",
+            "read": 0,
+            "type": "f16[1,2,16] gmem",
+            "write": 64
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 32,
+            "write": 64
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "memory",
+        "compute_ns": 0,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "value": "C_heads"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 32
+        },
+        "flops_per_unit": {
+          "f32": 32
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "C_heads",
+            "read": 64,
+            "type": "f16[1,2,16] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "y_t",
+            "read": 0,
+            "type": "f32[1,2,16] gmem",
+            "write": 128
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 64,
+            "write": 128
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "value": "y_t"
+    },
+    {
+      "compute-cost": {
+        "flops": {},
+        "flops_per_unit": {},
+        "operands": [
+          {
+            "arg": 0,
+            "name": "y_t",
+            "read": 0,
+            "type": "f32[1,2,16] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "y_t",
+            "read": 0,
+            "type": "f32[1,2,1,16] gmem",
+            "write": 0
+          }
+        ],
+        "traffic": {}
+      },
+      "roofline": {
+        "bound_by": "none",
+        "compute_ns": 0,
+        "ideal_ns": 0,
+        "memory_ns": 0
+      },
+      "value": "y_t"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 512
+        },
+        "flops_per_unit": {
+          "f32": 512
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "next_state",
+            "read": 2048,
+            "type": "f32[1,2,16,16] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "y_t",
+            "read": 128,
+            "type": "f32[1,2,1,16] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "y_t",
+            "read": 0,
+            "type": "f32[1,2,16,16] gmem",
+            "write": 2048
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 2176,
+            "write": 2048
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "value": "y_t"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 512
+        },
+        "flops_per_unit": {
+          "f32": 512
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "y_t",
+            "read": 2048,
+            "type": "f32[1,2,16,16] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "y_t",
+            "read": 0,
+            "type": "f32[1,2,16] gmem",
+            "write": 128
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 2048,
+            "write": 128
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "value": "y_t"
+    }
+  ],
+  "executed": [
+    "compute-cost",
+    "memory",
+    "roofline"
+  ],
+  "function": "mamba2_step",
+  "function_records": {
+    "memory": {
+      "advisories": [],
+      "footprint": [
+        {
+          "capacity_bytes": 141000000000,
+          "level": "gmem",
+          "peak_bytes": 8336,
+          "persistent_bytes": 2192
+        }
+      ],
+      "lifetimes": [
+        {
+          "binding": "state",
+          "bytes": 2048,
+          "defined_at": 0,
+          "last_used_at": 26,
+          "level": "gmem",
+          "persistent": true
+        },
+        {
+          "binding": "x_t",
+          "bytes": 64,
+          "defined_at": 1,
+          "last_used_at": 26,
+          "level": "gmem",
+          "persistent": true
+        },
+        {
+          "binding": "dt_t",
+          "bytes": 8,
+          "defined_at": 2,
+          "last_used_at": 26,
+          "level": "gmem",
+          "persistent": true
+        },
+        {
+          "binding": "A",
+          "bytes": 8,
+          "defined_at": 3,
+          "last_used_at": 26,
+          "level": "gmem",
+          "persistent": true
+        },
+        {
+          "binding": "B_t",
+          "bytes": 32,
+          "defined_at": 4,
+          "last_used_at": 26,
+          "level": "gmem",
+          "persistent": true
+        },
+        {
+          "binding": "C_t",
+          "bytes": 32,
+          "defined_at": 5,
+          "last_used_at": 26,
+          "level": "gmem",
+          "persistent": true
+        },
+        {
+          "binding": "delta",
+          "bytes": 8,
+          "defined_at": 6,
+          "last_used_at": 7,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "delta_2",
+          "bytes": 8,
+          "defined_at": 7,
+          "last_used_at": 13,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "decay_2",
+          "bytes": 8,
+          "defined_at": 9,
+          "last_used_at": 10,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "decay_3",
+          "bytes": 8,
+          "defined_at": 10,
+          "last_used_at": 11,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "next_state_2",
+          "bytes": 2048,
+          "defined_at": 12,
+          "last_used_at": 21,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "update_2",
+          "bytes": 128,
+          "defined_at": 14,
+          "last_used_at": 15,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "update_4",
+          "bytes": 128,
+          "defined_at": 16,
+          "last_used_at": 20,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "B_heads",
+          "bytes": 64,
+          "defined_at": 17,
+          "last_used_at": 18,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "update_5",
+          "bytes": 128,
+          "defined_at": 18,
+          "last_used_at": 19,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "update_7",
+          "bytes": 2048,
+          "defined_at": 20,
+          "last_used_at": 21,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "next_state_3",
+          "bytes": 2048,
+          "defined_at": 21,
+          "last_used_at": 25,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "C_heads",
+          "bytes": 64,
+          "defined_at": 22,
+          "last_used_at": 23,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "y_t",
+          "bytes": 128,
+          "defined_at": 23,
+          "last_used_at": 24,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "y_t_3",
+          "bytes": 2048,
+          "defined_at": 25,
+          "last_used_at": 26,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "y_t_4",
+          "bytes": 128,
+          "defined_at": 26,
+          "last_used_at": 26,
+          "level": "gmem",
+          "persistent": false
+        }
+      ],
+      "traffic": {
+        "gmem": {
+          "read": 11064,
+          "write": 8992
+        }
+      }
+    },
+    "roofline": {
+      "bound_by": "memory",
+      "compute_ns": 1,
+      "ideal_ns": 5,
+      "memory_ns": 5
+    }
+  },
+  "module": "Mamba2Step",
+  "requested": [
+    "compute-cost",
+    "memory",
+    "roofline"
+  ],
+  "target": "nvidia.h200_sxm",
+  "topology": "cta",
+  "totals": {
+    "flops": {
+      "f32": 2696
+    },
+    "traffic": {
+      "gmem": {
+        "read": 11064,
+        "write": 8992
+      }
+    }
+  }
+}

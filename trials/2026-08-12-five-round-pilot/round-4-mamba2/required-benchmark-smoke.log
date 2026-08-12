@@ -1,0 +1,90 @@
+DaCumsumFwdKernel initialized with config: {'block_h': 4, 'threads': 1024}
+2026-08-11 21:23:54  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:117): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 21:23:54  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:121): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 21:23:54  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:128): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 21:23:54  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:131): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+CBProducerKernel initialized with config: {'block_l': 64, 'block_s': 64, 'block_n': 64, 'threads': 128}
+SSDChunkStateFwdKernel initialized with config: {'block_n': 128, 'block_p': 64, 'block_l': 32, 'threads': 128}
+SSDStatePassingFwdKernel initialized with config: {'block_d': 64, 'threads': 128, 'vectorize': False}
+SSDChunkScanFwdKernel initialized with config: {'block_l': 64, 'block_p': 64, 'block_n': 64, 'block_s': 64, 'threads': 128, 'num_stages': 3}
+2026-08-11 21:23:55  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+.DaCumsumFwdKernel initialized with config: {'block_h': 4, 'threads': 1024}
+2026-08-11 21:24:01  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:117): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 21:24:01  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:121): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 21:24:01  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:128): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 21:24:01  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:131): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+CBProducerKernel initialized with config: {'block_l': 64, 'block_s': 64, 'block_n': 64, 'threads': 128}
+SSDChunkStateFwdKernel initialized with config: {'block_n': 128, 'block_p': 64, 'block_l': 32, 'threads': 128}
+SSDStatePassingFwdKernel initialized with config: {'block_d': 64, 'threads': 128, 'vectorize': False}
+SSDChunkScanFwdKernel initialized with config: {'block_l': 64, 'block_p': 64, 'block_n': 64, 'block_s': 64, 'threads': 128, 'num_stages': 3}
+2026-08-11 21:24:01  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+.DaCumsumFwdKernel initialized with config: {'block_h': 4, 'threads': 1024}
+2026-08-11 21:24:03  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:121): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 21:24:03  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:128): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 21:24:03  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:131): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+CBProducerKernel initialized with config: {'block_l': 64, 'block_s': 64, 'block_n': 64, 'threads': 128}
+SSDChunkStateFwdKernel initialized with config: {'block_n': 32, 'block_p': 64, 'block_l': 32, 'threads': 128}
+SSDStatePassingFwdKernel initialized with config: {'block_d': 64, 'threads': 128, 'vectorize': False}
+SSDChunkScanFwdKernel initialized with config: {'block_l': 64, 'block_p': 64, 'block_n': 32, 'block_s': 64, 'threads': 128, 'num_stages': 3}
+2026-08-11 21:24:03  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+.DaCumsumFwdKernel initialized with config: {'block_h': 4, 'threads': 1024}
+2026-08-11 21:24:10  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:121): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 21:24:10  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:128): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 21:24:10  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:131): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 21:24:10  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-2, -1]`
+2026-08-11 21:24:13  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+CBProducerKernel initialized with config: {'block_l': 64, 'block_s': 64, 'block_n': 64, 'threads': 128}
+2026-08-11 21:24:13  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-1]`
+[21:24:13] $TMP_PATH Warning: Data race detected: `cb(bb, 0, 0, l_abs, s_abs)`is written by multiple threads in loop (ll, ss), Example:
+  bx = 0
+  by = 0
+  l0 = 0
+  l_abs = 0
+  ll = 1
+  ll_OTHER_ = 0
+  s0 = 0
+  s_abs = 0
+  ss = 1
+  ss_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 21:24:18  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+SSDChunkStateFwdKernel initialized with config: {'block_n': 32, 'block_p': 64, 'block_l': 32, 'threads': 128}
+2026-08-11 21:24:18  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-1]`
+[21:24:18] $TMP_PATH Warning: Data race detected: `out(bz, bc, bh, p_idx, n_idx)`is written by multiple threads in loop (pp, nn), Example:
+  bc = 0
+  bh = 0
+  bx = 0
+  bz = 0
+  n_idx = 0
+  nn = 0
+  nn_OTHER_ = 1
+  p_idx = 0
+  pp = 1
+  pp_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 21:24:22  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+SSDStatePassingFwdKernel initialized with config: {'block_d': 64, 'threads': 128, 'vectorize': False}
+SSDChunkScanFwdKernel initialized with config: {'block_l': 64, 'block_p': 64, 'block_n': 32, 'block_s': 64, 'threads': 128, 'num_stages': 3}
+2026-08-11 21:24:22  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 21:24:22  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-1]`
+[21:24:22] $TMP_PATH Warning: Data race detected: `out(bz, l_abs, bz, p_abs)`is written by multiple threads in loop (ll,), Example:
+  bl = 0
+  bz = 0
+  l_abs = 0
+  ll = 0
+  ll_OTHER_ = 1
+  p_abs = 0
+  p_abs_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 21:24:29  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+.Benchmark report saved to profile_run.log
+
+=============================== warnings summary ===============================
+benchmarks/ops/bench_mamba2_e2e.py::test_mamba2_fwd_bench[smoke-b1-s256-4h]
+  <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.cuda module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.driver module instead.
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+4 passed, 22 deselected, 1 warning in 44.57s

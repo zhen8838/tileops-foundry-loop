@@ -1,0 +1,27 @@
+FFTC2CKernel initialized with config: {'block_size': 1024, 'threads': 512}
+FFTC2CKernel initialized with config: {'block_size': 256, 'threads': 256}
+USDT:2026-08-12 01:10:12 4050:4050 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-08-12 01:10:12 4050:4050 SyncActivityProfilerHandler.cpp:59] profiler_stop
+USDT:2026-08-12 01:10:12 4050:4050 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-08-12 01:10:12 4050:4050 SyncActivityProfilerHandler.cpp:59] profiler_stop
+USDT:2026-08-12 01:10:12 4050:4050 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-08-12 01:10:12 4050:4050 SyncActivityProfilerHandler.cpp:59] profiler_stop
+fft-4k-c64-unbatched {'candidate': 12, 'base-incumbent': 23, 'torch-cufft': 13}
+FFTC2CKernel initialized with config: {'block_size': 1024, 'threads': 512}
+FFTC2CKernel initialized with config: {'block_size': 256, 'threads': 256}
+USDT:2026-08-12 01:10:12 4050:4050 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-08-12 01:10:12 4050:4050 SyncActivityProfilerHandler.cpp:59] profiler_stop
+USDT:2026-08-12 01:10:12 4050:4050 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-08-12 01:10:12 4050:4050 SyncActivityProfilerHandler.cpp:59] profiler_stop
+USDT:2026-08-12 01:10:12 4050:4050 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-08-12 01:10:12 4050:4050 SyncActivityProfilerHandler.cpp:59] profiler_stop
+fft-4k-c64-b64 {'candidate': 12, 'base-incumbent': 23, 'torch-cufft': 13}
+FFTC2CKernel initialized with config: {'block_size': 1024, 'threads': 512}
+FFTC2CKernel initialized with config: {'block_size': 256, 'threads': 256}
+USDT:2026-08-12 01:10:13 4050:4050 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-08-12 01:10:13 4050:4050 SyncActivityProfilerHandler.cpp:59] profiler_stop
+USDT:2026-08-12 01:10:13 4050:4050 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-08-12 01:10:13 4050:4050 SyncActivityProfilerHandler.cpp:59] profiler_stop
+USDT:2026-08-12 01:10:13 4050:4050 SyncActivityProfilerHandler.cpp:52] profiler_start
+USDT:2026-08-12 01:10:13 4050:4050 SyncActivityProfilerHandler.cpp:59] profiler_stop
+fft-4k-c128-b64 {'candidate': 12, 'base-incumbent': 23, 'torch-cufft': 13}

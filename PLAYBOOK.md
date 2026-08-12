@@ -70,6 +70,27 @@ TileFoundry-generated.
 
 - Deliver a real TileLang kernel produced through the TileFoundry workflow. It
   must not call an external baseline or dispatch to the incumbent.
+- A `[Perf][foundry]` PR must contain a substantive change to the executed
+  TileLang kernel body produced in the current round. Changes limited to
+  dispatch, operator wrappers, allocation, configuration constants/defaults,
+  workload selection, benchmarks, or tests do not qualify, even when they live
+  in a file under `src/tileops/kernels/`.
+- Before opening a performance PR, record the base-to-head kernel diff and name
+  the changed `@T.prim_func`, macro, or equivalent generated kernel body in the
+  round report. If that evidence is absent, classify the round as `no
+  improvement`, open no performance PR, and retain the analysis as a failed
+  round. Do not relabel incumbent selection or orchestration as a
+  TileFoundry-generated kernel.
+- Enforce that gate before push with:
+
+  ```bash
+  uv run python scripts/check_kernel_diff.py \
+    --repo "$TILEOPS_ROOT" --base <admitted-base> --head HEAD \
+    --kernel <relative-kernel-path>:<prim-func-or-macro-name>
+  ```
+
+  A passing check is necessary, not sufficient: the report must still connect
+  the changed body to the authored HIR and the measured candidate route.
 - Preserve the public Op contract and every supported manifest workload,
   including boundary and tail cases.
 - Correctness across the supported surface is a hard precondition for a PR.
@@ -135,7 +156,12 @@ The public body contains exactly these sections in order:
 2. `TileFoundry Description`: one Python block containing the exact `@module`
    class, with no imports, filename, path, or separately printed entrypoint
 3. `Performance`: environment, method, and every primary workload against the
-   candidate, incumbent, and every runnable external baseline
+   candidate, incumbent, and every runnable external baseline. Each
+   candidate column shows latency only. Every comparator column combines
+   latency and `implementation / candidate` on two lines, with the marker and
+   ratio kept on one non-breaking line. The incumbent cells are bold. A red
+   marker denotes a ratio above one (candidate speedup); a green marker denotes
+   a ratio at or below one.
 4. `Result And Limitations`: classification, per-row exceptions, noise, and
    remaining limitations
 
@@ -156,6 +182,17 @@ uv run python scripts/check_pr.py rounds/<slug>/pr-data.json
 The renderer owns the input schema, section layout, ratios, geometric means,
 and leak checks. `templates/pr-data.json` is the fillable starter; the rendered
 example under `examples/` is the visual reference.
+
+## Trial Archive
+
+At the end of a multi-round attempt, import the round state into a dated
+directory under `trials/` with `scripts/archive_trial.py`. Preserve briefs,
+reports, authored HIR, structured PR data, benchmark/profiler evidence,
+reproducers, and failure records. The archive command must redact host paths
+and personal email addresses, reject credential-like content, and omit binary
+tensors, caches, Git bundles, and other non-reviewable generated state. Add a
+retrospective that distinguishes kernel-generation failures from correct
+kernels that missed the performance or review bar.
 
 ## Review and Retest
 

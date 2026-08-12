@@ -1,0 +1,461 @@
+{
+  "environment": {
+    "torch": "2.13.0+cu132",
+    "cuda": "13.2",
+    "gpu": "NVIDIA H200",
+    "capability": [
+      9,
+      0
+    ]
+  },
+  "method": "ManifestBenchmark.compare with native CUPTI window attribution, forward/reverse drift balancing within each comparison, and rotated three-way insertion order across trials",
+  "trials": 3,
+  "rows": {
+    "fft-4k-c64-unbatched": {
+      "shape": [
+        4096
+      ],
+      "dtype": "torch.complex64",
+      "candidate_config": {
+        "block_size": 256,
+        "threads": 256
+      },
+      "correctness": {
+        "candidate": {
+          "passed": true,
+          "assertion": null,
+          "max_complex_abs": 4.264961171429604e-05,
+          "mean_complex_abs": 1.0907917385338806e-05
+        },
+        "incumbent": {
+          "passed": true,
+          "assertion": null,
+          "max_complex_abs": 7.864199869800359e-05,
+          "mean_complex_abs": 1.866138518380467e-05
+        },
+        "cufft": {
+          "passed": true,
+          "assertion": null,
+          "max_complex_abs": 0.0,
+          "mean_complex_abs": 0.0
+        }
+      },
+      "trials": [
+        {
+          "trial": 0,
+          "insertion_order": [
+            "candidate",
+            "incumbent",
+            "cufft"
+          ],
+          "results": {
+            "candidate": {
+              "latency_ms": 0.00664,
+              "n_samples": 200,
+              "latency_p10_ms": 0.006272000000000001,
+              "latency_p90_ms": 0.31455900000000003,
+              "timing": "cupti",
+              "tflops": 0.03701204819277109,
+              "bandwidth_tbs": 0.00986987951807229
+            },
+            "incumbent": {
+              "latency_ms": 0.1223515,
+              "n_samples": 200,
+              "latency_p10_ms": 0.064128,
+              "latency_p90_ms": 0.480352,
+              "timing": "cupti",
+              "tflops": 0.0020086390440656634,
+              "bandwidth_tbs": 0.0005356370784175102
+            },
+            "cufft": {
+              "latency_ms": 0.004608,
+              "n_samples": 200,
+              "latency_p10_ms": 0.0044480000000000006,
+              "latency_p90_ms": 0.004832,
+              "timing": "cupti",
+              "tflops": 0.05333333333333333,
+              "bandwidth_tbs": 0.014222222222222223
+            }
+          }
+        },
+        {
+          "trial": 1,
+          "insertion_order": [
+            "incumbent",
+            "cufft",
+            "candidate"
+          ],
+          "results": {
+            "incumbent": {
+              "latency_ms": 0.11816000000000002,
+              "n_samples": 200,
+              "latency_p10_ms": 0.063872,
+              "latency_p90_ms": 0.47942399999999996,
+              "timing": "cupti",
+              "tflops": 0.002079891672308734,
+              "bandwidth_tbs": 0.0005546377792823291
+            },
+            "cufft": {
+              "latency_ms": 0.004577,
+              "n_samples": 200,
+              "latency_p10_ms": 0.0044480000000000006,
+              "latency_p90_ms": 0.004863,
+              "timing": "cupti",
+              "tflops": 0.05369455975529823,
+              "bandwidth_tbs": 0.014318549268079527
+            },
+            "candidate": {
+              "latency_ms": 0.00656,
+              "n_samples": 200,
+              "latency_p10_ms": 0.006240000000000001,
+              "latency_p90_ms": 0.314048,
+              "timing": "cupti",
+              "tflops": 0.03746341463414634,
+              "bandwidth_tbs": 0.009990243902439026
+            }
+          }
+        },
+        {
+          "trial": 2,
+          "insertion_order": [
+            "cufft",
+            "candidate",
+            "incumbent"
+          ],
+          "results": {
+            "cufft": {
+              "latency_ms": 0.004608,
+              "n_samples": 200,
+              "latency_p10_ms": 0.0044480000000000006,
+              "latency_p90_ms": 0.0048,
+              "timing": "cupti",
+              "tflops": 0.05333333333333333,
+              "bandwidth_tbs": 0.014222222222222223
+            },
+            "candidate": {
+              "latency_ms": 0.0066405,
+              "n_samples": 200,
+              "latency_p10_ms": 0.006272000000000001,
+              "latency_p90_ms": 0.314111,
+              "timing": "cupti",
+              "tflops": 0.0370092613508019,
+              "bandwidth_tbs": 0.00986913636021384
+            },
+            "incumbent": {
+              "latency_ms": 0.10464000000000001,
+              "n_samples": 200,
+              "latency_p10_ms": 0.062848,
+              "latency_p90_ms": 0.482304,
+              "timing": "cupti",
+              "tflops": 0.002348623853211009,
+              "bandwidth_tbs": 0.0006262996941896025
+            }
+          }
+        }
+      ],
+      "reported_median_ms": {
+        "candidate": 0.00664,
+        "incumbent": 0.11816000000000002,
+        "cufft": 0.004608
+      }
+    },
+    "fft-4k-c64-b64": {
+      "shape": [
+        64,
+        4096
+      ],
+      "dtype": "torch.complex64",
+      "candidate_config": {
+        "block_size": 256,
+        "threads": 256
+      },
+      "correctness": {
+        "candidate": {
+          "passed": true,
+          "assertion": null,
+          "max_complex_abs": 5.5542830523336306e-05,
+          "mean_complex_abs": 1.0823916454683058e-05
+        },
+        "incumbent": {
+          "passed": true,
+          "assertion": null,
+          "max_complex_abs": 0.0001078959321603179,
+          "mean_complex_abs": 1.846450504672248e-05
+        },
+        "cufft": {
+          "passed": true,
+          "assertion": null,
+          "max_complex_abs": 0.0,
+          "mean_complex_abs": 0.0
+        }
+      },
+      "trials": [
+        {
+          "trial": 0,
+          "insertion_order": [
+            "candidate",
+            "incumbent",
+            "cufft"
+          ],
+          "results": {
+            "candidate": {
+              "latency_ms": 0.00976,
+              "n_samples": 200,
+              "latency_p10_ms": 0.009632,
+              "latency_p90_ms": 0.314624,
+              "timing": "cupti",
+              "tflops": 1.6115409836065575,
+              "bandwidth_tbs": 0.429744262295082
+            },
+            "incumbent": {
+              "latency_ms": 0.10777600000000001,
+              "n_samples": 200,
+              "latency_p10_ms": 0.06720000000000001,
+              "latency_p90_ms": 0.48288000000000003,
+              "timing": "cupti",
+              "tflops": 0.14593824228028504,
+              "bandwidth_tbs": 0.03891686460807601
+            },
+            "cufft": {
+              "latency_ms": 0.004864,
+              "n_samples": 200,
+              "latency_p10_ms": 0.004705,
+              "latency_p90_ms": 0.0051210000000000006,
+              "timing": "cupti",
+              "tflops": 3.2336842105263157,
+              "bandwidth_tbs": 0.8623157894736843
+            }
+          }
+        },
+        {
+          "trial": 1,
+          "insertion_order": [
+            "incumbent",
+            "cufft",
+            "candidate"
+          ],
+          "results": {
+            "incumbent": {
+              "latency_ms": 0.1042245,
+              "n_samples": 200,
+              "latency_p10_ms": 0.066848,
+              "latency_p90_ms": 0.48272000000000004,
+              "timing": "cupti",
+              "tflops": 0.15091115812500902,
+              "bandwidth_tbs": 0.0402429755000024
+            },
+            "cufft": {
+              "latency_ms": 0.004896,
+              "n_samples": 200,
+              "latency_p10_ms": 0.0047350000000000005,
+              "latency_p90_ms": 0.00512,
+              "timing": "cupti",
+              "tflops": 3.212549019607843,
+              "bandwidth_tbs": 0.8566797385620916
+            },
+            "candidate": {
+              "latency_ms": 0.009792,
+              "n_samples": 200,
+              "latency_p10_ms": 0.009632,
+              "latency_p90_ms": 0.314176,
+              "timing": "cupti",
+              "tflops": 1.6062745098039215,
+              "bandwidth_tbs": 0.4283398692810458
+            }
+          }
+        },
+        {
+          "trial": 2,
+          "insertion_order": [
+            "cufft",
+            "candidate",
+            "incumbent"
+          ],
+          "results": {
+            "cufft": {
+              "latency_ms": 0.004896,
+              "n_samples": 200,
+              "latency_p10_ms": 0.004704,
+              "latency_p90_ms": 0.005152,
+              "timing": "cupti",
+              "tflops": 3.212549019607843,
+              "bandwidth_tbs": 0.8566797385620916
+            },
+            "candidate": {
+              "latency_ms": 0.009792,
+              "n_samples": 200,
+              "latency_p10_ms": 0.009663,
+              "latency_p90_ms": 0.31420800000000004,
+              "timing": "cupti",
+              "tflops": 1.6062745098039215,
+              "bandwidth_tbs": 0.4283398692810458
+            },
+            "incumbent": {
+              "latency_ms": 0.107792,
+              "n_samples": 200,
+              "latency_p10_ms": 0.066432,
+              "latency_p90_ms": 0.48256,
+              "timing": "cupti",
+              "tflops": 0.14591658008015437,
+              "bandwidth_tbs": 0.0389110880213745
+            }
+          }
+        }
+      ],
+      "reported_median_ms": {
+        "candidate": 0.009792,
+        "incumbent": 0.10777600000000001,
+        "cufft": 0.004896
+      }
+    },
+    "fft-4k-c128-b64": {
+      "shape": [
+        64,
+        4096
+      ],
+      "dtype": "torch.complex128",
+      "candidate_config": {
+        "block_size": 256,
+        "threads": 256
+      },
+      "correctness": {
+        "candidate": {
+          "passed": true,
+          "assertion": null,
+          "max_complex_abs": 1.9945885082418898e-13,
+          "mean_complex_abs": 3.6161389429570227e-14
+        },
+        "incumbent": {
+          "passed": true,
+          "assertion": null,
+          "max_complex_abs": 2.089768879877275e-13,
+          "mean_complex_abs": 3.5760059882200284e-14
+        },
+        "cufft": {
+          "passed": true,
+          "assertion": null,
+          "max_complex_abs": 0.0,
+          "mean_complex_abs": 0.0
+        }
+      },
+      "trials": [
+        {
+          "trial": 0,
+          "insertion_order": [
+            "candidate",
+            "incumbent",
+            "cufft"
+          ],
+          "results": {
+            "candidate": {
+              "latency_ms": 0.012896000000000001,
+              "n_samples": 200,
+              "latency_p10_ms": 0.012705000000000001,
+              "latency_p90_ms": 0.31555200000000005,
+              "timing": "cupti",
+              "tflops": 1.2196526054590568,
+              "bandwidth_tbs": 0.6504813895781638
+            },
+            "incumbent": {
+              "latency_ms": 0.124672,
+              "n_samples": 200,
+              "latency_p10_ms": 0.080128,
+              "latency_p90_ms": 0.500896,
+              "timing": "cupti",
+              "tflops": 0.12616016427104723,
+              "bandwidth_tbs": 0.06728542094455853
+            },
+            "cufft": {
+              "latency_ms": 0.007392,
+              "n_samples": 200,
+              "latency_p10_ms": 0.0072640000000000005,
+              "latency_p90_ms": 0.007647999999999999,
+              "timing": "cupti",
+              "tflops": 2.127792207792208,
+              "bandwidth_tbs": 1.1348225108225107
+            }
+          }
+        },
+        {
+          "trial": 1,
+          "insertion_order": [
+            "incumbent",
+            "cufft",
+            "candidate"
+          ],
+          "results": {
+            "incumbent": {
+              "latency_ms": 0.112576,
+              "n_samples": 200,
+              "latency_p10_ms": 0.080768,
+              "latency_p90_ms": 0.495296,
+              "timing": "cupti",
+              "tflops": 0.13971574758385447,
+              "bandwidth_tbs": 0.07451506537805573
+            },
+            "cufft": {
+              "latency_ms": 0.007392,
+              "n_samples": 200,
+              "latency_p10_ms": 0.0072640000000000005,
+              "latency_p90_ms": 0.007584,
+              "timing": "cupti",
+              "tflops": 2.127792207792208,
+              "bandwidth_tbs": 1.1348225108225107
+            },
+            "candidate": {
+              "latency_ms": 0.012928,
+              "n_samples": 200,
+              "latency_p10_ms": 0.012736,
+              "latency_p90_ms": 0.313568,
+              "timing": "cupti",
+              "tflops": 1.2166336633663366,
+              "bandwidth_tbs": 0.6488712871287129
+            }
+          }
+        },
+        {
+          "trial": 2,
+          "insertion_order": [
+            "cufft",
+            "candidate",
+            "incumbent"
+          ],
+          "results": {
+            "cufft": {
+              "latency_ms": 0.007392,
+              "n_samples": 200,
+              "latency_p10_ms": 0.0072640000000000005,
+              "latency_p90_ms": 0.007615,
+              "timing": "cupti",
+              "tflops": 2.127792207792208,
+              "bandwidth_tbs": 1.1348225108225107
+            },
+            "candidate": {
+              "latency_ms": 0.012928,
+              "n_samples": 200,
+              "latency_p10_ms": 0.012736,
+              "latency_p90_ms": 0.308064,
+              "timing": "cupti",
+              "tflops": 1.2166336633663366,
+              "bandwidth_tbs": 0.6488712871287129
+            },
+            "incumbent": {
+              "latency_ms": 0.120848,
+              "n_samples": 200,
+              "latency_p10_ms": 0.08025600000000001,
+              "latency_p90_ms": 0.488736,
+              "timing": "cupti",
+              "tflops": 0.13015225738117306,
+              "bandwidth_tbs": 0.06941453726995896
+            }
+          }
+        }
+      ],
+      "reported_median_ms": {
+        "candidate": 0.012928,
+        "incumbent": 0.120848,
+        "cufft": 0.007392
+      }
+    }
+  }
+}

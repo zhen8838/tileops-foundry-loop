@@ -1,0 +1,456 @@
+{
+  "calls": [
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 64
+        },
+        "flops_per_unit": {
+          "f32": 64
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "x_r",
+            "read": 32,
+            "type": "f32[2,4] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "w_r",
+            "read": 64,
+            "type": "f32[4,4] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "y_r",
+            "read": 0,
+            "type": "f32[2,4] gmem",
+            "write": 32
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 96,
+            "write": 32
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "timeline": {
+        "end_ns": 1,
+        "grid_units": 1,
+        "start_ns": 0,
+        "waves": 1
+      },
+      "value": "y_r"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 64
+        },
+        "flops_per_unit": {
+          "f32": 64
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "x_i",
+            "read": 32,
+            "type": "f32[2,4] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "w_i",
+            "read": 64,
+            "type": "f32[4,4] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "y_r",
+            "read": 0,
+            "type": "f32[2,4] gmem",
+            "write": 32
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 96,
+            "write": 32
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "timeline": {
+        "end_ns": 1,
+        "grid_units": 1,
+        "start_ns": 0,
+        "waves": 1
+      },
+      "value": "y_r"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 8
+        },
+        "flops_per_unit": {
+          "f32": 8
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "y_r",
+            "read": 32,
+            "type": "f32[2,4] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "y_r",
+            "read": 32,
+            "type": "f32[2,4] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "y_r",
+            "read": 0,
+            "type": "f32[2,4] gmem",
+            "write": 32
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 64,
+            "write": 32
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "timeline": {
+        "end_ns": 2,
+        "grid_units": 1,
+        "start_ns": 1,
+        "waves": 1
+      },
+      "value": "y_r"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 64
+        },
+        "flops_per_unit": {
+          "f32": 64
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "x_r",
+            "read": 32,
+            "type": "f32[2,4] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "w_i",
+            "read": 64,
+            "type": "f32[4,4] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "y_i",
+            "read": 0,
+            "type": "f32[2,4] gmem",
+            "write": 32
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 96,
+            "write": 32
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "timeline": {
+        "end_ns": 1,
+        "grid_units": 1,
+        "start_ns": 0,
+        "waves": 1
+      },
+      "value": "y_i"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 64
+        },
+        "flops_per_unit": {
+          "f32": 64
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "x_i",
+            "read": 32,
+            "type": "f32[2,4] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "w_r",
+            "read": 64,
+            "type": "f32[4,4] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "y_i",
+            "read": 0,
+            "type": "f32[2,4] gmem",
+            "write": 32
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 96,
+            "write": 32
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "timeline": {
+        "end_ns": 1,
+        "grid_units": 1,
+        "start_ns": 0,
+        "waves": 1
+      },
+      "value": "y_i"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 8
+        },
+        "flops_per_unit": {
+          "f32": 8
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "y_i",
+            "read": 32,
+            "type": "f32[2,4] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "y_i",
+            "read": 32,
+            "type": "f32[2,4] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "y_i",
+            "read": 0,
+            "type": "f32[2,4] gmem",
+            "write": 32
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 64,
+            "write": 32
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "timeline": {
+        "end_ns": 2,
+        "grid_units": 1,
+        "start_ns": 1,
+        "waves": 1
+      },
+      "value": "y_i"
+    }
+  ],
+  "executed": [
+    "compute-cost",
+    "memory",
+    "roofline",
+    "timeline"
+  ],
+  "function": "dft_pair_f32",
+  "function_records": {
+    "memory": {
+      "advisories": [],
+      "footprint": [
+        {
+          "capacity_bytes": 141000000000,
+          "level": "gmem",
+          "peak_bytes": 288,
+          "persistent_bytes": 192
+        }
+      ],
+      "lifetimes": [
+        {
+          "binding": "x_r",
+          "bytes": 32,
+          "defined_at": 0,
+          "last_used_at": 9,
+          "level": "gmem",
+          "persistent": true
+        },
+        {
+          "binding": "x_i",
+          "bytes": 32,
+          "defined_at": 1,
+          "last_used_at": 9,
+          "level": "gmem",
+          "persistent": true
+        },
+        {
+          "binding": "w_r",
+          "bytes": 64,
+          "defined_at": 2,
+          "last_used_at": 9,
+          "level": "gmem",
+          "persistent": true
+        },
+        {
+          "binding": "w_i",
+          "bytes": 64,
+          "defined_at": 3,
+          "last_used_at": 9,
+          "level": "gmem",
+          "persistent": true
+        },
+        {
+          "binding": "y_r",
+          "bytes": 32,
+          "defined_at": 4,
+          "last_used_at": 6,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "y_r_2",
+          "bytes": 32,
+          "defined_at": 5,
+          "last_used_at": 6,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "y_r_3",
+          "bytes": 32,
+          "defined_at": 6,
+          "last_used_at": 6,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "y_i",
+          "bytes": 32,
+          "defined_at": 7,
+          "last_used_at": 9,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "y_i_2",
+          "bytes": 32,
+          "defined_at": 8,
+          "last_used_at": 9,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "y_i_3",
+          "bytes": 32,
+          "defined_at": 9,
+          "last_used_at": 9,
+          "level": "gmem",
+          "persistent": false
+        }
+      ],
+      "traffic": {
+        "gmem": {
+          "read": 512,
+          "write": 192
+        }
+      }
+    },
+    "roofline": {
+      "bound_by": "balanced",
+      "compute_ns": 1,
+      "ideal_ns": 1,
+      "memory_ns": 1
+    },
+    "timeline": {
+      "end_ns": 2,
+      "grid_units": 1,
+      "start_ns": 0,
+      "waves": 6
+    }
+  },
+  "module": "FFTPairF32",
+  "requested": [
+    "compute-cost",
+    "memory",
+    "roofline",
+    "timeline"
+  ],
+  "target": "nvidia.h200_sxm",
+  "topology": "cta",
+  "totals": {
+    "flops": {
+      "f32": 272
+    },
+    "traffic": {
+      "gmem": {
+        "read": 512,
+        "write": 192
+      }
+    }
+  }
+}

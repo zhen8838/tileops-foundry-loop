@@ -1,0 +1,52 @@
+# TileOPs Benchmark Report
+Generated: 2026-08-12 01:04:23
+
+## Environment
+
+- **Torch version**: 2.13.0+cu132
+- **CUDA version (torch)**: 13.2
+- **GPU model**: NVIDIA H200
+- **Driver version**: 595.71.05
+- **GPU clocks**: SM current 1980 MHz, memory current 3201 MHz, application SM [Requested functionality has been deprecated] MHz, application memory [Requested functionality has been deprecated] MHz
+
+## GemmW4A16Op
+
+### tileops
+
+| m | n | k | group_size | dtype_str | dtype | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing | config |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 64 | 64 | 128 | 128 | float16 | torch.float16 | 0.0036 | 0.2926 | 0.0081 | 200.0000 | 0.0034 | 0.0038 | cupti | {'block_m': 64, 'block_n': 64, 'block_k': 64, 'num_stages': 2, 'threads': 128} |
+| 128 | 256 | 256 | 128 | float16 | torch.float16 | 0.0048 | 3.4714 | 0.0344 | 200.0000 | 0.0047 | 0.0050 | cupti | {'block_m': 64, 'block_n': 64, 'block_k': 64, 'num_stages': 2, 'threads': 128} |
+| 1 | 8192 | 8192 | 128 | float16 | torch.float16 | 0.0540 | 2.4878 | 0.6711 | 200.0000 | 0.0532 | 0.0546 | cupti | {'block_n': 16, 'threads': 128} |
+| 1 | 8192 | 16384 | 128 | float16 | torch.float16 | 0.1012 | 2.6521 | 0.7153 | 200.0000 | 0.1006 | 0.1020 | cupti | {'block_n': 16, 'threads': 128} |
+| 1 | 7168 | 20480 | 128 | float16 | torch.float16 | 0.1226 | 2.3943 | 0.6458 | 200.0000 | 0.1219 | 0.1235 | cupti | {'block_n': 16, 'threads': 128} |
+| 1 | 8192 | 81920 | 128 | float16 | torch.float16 | 0.4637 | 2.8942 | 0.7805 | 196.0000 | 0.4622 | 0.4657 | cupti | {'block_n': 16, 'threads': 128} |
+
+### torch-dequantized-matmul
+
+| m | n | k | group_size | dtype_str | dtype | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing | config |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 64 | 64 | 128 | 128 | float16 | torch.float16 | 0.0023 | 0.4489 | 0.0124 | 200.0000 | 0.0022 | 0.0024 | cupti | {'block_m': 64, 'block_n': 64, 'block_k': 64, 'num_stages': 2, 'threads': 128} |
+| 128 | 256 | 256 | 128 | float16 | torch.float16 | 0.0026 | 6.4752 | 0.0642 | 200.0000 | 0.0025 | 0.0027 | cupti | {'block_m': 64, 'block_n': 64, 'block_k': 64, 'num_stages': 2, 'threads': 128} |
+| 1 | 8192 | 8192 | 128 | float16 | torch.float16 | 0.0459 | 2.9229 | 0.7885 | 200.0000 | 0.0450 | 0.3247 | cupti | {'block_n': 16, 'threads': 128} |
+| 1 | 8192 | 16384 | 128 | float16 | torch.float16 | 0.0737 | 3.6409 | 0.9820 | 200.0000 | 0.0727 | 0.3249 | cupti | {'block_n': 16, 'threads': 128} |
+| 1 | 7168 | 20480 | 128 | float16 | torch.float16 | 0.0854 | 3.4370 | 0.9270 | 200.0000 | 0.0845 | 0.3247 | cupti | {'block_n': 16, 'threads': 128} |
+| 1 | 8192 | 81920 | 128 | float16 | torch.float16 | 0.3226 | 4.1608 | 1.1220 | 200.0000 | 0.3215 | 0.3252 | cupti | {'block_n': 16, 'threads': 128} |
+
+### marlin-fp32
+
+| m | n | k | group_size | dtype_str | dtype | reduce_mode | use_fp32_reduce | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing | config |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 8192 | 8192 | 128 | float16 | torch.float16 | fp32 | True | 0.0200 | 6.7002 | 1.8075 | 200.0000 | 0.0197 | 0.0207 | cupti | {'block_n': 16, 'threads': 128} |
+| 1 | 8192 | 16384 | 128 | float16 | torch.float16 | fp32 | True | 0.0354 | 7.5846 | 2.0457 | 200.0000 | 0.0350 | 0.0362 | cupti | {'block_n': 16, 'threads': 128} |
+| 1 | 7168 | 20480 | 128 | float16 | torch.float16 | fp32 | True | 0.0382 | 7.6779 | 2.0709 | 200.0000 | 0.0377 | 0.0390 | cupti | {'block_n': 16, 'threads': 128} |
+| 1 | 8192 | 81920 | 128 | float16 | torch.float16 | fp32 | True | 0.1253 | 10.7121 | 2.8887 | 200.0000 | 0.1246 | 0.1264 | cupti | {'block_n': 16, 'threads': 128} |
+
+### marlin-fp16
+
+| m | n | k | group_size | dtype_str | dtype | reduce_mode | use_fp32_reduce | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing | config |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 8192 | 8192 | 128 | float16 | torch.float16 | fp16 | False | 0.0202 | 6.6471 | 1.7932 | 200.0000 | 0.0199 | 0.0208 | cupti | {'block_n': 16, 'threads': 128} |
+| 1 | 8192 | 16384 | 128 | float16 | torch.float16 | fp16 | False | 0.0357 | 7.5099 | 2.0255 | 200.0000 | 0.0350 | 0.0373 | cupti | {'block_n': 16, 'threads': 128} |
+| 1 | 7168 | 20480 | 128 | float16 | torch.float16 | fp16 | False | 0.0381 | 7.7004 | 2.0770 | 200.0000 | 0.0376 | 0.0389 | cupti | {'block_n': 16, 'threads': 128} |
+| 1 | 8192 | 81920 | 128 | float16 | torch.float16 | fp16 | False | 0.1254 | 10.7066 | 2.8872 | 200.0000 | 0.1244 | 0.1272 | cupti | {'block_n': 16, 'threads': 128} |

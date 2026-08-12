@@ -1,0 +1,4 @@
+FFTC2CKernel initialized with config: {'block_size': 256, 'threads': 256}
+2026-08-12 01:04:42  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+2026-08-12 01:04:48  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+torch.Size([64, 4096]) torch.complex64 6.103515625e-05

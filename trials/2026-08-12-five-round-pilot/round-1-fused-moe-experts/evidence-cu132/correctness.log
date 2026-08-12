@@ -1,0 +1,13 @@
+Script started on 2026-08-12 08:49:32+08:00 [COMMAND="$HOST_HOME/foreman/local/tileops-container.sh python -m pytest -q tests/ops/test_fused_moe_experts.py tests/kernels/test_moe_grouped_gemm_3wg_fused_act.py tests/test_validate_manifest.py benchmarks/tests tests/test_workload_placement.py --junitxml=$CONTAINER_WORKSPACE/tileops/.cu132-correctness.xml" <not executed on terminal>]
+........................................................................ [ 38%]
+........................................................................ [ 76%]
+.............................................                            [100%]
+=============================== warnings summary ===============================
+tests/test_validate_manifest.py::TestResolveOpClass::test_single_class_file_rejects_mismatched_name
+  $CONTAINER_WORKSPACE/tileops/tests/test_validate_manifest.py:2324: UserWarning: No class named 'SoftmaxBwdOp' found in 'tileops/ops/reduction/softmax.py'. Candidates: ['LogSoftmaxFwdOp', 'LogSumExpFwdOp', 'SoftmaxFwdOp', '_SoftmaxBaseOp']. Manifest key must exactly match cls.__name__.
+    result = validator._resolve_op_class(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+189 passed, 1 warning in 274.99s (0:04:34)
+
+Script done on 2026-08-12 08:54:10+08:00 [COMMAND_EXIT_CODE="0"]

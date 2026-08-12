@@ -1,0 +1,16 @@
+device NVIDIA H200 torch 2.10.0+cu129
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "<string>", line 1, in <lambda>
+  File "<string>", line 1, in <lambda>
+TypeError: _prepare_marlin_w4a16_baseline() got multiple values for argument 'use_fp32_reduce'
+retry=correct-helper-signature
+device NVIDIA H200 torch 2.10.0+cu129
+{'shape': (1, 8192, 8192), 'fp32_reduce': False, 'shape_out': (1, 8192), 'finite': True}
+{'shape': (1, 8192, 8192), 'fp32_reduce': True, 'shape_out': (1, 8192), 'finite': True}
+{'shape': (1, 8192, 16384), 'fp32_reduce': False, 'shape_out': (1, 8192), 'finite': True}
+{'shape': (1, 8192, 16384), 'fp32_reduce': True, 'shape_out': (1, 8192), 'finite': True}
+{'shape': (1, 7168, 20480), 'fp32_reduce': False, 'shape_out': (1, 7168), 'finite': True}
+{'shape': (1, 7168, 20480), 'fp32_reduce': True, 'shape_out': (1, 7168), 'finite': True}
+{'shape': (1, 8192, 81920), 'fp32_reduce': False, 'shape_out': (1, 8192), 'finite': True}
+{'shape': (1, 8192, 81920), 'fp32_reduce': True, 'shape_out': (1, 8192), 'finite': True}

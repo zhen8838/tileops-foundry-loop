@@ -1,0 +1,1 @@
+[Perf][foundry][FFT] Remove split-input copies from C2C FFT

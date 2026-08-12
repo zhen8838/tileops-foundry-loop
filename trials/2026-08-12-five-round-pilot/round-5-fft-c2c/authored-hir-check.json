@@ -1,0 +1,70 @@
+{
+  "target": "authored_hir.py:FFTPairF32.dft_pair_f32",
+  "runs": [
+    {
+      "dims": {},
+      "pinned": [],
+      "variant": null,
+      "inputs": {
+        "activations": {
+          "source": "random, seed 0",
+          "actual_dtypes": [
+            "torch.float32",
+            "torch.float32",
+            "torch.float32",
+            "torch.float32"
+          ],
+          "declared_dtypes": [
+            "f32",
+            "f32",
+            "f32",
+            "f32"
+          ],
+          "files": []
+        },
+        "weights": {
+          "source": "none declared",
+          "actual_dtypes": [],
+          "declared_dtypes": []
+        }
+      },
+      "reference": null,
+      "outputs": [
+        {
+          "path": "output[0]",
+          "shape": [
+            2,
+            4
+          ],
+          "dtype": "f32",
+          "fns": [
+            {
+              "fn": "nan_inf",
+              "nan": 0.0,
+              "inf": 0.0,
+              "passed": true
+            }
+          ]
+        },
+        {
+          "path": "output[1]",
+          "shape": [
+            2,
+            4
+          ],
+          "dtype": "f32",
+          "fns": [
+            {
+              "fn": "nan_inf",
+              "nan": 0.0,
+              "inf": 0.0,
+              "passed": true
+            }
+          ]
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "passed": true
+}

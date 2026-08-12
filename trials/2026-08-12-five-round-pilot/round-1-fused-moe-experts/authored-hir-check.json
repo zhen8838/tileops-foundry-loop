@@ -1,0 +1,100 @@
+{
+  "target": "authored_hir_twin.py:RoutedExpertsTwin.routed_experts",
+  "runs": [
+    {
+      "dims": {},
+      "pinned": [],
+      "variant": null,
+      "inputs": {
+        "activations": {
+          "source": "3 file(s): hidden.pt, topk_weights.pt, topk_ids.pt",
+          "actual_dtypes": [
+            "torch.bfloat16",
+            "torch.float32",
+            "torch.int32"
+          ],
+          "declared_dtypes": [
+            "bf16",
+            "f32",
+            "i32"
+          ],
+          "files": [
+            {
+              "path": "hidden.pt",
+              "tensor_count": 1,
+              "structure": {
+                "dtype": "torch.bfloat16",
+                "shape": [
+                  4,
+                  64
+                ]
+              }
+            },
+            {
+              "path": "topk_weights.pt",
+              "tensor_count": 1,
+              "structure": {
+                "dtype": "torch.float32",
+                "shape": [
+                  4,
+                  2
+                ]
+              }
+            },
+            {
+              "path": "topk_ids.pt",
+              "tensor_count": 1,
+              "structure": {
+                "dtype": "torch.int32",
+                "shape": [
+                  4,
+                  2
+                ]
+              }
+            }
+          ]
+        },
+        "weights": {
+          "source": "the checkpoint",
+          "actual_dtypes": [
+            "torch.bfloat16",
+            "torch.bfloat16"
+          ],
+          "declared_dtypes": [
+            "bf16",
+            "bf16"
+          ]
+        }
+      },
+      "reference": "evaluator on RoutedExperts.routed_experts",
+      "outputs": [
+        {
+          "path": "output",
+          "shape": [
+            4,
+            64
+          ],
+          "dtype": "bf16",
+          "ref_norm": 0.016490768641233444,
+          "fns": [
+            {
+              "fn": "allclose",
+              "atol": 0.01,
+              "rtol": 0.01,
+              "max_violation": 0.0,
+              "passed": true
+            },
+            {
+              "fn": "nan_inf",
+              "nan": 0.0,
+              "inf": 0.0,
+              "passed": true
+            }
+          ]
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "passed": true
+}

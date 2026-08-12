@@ -1,0 +1,24 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.0.2, pluggy-1.6.0 -- /usr/bin/python
+cachedir: .pytest_cache
+rootdir: $CONTAINER_WORKSPACE/tileops
+configfile: pyproject.toml
+plugins: anyio-4.14.2, xdist-3.8.0, timeout-2.3.1
+collecting ... collected 41 items / 34 deselected / 7 selected
+
+tests/ops/test_gemm.py::test_gemm_w4a16[smoke-w4a16-square] PASSED       [ 14%]
+tests/ops/test_gemm.py::test_gemm_w4a16[smoke-w4a16-rect] PASSED         [ 28%]
+tests/ops/test_gemm.py::test_gemm_w4a16[full-w4a16-m1] PASSED            [ 42%]
+tests/ops/test_gemm.py::test_gemm_w4a16[full-w4a16-m16] PASSED           [ 57%]
+tests/ops/test_gemm.py::test_gemm_w4a16_rejects_invalid_metadata_shapes PASSED [ 71%]
+benchmarks/tests/test_gemm_w4a16_marlin.py::test_marlin_w4a16_conversion_preserves_nibbles_and_group_metadata[fp16-reduce] PASSED [ 85%]
+benchmarks/tests/test_gemm_w4a16_marlin.py::test_marlin_w4a16_conversion_preserves_nibbles_and_group_metadata[fp32-reduce] PASSED [100%]
+
+=============================== warnings summary ===============================
+benchmarks/tests/test_gemm_w4a16_marlin.py: 14 warnings
+  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: $CONTAINER_WORKSPACE/tileops/.artifacts/cu132/rebase-w4a16-targeted.xml -
+================ 7 passed, 34 deselected, 14 warnings in 8.63s =================

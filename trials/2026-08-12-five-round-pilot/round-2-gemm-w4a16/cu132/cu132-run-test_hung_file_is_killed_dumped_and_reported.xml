@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="12.245" timestamp="2026-08-12T01:13:18.782639+00:00" hostname="3211f6d63303"><testcase classname="benchmarks.tests.test_run_benchmarks" name="test_hung_file_is_killed_dumped_and_reported" time="12.231" /></testsuite></testsuites>

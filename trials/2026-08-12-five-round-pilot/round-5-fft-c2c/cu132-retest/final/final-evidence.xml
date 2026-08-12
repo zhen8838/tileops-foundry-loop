@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="fft_final_evidence" tests="9" failures="0"><testcase name="fft-4k-c64-unbatched-candidate" /><testcase name="fft-4k-c64-unbatched-base-incumbent" /><testcase name="fft-4k-c64-unbatched-torch-cufft" /><testcase name="fft-4k-c64-b64-candidate" /><testcase name="fft-4k-c64-b64-base-incumbent" /><testcase name="fft-4k-c64-b64-torch-cufft" /><testcase name="fft-4k-c128-b64-candidate" /><testcase name="fft-4k-c128-b64-base-incumbent" /><testcase name="fft-4k-c128-b64-torch-cufft" /></testsuite>

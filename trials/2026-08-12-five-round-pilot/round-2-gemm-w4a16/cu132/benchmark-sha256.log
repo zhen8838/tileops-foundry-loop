@@ -1,0 +1,2 @@
+2a93441b5b8b7036bc57d337f43d013bb498d36b1a3668f4331d92b5f145f3fa  $TRIAL_SOURCE/round-2-gemm-w4a16/cu132/final-benchmark-cu132.log
+f51702c3d36626137b0269a99e6bdf19adddd94fadeafe743159cc82450c5393  $TRIAL_SOURCE/round-2-gemm-w4a16/cu132/final-benchmark-summary.jsonl

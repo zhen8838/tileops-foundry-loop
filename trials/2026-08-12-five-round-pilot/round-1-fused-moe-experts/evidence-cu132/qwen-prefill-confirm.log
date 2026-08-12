@@ -1,0 +1,24 @@
+Script started on 2026-08-12 08:57:42+08:00 [COMMAND="$HOST_HOME/foreman/local/tileops-container.sh env TILEOPS_ALLOW_CUDA_EVENTS_FALLBACK=0 python -m pytest -q -s benchmarks/ops/bench_fused_moe_experts.py -k qwen3-235b-prefill --junitxml=$CONTAINER_WORKSPACE/tileops/.cu132-qwen-prefill-confirm.xml" <not executed on terminal>]
+MoePermuteNopadKernel initialized with config: {'threads': 1024}
+MoeGroupedGemmPersistent3WGFusedActKernel initialized with config: {'block_m': 128, 'block_n': 128, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 1}
+GroupedGemmPersistent3WGKernel initialized with config: {'block_m': 128, 'block_n': 256, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 8}
+MoeUnpermuteKernel initialized with config: {}
+MoePermuteNopadKernel initialized with config: {'threads': 1024}
+2026-08-12 00:57:51  [TileLang:tilelang.cache.kernel_cache:WARNING] (kernel_cache.py:347): Found kernel '_scan_main' in memory cache. For better performance, consider using `@tilelang.jit` instead of direct kernel caching.
+2026-08-12 00:57:51  [TileLang:tilelang.cache.kernel_cache:WARNING] (kernel_cache.py:347): Found kernel '_gather_main' in memory cache. For better performance, consider using `@tilelang.jit` instead of direct kernel caching.
+GroupedGemmPersistent3WGKernel initialized with config: {'block_m': 128, 'block_n': 256, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 8}
+SiluAndMulFwdKernel initialized with config: {'strategy': 'explicit_parallel', 'threads': 128, 'num_per_thread': 8}
+GroupedGemmPersistent3WGKernel initialized with config: {'block_m': 128, 'block_n': 256, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 8}
+MoeUnpermuteKernel initialized with config: {}
+WARNING 08-12 00:57:51 [fused_moe.py:1161] Using default MoE config. Performance might be sub-optimal! Config file not found at /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/fused_moe/configs/E=128,N=2048,device_name=NVIDIA_H200.json
+.Benchmark report saved to profile_run.log
+
+=============================== warnings summary ===============================
+../../usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:365: 14 warnings
+  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1 passed, 3 deselected, 14 warnings in 10.18s
+
+Script done on 2026-08-12 08:57:56+08:00 [COMMAND_EXIT_CODE="0"]

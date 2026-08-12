@@ -1,0 +1,28 @@
+# TileOPs Benchmark Report
+Generated: 2026-08-12 01:09:05
+
+## Environment
+
+- **Torch version**: 2.13.0+cu132
+- **CUDA version (torch)**: 13.2
+- **GPU model**: NVIDIA H200
+- **Driver version**: 595.71.05
+- **GPU clocks**: SM current 1980 MHz, memory current 3201 MHz, application SM [Requested functionality has been deprecated] MHz, application memory [Requested functionality has been deprecated] MHz
+
+## FFTC2COp
+
+### tileops
+
+| shape | dtype | n | batch_shape | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing | config |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| (4096,) | torch.complex64 | 4096 | () | 0.0071 | 0.0346 | 0.0092 | 200.0000 | 0.0065 | 0.3128 | cupti | {'block_size': 256, 'threads': 256} |
+| (64, 4096) | torch.complex64 | 4096 | (64,) | 0.0107 | 1.4650 | 0.3907 | 200.0000 | 0.0098 | 0.4058 | cupti | {'block_size': 256, 'threads': 256} |
+| (64, 4096) | torch.complex128 | 4096 | (64,) | 0.0129 | 1.2227 | 0.6521 | 200.0000 | 0.0126 | 0.4063 | cupti | {'block_size': 256, 'threads': 256} |
+
+### torch-cufft
+
+| shape | dtype | n | batch_shape | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing | config |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| (4096,) | torch.complex64 | 4096 | () | 0.0042 | 0.0582 | 0.0155 | 200.0000 | 0.0041 | 0.0044 | cupti | {'block_size': 256, 'threads': 256} |
+| (64, 4096) | torch.complex64 | 4096 | (64,) | 0.0048 | 3.2551 | 0.8680 | 200.0000 | 0.0047 | 0.0051 | cupti | {'block_size': 256, 'threads': 256} |
+| (64, 4096) | torch.complex128 | 4096 | (64,) | 0.0074 | 2.1189 | 1.1301 | 200.0000 | 0.0073 | 0.0077 | cupti | {'block_size': 256, 'threads': 256} |

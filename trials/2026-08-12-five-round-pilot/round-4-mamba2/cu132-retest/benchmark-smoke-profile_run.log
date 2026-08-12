@@ -1,0 +1,40 @@
+# TileOPs Benchmark Report
+Generated: 2026-08-12 01:09:36
+
+## Environment
+
+- **Torch version**: 2.13.0+cu132
+- **CUDA version (torch)**: 13.2
+- **GPU model**: NVIDIA H200
+- **Driver version**: 595.71.05
+- **GPU clocks**: SM current 1980 MHz, memory current 3201 MHz, application SM [Requested functionality has been deprecated] MHz, application memory [Requested functionality has been deprecated] MHz
+
+## Mamba2FwdOp
+
+### tileops
+
+| batch | seqlen | n_heads | d_head | d_state | n_groups | dtype | chunk_size | dt_softplus | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 256 | 4 | 64 | 128 | 1 | torch.bfloat16 | 256 | True | 0.6762 | 0.0993 | 0.0008 | 59.0000 | 0.2929 | 3.3753 | cupti |
+| 2 | 512 | 8 | 64 | 128 | 1 | torch.bfloat16 | 256 | True | 0.9193 | 0.5844 | 0.0040 | 63.0000 | 0.4156 | 1.5634 | cupti |
+
+### mamba
+
+| batch | seqlen | n_heads | d_head | d_state | n_groups | dtype | chunk_size | dt_softplus | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 256 | 4 | 64 | 128 | 1 | torch.bfloat16 | 256 | True | 0.4351 | 0.1543 | 0.0012 | 169.0000 | 0.3296 | 0.7583 | cupti |
+| 2 | 512 | 8 | 64 | 128 | 1 | torch.bfloat16 | 256 | True | 0.4515 | 1.1897 | 0.0082 | 200.0000 | 0.0221 | 1.6901 | cupti |
+
+### tileops-primary
+
+| batch | seqlen | n_heads | d_head | d_state | n_groups | dtype | label | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 256 | 4 | 64 | 32 | 1 | torch.float16 | primary-smoke-fp16 | 0.4775 | 0.0879 | 0.0009 | 200.0000 | 0.0246 | 1.1611 | cupti |
+| 1 | 256 | 4 | 64 | 32 | 1 | torch.bfloat16 | primary-smoke-bf16 | 0.9575 | 0.0438 | 0.0004 | 66.0000 | 0.4036 | 1.7015 | cupti |
+
+### mamba-primary
+
+| batch | seqlen | n_heads | d_head | d_state | n_groups | dtype | label | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 256 | 4 | 64 | 32 | 1 | torch.float16 | primary-smoke-fp16 | 0.7320 | 0.0573 | 0.0006 | 170.0000 | 0.3712 | 0.8086 | cupti |
+| 1 | 256 | 4 | 64 | 32 | 1 | torch.bfloat16 | primary-smoke-bf16 | 0.7682 | 0.0546 | 0.0006 | 180.0000 | 0.3740 | 0.8263 | cupti |

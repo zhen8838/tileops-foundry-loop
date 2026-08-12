@@ -1,0 +1,29 @@
+GemmW4A16Kernel initialized with config: {'block_m': 64, 'block_n': 64, 'block_k': 64, 'num_stages': 2, 'threads': 128}
+  [correctness] tileops max_abs=0.0078125 max_rel=0.150520831
+.GemmW4A16Kernel initialized with config: {'block_m': 64, 'block_n': 64, 'block_k': 64, 'num_stages': 2, 'threads': 128}
+  [correctness] tileops max_abs=0.0078125 max_rel=1.86996496
+.GemmW4A16DecodeKernel initialized with config: {'block_n': 16, 'threads': 128}
+  [correctness] tileops max_abs=0.03125 max_rel=0.00623885915
+  [correctness] marlin-fp32 max_abs=0.0625 max_rel=0.771835983
+  [correctness] marlin-fp16 max_abs=0.0625 max_rel=1.40819967
+.GemmW4A16DecodeKernel initialized with config: {'block_n': 16, 'threads': 128}
+  [correctness] tileops max_abs=0.0625 max_rel=0.236912161
+  [correctness] marlin-fp32 max_abs=0.0625 max_rel=9.20053196
+  [correctness] marlin-fp16 max_abs=0.0625 max_rel=11.2732916
+.GemmW4A16DecodeKernel initialized with config: {'block_n': 16, 'threads': 128}
+  [correctness] tileops max_abs=0.0625 max_rel=0.020855058
+  [correctness] marlin-fp32 max_abs=0.0625 max_rel=6.57364845
+  [correctness] marlin-fp16 max_abs=0.0625 max_rel=8.70167828
+.GemmW4A16DecodeKernel initialized with config: {'block_n': 16, 'threads': 128}
+  [correctness] tileops max_abs=0.125 max_rel=0.0270819236
+  [correctness] marlin-fp32 max_abs=0.25 max_rel=0.484437346
+  [correctness] marlin-fp16 max_abs=0.25 max_rel=0.809103906
+.Benchmark report saved to profile_run.log
+
+=============================== warnings summary ===============================
+benchmarks/ops/bench_gemm.py: 14 warnings
+  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+6 passed, 28 deselected, 14 warnings in 28.93s

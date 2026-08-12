@@ -1,0 +1,800 @@
+{
+  "calls": [
+    {
+      "compute-cost": {
+        "flops": {
+          "i32": 4096
+        },
+        "flops_per_unit": {
+          "i32": 4096
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "packed_weight",
+            "read": 16384,
+            "type": "i32[64,64] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "packed_i32",
+            "read": 0,
+            "type": "i32[64,64] gmem",
+            "write": 16384
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 16384,
+            "write": 16384
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "memory",
+        "compute_ns": 0,
+        "ideal_ns": 7,
+        "memory_ns": 7
+      },
+      "value": "packed_i32"
+    },
+    {
+      "compute-cost": {
+        "flops": {},
+        "flops_per_unit": {},
+        "operands": [
+          {
+            "arg": 0,
+            "name": "packed_i32",
+            "read": 16384,
+            "type": "i32[64,64] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "sixteen",
+            "read": 0,
+            "type": "i32[64,64] gmem",
+            "write": 16384
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 16384,
+            "write": 16384
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "memory",
+        "compute_ns": 0,
+        "ideal_ns": 7,
+        "memory_ns": 7
+      },
+      "value": "sixteen"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "i32": 4096
+        },
+        "flops_per_unit": {
+          "i32": 4096
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "packed_i32",
+            "read": 16384,
+            "type": "i32[64,64] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "sixteen",
+            "read": 16384,
+            "type": "i32[64,64] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "low",
+            "read": 0,
+            "type": "i32[64,64] gmem",
+            "write": 16384
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 32768,
+            "write": 16384
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "memory",
+        "compute_ns": 0,
+        "ideal_ns": 11,
+        "memory_ns": 11
+      },
+      "value": "low"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "i32": 4096
+        },
+        "flops_per_unit": {
+          "i32": 4096
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "packed_i32",
+            "read": 16384,
+            "type": "i32[64,64] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "sixteen",
+            "read": 16384,
+            "type": "i32[64,64] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "high",
+            "read": 0,
+            "type": "i32[64,64] gmem",
+            "write": 16384
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 32768,
+            "write": 16384
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "memory",
+        "compute_ns": 0,
+        "ideal_ns": 11,
+        "memory_ns": 11
+      },
+      "value": "high"
+    },
+    {
+      "compute-cost": {
+        "flops": {},
+        "flops_per_unit": {},
+        "operands": [
+          {
+            "arg": 0,
+            "name": "low",
+            "read": 16384,
+            "type": "i32[64,64] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "high",
+            "read": 16384,
+            "type": "i32[64,64] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "q_i32",
+            "read": 0,
+            "type": "i32[64,64,2] gmem",
+            "write": 32768
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 32768,
+            "write": 32768
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "memory",
+        "compute_ns": 0,
+        "ideal_ns": 14,
+        "memory_ns": 14
+      },
+      "value": "q_i32"
+    },
+    {
+      "compute-cost": {
+        "flops": {},
+        "flops_per_unit": {},
+        "operands": [
+          {
+            "arg": 0,
+            "name": "q_i32",
+            "read": 0,
+            "type": "i32[64,64,2] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "q_i32",
+            "read": 0,
+            "type": "i32[64,128] gmem",
+            "write": 0
+          }
+        ],
+        "traffic": {}
+      },
+      "roofline": {
+        "bound_by": "none",
+        "compute_ns": 0,
+        "ideal_ns": 0,
+        "memory_ns": 0
+      },
+      "value": "q_i32"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 8192
+        },
+        "flops_per_unit": {
+          "f32": 8192
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "q_i32",
+            "read": 32768,
+            "type": "i32[64,128] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "dequant_f32",
+            "read": 0,
+            "type": "f32[64,128] gmem",
+            "write": 32768
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 32768,
+            "write": 32768
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "memory",
+        "compute_ns": 1,
+        "ideal_ns": 14,
+        "memory_ns": 14
+      },
+      "value": "dequant_f32"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 64
+        },
+        "flops_per_unit": {
+          "f32": 64
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "weight_zero",
+            "read": 256,
+            "type": "i32[64,1] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "zero_expanded",
+            "read": 0,
+            "type": "f32[64,1] gmem",
+            "write": 256
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 256,
+            "write": 256
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "balanced",
+        "compute_ns": 1,
+        "ideal_ns": 1,
+        "memory_ns": 1
+      },
+      "value": "zero_expanded"
+    },
+    {
+      "compute-cost": {
+        "flops": {},
+        "flops_per_unit": {},
+        "operands": [
+          {
+            "arg": 0,
+            "name": "zero_expanded",
+            "read": 256,
+            "type": "f32[64,1] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "zero_expanded",
+            "read": 0,
+            "type": "f32[64,128] gmem",
+            "write": 32768
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 256,
+            "write": 32768
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "memory",
+        "compute_ns": 0,
+        "ideal_ns": 7,
+        "memory_ns": 7
+      },
+      "value": "zero_expanded"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 8192
+        },
+        "flops_per_unit": {
+          "f32": 8192
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "dequant_f32",
+            "read": 32768,
+            "type": "f32[64,128] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "zero_expanded",
+            "read": 32768,
+            "type": "f32[64,128] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "dequant_f32",
+            "read": 0,
+            "type": "f32[64,128] gmem",
+            "write": 32768
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 65536,
+            "write": 32768
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "memory",
+        "compute_ns": 1,
+        "ideal_ns": 21,
+        "memory_ns": 21
+      },
+      "value": "dequant_f32"
+    },
+    {
+      "compute-cost": {
+        "flops": {},
+        "flops_per_unit": {},
+        "operands": [
+          {
+            "arg": 0,
+            "name": "weight_scale",
+            "read": 256,
+            "type": "f32[64,1] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "scale_expanded",
+            "read": 0,
+            "type": "f32[64,128] gmem",
+            "write": 32768
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 256,
+            "write": 32768
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "memory",
+        "compute_ns": 0,
+        "ideal_ns": 7,
+        "memory_ns": 7
+      },
+      "value": "scale_expanded"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f32": 8192
+        },
+        "flops_per_unit": {
+          "f32": 8192
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "dequant_f32",
+            "read": 32768,
+            "type": "f32[64,128] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "scale_expanded",
+            "read": 32768,
+            "type": "f32[64,128] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "dequant_f32",
+            "read": 0,
+            "type": "f32[64,128] gmem",
+            "write": 32768
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 65536,
+            "write": 32768
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "memory",
+        "compute_ns": 1,
+        "ideal_ns": 21,
+        "memory_ns": 21
+      },
+      "value": "dequant_f32"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f16": 8192
+        },
+        "flops_per_unit": {
+          "f16": 8192
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "dequant_f32",
+            "read": 32768,
+            "type": "f32[64,128] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "dequant_f16",
+            "read": 0,
+            "type": "f16[64,128] gmem",
+            "write": 16384
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 32768,
+            "write": 16384
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "memory",
+        "compute_ns": 1,
+        "ideal_ns": 11,
+        "memory_ns": 11
+      },
+      "value": "dequant_f16"
+    },
+    {
+      "compute-cost": {
+        "flops": {},
+        "flops_per_unit": {},
+        "operands": [
+          {
+            "arg": 0,
+            "name": "dequant_f16",
+            "read": 16384,
+            "type": "f16[64,128] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "transpose",
+            "read": 0,
+            "type": "f16[128,64] gmem",
+            "write": 16384
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 16384,
+            "write": 16384
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "memory",
+        "compute_ns": 0,
+        "ideal_ns": 7,
+        "memory_ns": 7
+      },
+      "value": "<value 17>"
+    },
+    {
+      "compute-cost": {
+        "flops": {
+          "f16": 1048576
+        },
+        "flops_per_unit": {
+          "f16": 1048576
+        },
+        "operands": [
+          {
+            "arg": 0,
+            "name": "activation",
+            "read": 16384,
+            "type": "f16[64,128] gmem",
+            "write": 0
+          },
+          {
+            "arg": 1,
+            "name": "transpose",
+            "read": 16384,
+            "type": "f16[128,64] gmem",
+            "write": 0
+          },
+          {
+            "arg": "result",
+            "name": "matmul",
+            "read": 0,
+            "type": "f16[64,64] gmem",
+            "write": 8192
+          }
+        ],
+        "traffic": {
+          "gmem": {
+            "read": 32768,
+            "write": 8192
+          }
+        }
+      },
+      "roofline": {
+        "bound_by": "memory",
+        "compute_ns": 2,
+        "ideal_ns": 9,
+        "memory_ns": 9
+      },
+      "value": "<value 18>"
+    }
+  ],
+  "executed": [
+    "compute-cost",
+    "memory",
+    "roofline"
+  ],
+  "function": "gemm_w4a16",
+  "function_records": {
+    "memory": {
+      "advisories": [],
+      "footprint": [
+        {
+          "capacity_bytes": 141000000000,
+          "level": "gmem",
+          "peak_bytes": 131584,
+          "persistent_bytes": 33280
+        }
+      ],
+      "lifetimes": [
+        {
+          "binding": "activation",
+          "bytes": 16384,
+          "defined_at": 0,
+          "last_used_at": 18,
+          "level": "gmem",
+          "persistent": true
+        },
+        {
+          "binding": "packed_weight",
+          "bytes": 16384,
+          "defined_at": 1,
+          "last_used_at": 18,
+          "level": "gmem",
+          "persistent": true
+        },
+        {
+          "binding": "weight_scale",
+          "bytes": 256,
+          "defined_at": 2,
+          "last_used_at": 18,
+          "level": "gmem",
+          "persistent": true
+        },
+        {
+          "binding": "weight_zero",
+          "bytes": 256,
+          "defined_at": 3,
+          "last_used_at": 18,
+          "level": "gmem",
+          "persistent": true
+        },
+        {
+          "binding": "packed_i32",
+          "bytes": 16384,
+          "defined_at": 4,
+          "last_used_at": 7,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "sixteen",
+          "bytes": 16384,
+          "defined_at": 5,
+          "last_used_at": 7,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "low",
+          "bytes": 16384,
+          "defined_at": 6,
+          "last_used_at": 8,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "high",
+          "bytes": 16384,
+          "defined_at": 7,
+          "last_used_at": 8,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "q_i32",
+          "bytes": 32768,
+          "defined_at": 8,
+          "last_used_at": 9,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "dequant_f32",
+          "bytes": 32768,
+          "defined_at": 10,
+          "last_used_at": 13,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "zero_expanded",
+          "bytes": 256,
+          "defined_at": 11,
+          "last_used_at": 12,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "zero_expanded_2",
+          "bytes": 32768,
+          "defined_at": 12,
+          "last_used_at": 13,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "dequant_f32_2",
+          "bytes": 32768,
+          "defined_at": 13,
+          "last_used_at": 15,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "scale_expanded",
+          "bytes": 32768,
+          "defined_at": 14,
+          "last_used_at": 15,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "dequant_f32_3",
+          "bytes": 32768,
+          "defined_at": 15,
+          "last_used_at": 16,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "dequant_f16",
+          "bytes": 16384,
+          "defined_at": 16,
+          "last_used_at": 17,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "<value 17>",
+          "bytes": 16384,
+          "defined_at": 17,
+          "last_used_at": 18,
+          "level": "gmem",
+          "persistent": false
+        },
+        {
+          "binding": "<value 18>",
+          "bytes": 8192,
+          "defined_at": 18,
+          "last_used_at": 18,
+          "level": "gmem",
+          "persistent": false
+        }
+      ],
+      "traffic": {
+        "gmem": {
+          "read": 377600,
+          "write": 303360
+        }
+      }
+    },
+    "roofline": {
+      "bound_by": "memory",
+      "compute_ns": 3,
+      "ideal_ns": 142,
+      "memory_ns": 142
+    }
+  },
+  "module": "GemmW4A16",
+  "requested": [
+    "compute-cost",
+    "memory",
+    "roofline"
+  ],
+  "target": "nvidia.h200_sxm",
+  "topology": "cta",
+  "totals": {
+    "flops": {
+      "f16": 1056768,
+      "f32": 24640,
+      "i32": 12288
+    },
+    "traffic": {
+      "gmem": {
+        "read": 377600,
+        "write": 303360
+      }
+    }
+  }
+}

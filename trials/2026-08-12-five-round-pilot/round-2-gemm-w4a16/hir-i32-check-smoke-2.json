@@ -1,0 +1,62 @@
+{
+  "target": "authored_hir_i32_workaround.py:EvaluatorTwin.gemm_w4a16",
+  "runs": [
+    {
+      "dims": {},
+      "pinned": [],
+      "variant": null,
+      "inputs": {
+        "activations": {
+          "source": "random, seed 0",
+          "actual_dtypes": [
+            "torch.float16",
+            "torch.int32",
+            "torch.float32",
+            "torch.int32"
+          ],
+          "declared_dtypes": [
+            "f16",
+            "i32",
+            "f32",
+            "i32"
+          ],
+          "files": []
+        },
+        "weights": {
+          "source": "none declared",
+          "actual_dtypes": [],
+          "declared_dtypes": []
+        }
+      },
+      "reference": "evaluator on GemmW4A16.gemm_w4a16",
+      "outputs": [
+        {
+          "path": "output",
+          "shape": [
+            64,
+            64
+          ],
+          "dtype": "f16",
+          "ref_norm": 2336.204833984375,
+          "fns": [
+            {
+              "fn": "allclose",
+              "atol": 0.0,
+              "rtol": 0.0,
+              "max_violation": 0.0,
+              "passed": true
+            },
+            {
+              "fn": "nan_inf",
+              "nan": 0.0,
+              "inf": 0.0,
+              "passed": true
+            }
+          ]
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "passed": true
+}

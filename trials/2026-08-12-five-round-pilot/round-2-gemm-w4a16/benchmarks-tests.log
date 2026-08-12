@@ -1,0 +1,11 @@
+........................                                                 [100%]
+=============================== warnings summary ===============================
+benchmarks/tests/test_benchmark_base.py::test_native_cupti_failure_fails_closed_by_default
+  <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.cuda module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.driver module instead.
+
+benchmarks/tests/test_gemm_w4a16_marlin.py: 14 warnings
+  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:362: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+24 passed, 15 warnings in 43.50s

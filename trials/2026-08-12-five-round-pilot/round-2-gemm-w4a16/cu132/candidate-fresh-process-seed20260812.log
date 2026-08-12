@@ -1,0 +1,15 @@
+fresh_process=1
+GemmW4A16DecodeKernel initialized with config: {'block_n': 16, 'threads': 128}
+pass max_abs 0.125 index7846 -0.00716400146484375 expected7846 -0.006694793701171875
+fresh_process=2
+GemmW4A16DecodeKernel initialized with config: {'block_n': 16, 'threads': 128}
+pass max_abs 0.125 index7846 -0.00716400146484375 expected7846 -0.006694793701171875
+fresh_process=3
+GemmW4A16DecodeKernel initialized with config: {'block_n': 16, 'threads': 128}
+pass max_abs 0.125 index7846 -0.00716400146484375 expected7846 -0.006694793701171875
+fresh_process=4
+GemmW4A16DecodeKernel initialized with config: {'block_n': 16, 'threads': 128}
+pass max_abs 0.125 index7846 -0.00716400146484375 expected7846 -0.006694793701171875
+fresh_process=5
+GemmW4A16DecodeKernel initialized with config: {'block_n': 16, 'threads': 128}
+pass max_abs 0.125 index7846 -0.00716400146484375 expected7846 -0.006694793701171875

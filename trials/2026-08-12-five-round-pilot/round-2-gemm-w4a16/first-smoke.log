@@ -1,0 +1,154 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________________ test_gemm_w4a16[smoke-w4a16-square] ______________________
+
+m = 64, n = 64, k = 128, dtype = torch.float16
+
+    @GemmW4A16Fixture
+    def test_gemm_w4a16(m: int, n: int, k: int, dtype: torch.dtype) -> None:
+        test = GemmW4A16Test(m, n, k, dtype)
+        op = GemmW4A16Op()
+>       test.check(op, *test.gen_inputs(), atol=7e-2, rtol=5e-2)
+
+tests/ops/test_gemm.py:217:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_base.py:109: in check
+    outputs = op(*inputs)
+              ^^^^^^^^^^^
+src/tileops/ops/op_base.py:508: in __call__
+    return self.forward(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/tileops/ops/gemm.py:486: in forward
+    return self._active(activation, packed_weight, weight_scale, weight_zero)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/tileops/kernels/kernel_base.py:163: in __call__
+    return self.forward(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/tileops/kernels/gemm_w4a16_r2.py:170: in forward
+    return _gemm_w4a16_wrapped(
+/usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:698: in __call__
+    return self._opoverload(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/dist-packages/torch/_ops.py:819: in __call__
+    return self._op(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/dist-packages/torch/_library/autograd.py:112: in autograd_impl
+    result = forward_no_grad(*args, Metadata(keyset, keyword_only_args))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/dist-packages/torch/_library/autograd.py:41: in forward_no_grad
+    result = op.redispatch(keyset & _C._after_autograd_keyset, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/dist-packages/torch/_ops.py:826: in redispatch
+    return self._handle.redispatch_boxed(keyset, *args, **kwargs)  # type: ignore[return-value]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:347: in backend_impl
+    result = self._backend_fns[device_type](*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/dist-packages/torch/_compile.py:54: in inner
+    return disable_fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/dist-packages/torch/_dynamo/eval_frame.py:1181: in _fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:382: in wrapped_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+src/tileops/kernels/gemm_w4a16_r2.py:104: in _gemm_w4a16_wrapped
+    return _gemm_w4a16_kernel(m, n, k, dtype_str)(block_n, threads)(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/dist-packages/tilelang/jit/__init__.py:529: in __call__
+    kernel = self.compile(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/dist-packages/tilelang/jit/__init__.py:444: in compile
+    kernel_result = compile(
+/usr/local/lib/python3.12/dist-packages/tilelang/jit/__init__.py:161: in compile
+    return cached(
+/usr/local/lib/python3.12/dist-packages/tilelang/cache/__init__.py:82: in cached
+    return cache.cached(
+/usr/local/lib/python3.12/dist-packages/tilelang/cache/kernel_cache.py:384: in cached
+    kernel = JITKernel(
+/usr/local/lib/python3.12/dist-packages/tilelang/jit/kernel.py:132: in __init__
+    adapter = self._compile_and_create_adapter(func, out_idx)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/dist-packages/tilelang/jit/kernel.py:258: in _compile_and_create_adapter
+    artifact = tilelang.lower(
+/usr/local/lib/python3.12/dist-packages/tilelang/engine/lower.py:311: in lower
+    host_mod, device_mod, params, target, target_host = lower_to_host_device_ir(
+/usr/local/lib/python3.12/dist-packages/tilelang/engine/lower.py:288: in lower_to_host_device_ir
+    mod = pipeline.lower(mod, target)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/dist-packages/tilelang/backend/pass_pipeline/pipeline.py:23: in lower
+    return self._lower(mod, target)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/dist-packages/tilelang/cuda/pipeline.py:144: in CUDAPassPipelineBody
+    mod = CUDAPassPipelineBodyPrologue(mod, target)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/dist-packages/tilelang/cuda/pipeline.py:113: in CUDAPassPipelineBodyPrologue
+    mod = tilelang.transform.LayoutInference()(mod)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.12/dist-packages/tilelang/3rdparty/tvm/python/tvm/ir/transform.py:171: in __call__
+    return _ffi_transform_api.RunPass(self, mod)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+python/tvm_ffi/cython/function.pxi:968: in tvm_ffi.core.Function.__call__
+    ???
+<unknown>:0: in tvm::transform::Pass::operator()(tvm::IRModule) const
+    ???
+<unknown>:0: in tvm::transform::Pass::operator()(tvm::IRModule, tvm::transform::PassContext const&) const
+    ???
+<unknown>:0: in tvm::tirx::transform::PrimFuncPassNode::operator()(tvm::IRModule, tvm::transform::PassContext const&) const
+    ???
+<unknown>:0: in tvm::tl::LayoutInferencer::Substitute(tvm::tirx::PrimFunc, bool)
+    ???
+<unknown>:0: in tvm::tl::BufferUseDefCollector::Collect(tvm::tirx::PrimFunc const&)
+    ???
+<unknown>:0: in tvm::tl::BufferUseDefCollector::VisitStmt_(tvm::tirx::SBlockNode const*)
+    ???
+<unknown>:0: in tvm::arith::IRVisitorWithAnalyzer::VisitStmt_(tvm::tirx::SBlockNode const*)
+    ???
+<unknown>:0: in tvm::arith::IRVisitorWithAnalyzer::VisitStmt_(tvm::tirx::AttrStmtNode const*)
+    ???
+<unknown>:0: in tvm::arith::IRVisitorWithAnalyzer::VisitStmt_(tvm::tirx::AttrStmtNode const*)
+    ???
+<unknown>:0: in tvm::arith::IRVisitorWithAnalyzer::VisitStmt_(tvm::tirx::AttrStmtNode const*)
+    ???
+<unknown>:0: in tvm::arith::IRVisitorWithAnalyzer::VisitStmt_(tvm::tirx::AttrStmtNode const*)
+    ???
+<unknown>:0: in tvm::arith::IRVisitorWithAnalyzer::VisitStmt_(tvm::tirx::AttrStmtNode const*)
+    ???
+<unknown>:0: in tvm::tl::BufferUseDefCollector::VisitStmt_(tvm::tirx::SBlockNode const*)
+    ???
+<unknown>:0: in tvm::arith::IRVisitorWithAnalyzer::VisitStmt_(tvm::tirx::SBlockNode const*)
+    ???
+<unknown>:0: in tvm::tirx::StmtVisitor::VisitStmt_(tvm::tirx::SeqStmtNode const*)
+    ???
+<unknown>:0: in tvm::tirx::StmtVisitor::VisitStmt_(tvm::tirx::SeqStmtNode const*)
+    ???
+<unknown>:0: in tvm::tl::BufferUseDefCollector::VisitStmt_(tvm::tirx::ForNode const*)
+    ???
+<unknown>:0: in tvm::tl::ParallelOpNode::ParallelOpNode(tvm::tirx::For)
+    ???
+<unknown>:0: in tvm::tirx::StmtVisitor::VisitStmt_(tvm::tirx::SeqStmtNode const*)
+    ???
+<unknown>:0: in non-virtual thunk to tvm::tl::ParallelLoopNestVisitor::VisitStmt_(tvm::tirx::BufferStoreNode const*)
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+>   ???
+E   tvm.error.InternalError: Check failed: (StructuralEqual()(it->second.indices, indices)) is false: products: (row, packed_k * 2 + 1) and (row, packed_k * 2)
+
+$TMP_PATH InternalError
+----------------------------- Captured stdout call -----------------------------
+GemmW4A16Kernel initialized with config: {'block_n': 8, 'threads': 128}
+2026-08-11 17:56:22  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[4]`
+----------------------------- Captured stderr call -----------------------------
+[17:56:22] $TMP_PATH Warning: Data race detected: `output(by, out_col)`is written by multiple threads in loop (row,), Example:
+  bx = 0
+  by = 0
+  out_col = 0
+  row = 1
+  row_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+=========================== short test summary info ============================
+FAILED tests/ops/test_gemm.py::test_gemm_w4a16[smoke-w4a16-square] - tvm.erro...
+1 failed, 37 deselected in 4.85s

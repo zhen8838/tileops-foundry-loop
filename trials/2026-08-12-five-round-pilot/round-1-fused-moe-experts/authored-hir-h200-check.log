@@ -1,0 +1,1 @@
+tilefoundry check: error: check: 'output' asks for ['allclose'] with no reference to compare against. Without a reference only ['nan_inf'] can be measured.

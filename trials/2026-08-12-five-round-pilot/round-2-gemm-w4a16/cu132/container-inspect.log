@@ -1,0 +1,1 @@
+container=/tileops-db8dd17a394e image_id=sha256:2590888968a870216e1ea076829b909e62e9053608f6a65d5ab5ecd7eb5561f7 schema=3 gpu=2 worktree=$HOST_HOME/TileOPs-worktrees/tileops-tileops-r2-gemm-w4a16

@@ -1,0 +1,56 @@
+{
+  "target": "state_scan_hir.py:StateScan",
+  "runs": [
+    {
+      "dims": {},
+      "pinned": [],
+      "variant": null,
+      "inputs": {
+        "activations": {
+          "source": "random, seed 0",
+          "actual_dtypes": [
+            "torch.float16",
+            "torch.float16",
+            "torch.float16",
+            "torch.float16"
+          ],
+          "declared_dtypes": [
+            "f16",
+            "f16",
+            "f16",
+            "f16"
+          ],
+          "files": []
+        },
+        "weights": {
+          "source": "none declared",
+          "actual_dtypes": [],
+          "declared_dtypes": []
+        }
+      },
+      "reference": null,
+      "outputs": [
+        {
+          "path": "output",
+          "shape": [
+            1,
+            2,
+            16,
+            16
+          ],
+          "dtype": "f16",
+          "fns": [
+            {
+              "fn": "nan_inf",
+              "nan": 0.0,
+              "inf": 0.0,
+              "passed": true
+            }
+          ]
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "passed": true
+}

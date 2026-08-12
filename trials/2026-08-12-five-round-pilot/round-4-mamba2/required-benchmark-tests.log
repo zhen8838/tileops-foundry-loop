@@ -1,0 +1,7 @@
+......................                                                   [100%]
+=============================== warnings summary ===============================
+benchmarks/tests/test_benchmark_base.py::test_native_cupti_failure_fails_closed_by_default
+  <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.cuda module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.driver module instead.
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+22 passed, 1 warning in 37.45s

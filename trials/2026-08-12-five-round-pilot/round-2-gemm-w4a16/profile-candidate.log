@@ -1,0 +1,38 @@
+GemmW4A16DecodeKernel initialized with config: {'block_n': 16, 'threads': 128}
+{"label": "decode-l2-resident-ish", "config": {"block_n": 16, "threads": 128}, "resource_usage": "{}"}
+/usr/local/lib/python3.12/dist-packages/torch/profiler/profiler.py:217: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.
+  _warn_once(
+------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+                          Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg       CPU Mem  Self CPU Mem      CUDA Mem  Self CUDA Mem    # of Calls
+------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+    top::gemm_w4a16_decode_fwd        50.91%     138.056us        65.61%     177.935us      59.312us     132.929us       100.00%     132.929us      44.310us           0 B           0 B      48.00 KB           0 B             3
+                   main_kernel         0.00%       0.000us         0.00%       0.000us       0.000us     132.929us       100.00%     132.929us      44.310us           0 B           0 B           0 B           0 B             3
+                 ProfilerStep*         0.00%       0.000us         0.00%       0.000us       0.000us     132.929us       100.00%     132.929us      44.310us           0 B           0 B           0 B           0 B             3
+                 ProfilerStep*        28.92%      78.419us        94.53%     256.354us      85.451us       0.000us         0.00%     132.929us      44.310us           0 B           0 B           0 B     -48.00 KB             3
+                   aten::empty         7.63%      20.686us         7.63%      20.686us       6.895us       0.000us         0.00%       0.000us       0.000us           0 B           0 B      48.00 KB      48.00 KB             3
+                cuLaunchKernel         6.99%      18.946us         6.99%      18.946us       6.315us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B             3
+           cudaPeekAtLastError         0.09%       0.247us         0.09%       0.247us       0.082us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B             3
+         cudaDeviceSynchronize         5.47%      14.830us         5.47%      14.830us      14.830us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B             1
+------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+Self CPU time total: 271.184us
+Self CUDA time total: 132.929us
+
+trace=$CONTAINER_WORKSPACE/tileops/.artifacts/round-2-gemm-w4a16/decode-l2-resident-ish-trace.json
+GemmW4A16DecodeKernel initialized with config: {'block_n': 16, 'threads': 128}
+{"label": "decode-long-k-pressure", "config": {"block_n": 16, "threads": 128}, "resource_usage": "{}"}
+------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+                          Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg       CPU Mem  Self CPU Mem      CUDA Mem  Self CUDA Mem    # of Calls
+------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+                   main_kernel         0.00%       0.000us         0.00%       0.000us       0.000us       2.144ms       100.00%       2.144ms     535.924us           0 B           0 B           0 B           0 B             4
+    top::gemm_w4a16_decode_fwd         5.29%     124.892us         6.72%     158.486us      52.829us       1.608ms        75.02%       1.608ms     536.090us           0 B           0 B      48.00 KB           0 B             3
+                 ProfilerStep*         0.00%       0.000us         0.00%       0.000us       0.000us       1.608ms        75.02%       1.608ms     536.090us           0 B           0 B           0 B           0 B             3
+                 ProfilerStep*         5.27%     124.324us        11.98%     282.810us      94.270us       0.000us         0.00%       1.608ms     536.090us           0 B           0 B           0 B     -48.00 KB             3
+                   aten::empty         0.64%      15.136us         0.64%      15.136us       5.045us       0.000us         0.00%       0.000us       0.000us           0 B           0 B      48.00 KB      48.00 KB             3
+                cuLaunchKernel         0.77%      18.271us         0.77%      18.271us       6.090us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B             3
+           cudaPeekAtLastError         0.01%       0.187us         0.01%       0.187us       0.062us       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B             3
+         cudaDeviceSynchronize        88.02%       2.077ms        88.02%       2.077ms       2.077ms       0.000us         0.00%       0.000us       0.000us           0 B           0 B           0 B           0 B             1
+------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+Self CPU time total: 2.360ms
+Self CUDA time total: 2.144ms
+
+trace=$CONTAINER_WORKSPACE/tileops/.artifacts/round-2-gemm-w4a16/decode-long-k-pressure-trace.json

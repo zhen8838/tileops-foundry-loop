@@ -1,0 +1,21 @@
+DaCumsumFwdKernel initialized with config: {'block_h': 4, 'threads': 1024}
+2026-08-12 01:10:22  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:121): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-12 01:10:22  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:128): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-12 01:10:22  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:131): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+CBProducerKernel initialized with config: {'block_l': 64, 'block_s': 64, 'block_n': 64, 'threads': 128}
+SSDChunkStateFwdKernel initialized with config: {'block_n': 128, 'block_p': 64, 'block_l': 32, 'threads': 128}
+SSDStatePassingFwdKernel initialized with config: {'block_d': 64, 'threads': 128, 'vectorize': False}
+SSDChunkScanFwdKernel initialized with config: {'block_l': 64, 'block_p': 64, 'block_n': 64, 'block_s': 64, 'threads': 128, 'num_stages': 3}
+2026-08-12 01:10:22  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+.DaCumsumFwdKernel initialized with config: {'block_h': 4, 'threads': 1024}
+2026-08-12 01:10:28  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:121): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-12 01:10:28  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:128): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-12 01:10:28  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:131): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+CBProducerKernel initialized with config: {'block_l': 64, 'block_s': 64, 'block_n': 64, 'threads': 128}
+SSDChunkStateFwdKernel initialized with config: {'block_n': 128, 'block_p': 64, 'block_l': 32, 'threads': 128}
+SSDStatePassingFwdKernel initialized with config: {'block_d': 64, 'threads': 128, 'vectorize': False}
+SSDChunkScanFwdKernel initialized with config: {'block_l': 64, 'block_p': 64, 'block_n': 64, 'block_s': 64, 'threads': 128, 'num_stages': 3}
+2026-08-12 01:10:29  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+.Benchmark report saved to profile_run.log
+
+2 passed, 24 deselected in 18.71s

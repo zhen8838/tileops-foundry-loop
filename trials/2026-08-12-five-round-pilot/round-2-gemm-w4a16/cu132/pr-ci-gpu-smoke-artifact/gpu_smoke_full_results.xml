@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="39" time="14.373" timestamp="2026-08-12T00:43:17.497478+00:00" hostname="ca04cdcad15f"><testcase classname="tests.ops.test_gemm" name="test_gemm[smoke-fp16-square]" time="2.321"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="0.00e+00" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm[smoke-bf16-square]" time="0.258"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="0.00e+00" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm[full-fp16-trans-b-small-m]" time="0.034"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="3.12e-02" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm[full-fp16-nt-dense-ws]" time="0.114"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="1.25e-01" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm[full-fp16-tuned-wide]" time="0.604"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="2.50e-01" /></properties><failure message="AssertionError: Tensor-likes are not close!&#10;&#10;Mismatched elements: 11 / 7168 (0.2%)&#10;Greatest absolute difference: 0.00390625 at index (0, 3966) (up to 0.001 allowed)&#10;Greatest relative difference: 0.01556396484375 at index (0, 6334) (up to 0.001 allowed)">m = 1, n = 7168, k = 16384, dtype = torch.float16, trans_a = False
+trans_b = True, tune = True
+
+    @GemmFixture
+    def test_gemm(m: int, n: int, k: int, dtype: torch.dtype, trans_a: bool, trans_b: bool,
+                  tune: bool) -&gt; None:
+        test = GemmTest(m, n, k, dtype, trans_a, trans_b)
+        op = GemmOp(trans_a=trans_a, trans_b=trans_b, tune=tune)
+        if dtype == torch.float16:
+            tolerances = {"atol": 1e-3, "rtol": 1e-3}
+        else:
+            tolerances = {"atol": 1.6e-2, "rtol": 1.6e-2}
+&gt;       test.check(op, *test.gen_inputs(), **tolerances)
+
+tests/ops/test_gemm.py:191:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_base.py:136: in check
+    cmp(output, output_ref)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+output = tensor([[-241.3750,  130.5000,  134.3750,  ..., -151.8750,  -99.0000,
+          -56.0625]], device='cuda:0', dtype=torch.float16)
+output_ref = tensor([[-241.3750,  130.5000,  134.3750,  ..., -151.8750,  -99.0000,
+          -56.0625]], device='cuda:0', dtype=torch.float16)
+atol = 0.001, rtol = 0.001
+
+    def allclose_compare(output: torch.Tensor, output_ref: torch.Tensor, atol: float = 1e-8, rtol: float = 1e-5) -&gt; None:
+        """Default comparison using torch.allclose."""
+        output, output_ref = torch.broadcast_tensors(output, output_ref)
+&gt;       torch.testing.assert_close(
+            output,
+            output_ref,
+            atol=atol,
+            rtol=rtol,
+            equal_nan=True,
+        )
+E       AssertionError: Tensor-likes are not close!
+E
+E       Mismatched elements: 11 / 7168 (0.2%)
+E       Greatest absolute difference: 0.00390625 at index (0, 3966) (up to 0.001 allowed)
+E       Greatest relative difference: 0.01556396484375 at index (0, 6334) (up to 0.001 allowed)
+
+tests/test_base.py:42: AssertionError</failure></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm[full-fp16-tuned-wide-alt]" time="0.032"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="1.25e-01" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm[full-fp16-thin-n]" time="0.002"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="7.81e-03" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm[full-fp16-tuned-thin-n]" time="0.503"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="2.50e-01" /></properties><failure message="AssertionError: Tensor-likes are not close!&#10;&#10;Mismatched elements: 15 / 7168 (0.2%)&#10;Greatest absolute difference: 0.00390625 at index (1401, 0) (up to 0.001 allowed)&#10;Greatest relative difference: 0.200927734375 at index (712, 0) (up to 0.001 allowed)">m = 7168, n = 1, k = 16384, dtype = torch.float16, trans_a = False
+trans_b = False, tune = False
+
+    @GemmFixture
+    def test_gemm(m: int, n: int, k: int, dtype: torch.dtype, trans_a: bool, trans_b: bool,
+                  tune: bool) -&gt; None:
+        test = GemmTest(m, n, k, dtype, trans_a, trans_b)
+        op = GemmOp(trans_a=trans_a, trans_b=trans_b, tune=tune)
+        if dtype == torch.float16:
+            tolerances = {"atol": 1e-3, "rtol": 1e-3}
+        else:
+            tolerances = {"atol": 1.6e-2, "rtol": 1.6e-2}
+&gt;       test.check(op, *test.gen_inputs(), **tolerances)
+
+tests/ops/test_gemm.py:191:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_base.py:136: in check
+    cmp(output, output_ref)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+output = tensor([[  -5.4180],
+        [ 177.7500],
+        [ 130.1250],
+        ...,
+        [ -34.2500],
+        [ -43.6250],
+        [-218.3750]], device='cuda:0', dtype=torch.float16)
+output_ref = tensor([[  -5.4180],
+        [ 177.7500],
+        [ 130.1250],
+        ...,
+        [ -34.2500],
+        [ -43.6250],
+        [-218.3750]], device='cuda:0', dtype=torch.float16)
+atol = 0.001, rtol = 0.001
+
+    def allclose_compare(output: torch.Tensor, output_ref: torch.Tensor, atol: float = 1e-8, rtol: float = 1e-5) -&gt; None:
+        """Default comparison using torch.allclose."""
+        output, output_ref = torch.broadcast_tensors(output, output_ref)
+&gt;       torch.testing.assert_close(
+            output,
+            output_ref,
+            atol=atol,
+            rtol=rtol,
+            equal_nan=True,
+        )
+E       AssertionError: Tensor-likes are not close!
+E
+E       Mismatched elements: 15 / 7168 (0.2%)
+E       Greatest absolute difference: 0.00390625 at index (1401, 0) (up to 0.001 allowed)
+E       Greatest relative difference: 0.200927734375 at index (712, 0) (up to 0.001 allowed)
+
+tests/test_base.py:42: AssertionError</failure></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm[full-fp16-tuned-thin-n-alt]" time="0.003"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="1.25e-01" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm[full-bf16-trans-b-small-m]" time="0.055"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="0.00e+00" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm[full-bf16-tuned-wide]" time="0.034"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="1.00e+00" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm[full-bf16-tuned-wide-alt]" time="0.031"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="1.00e+00" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm[full-bf16-thin-n]" time="0.002"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="0.00e+00" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm[full-bf16-tuned-thin-n]" time="0.002"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="1.00e+00" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm[full-bf16-tuned-thin-n-alt]" time="0.002"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="1.00e+00" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm_fp8[smoke-fp8-e4m3-per-tensor]" time="0.229"><properties><property name="op" value="GemmFp8Op" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="1.56e-02" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm_fp8[smoke-fp8-e4m3-block128]" time="0.152"><properties><property name="op" value="GemmFp8Op" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="3.12e-02" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm_fp8[smoke-fp8-e5m2-per-tensor]" time="0.002" /><testcase classname="tests.ops.test_gemm" name="test_gemm_fp8[full-fp8-e4m3-block128-large-m]" time="0.149"><properties><property name="op" value="GemmFp8Op" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="3.12e-02" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm_fp8[full-fp8-e4m3-per-tensor-small-m-bias]" time="0.229"><properties><property name="op" value="GemmFp8Op" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="3.91e-03" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm_fp8[full-fp8-e4m3-per-tensor-gemv]" time="0.153"><properties><property name="op" value="GemmFp8Op" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="7.81e-03" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm_w4a16[smoke-w4a16-square]" time="0.098"><properties><property name="op" value="GemmW4A16Op" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="7.81e-03" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm_w4a16[smoke-w4a16-rect]" time="0.067"><properties><property name="op" value="GemmW4A16Op" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="7.81e-03" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm_w4a16[full-w4a16-m1]" time="6.377"><properties><property name="op" value="GemmW4A16Op" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="0.00e+00" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm_w4a16[full-w4a16-m16]" time="0.116"><properties><property name="op" value="GemmW4A16Op" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="1.56e-02" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_quantize_weight_int4_keeps_one_sided_groups_in_range" time="0.004" /><testcase classname="tests.ops.test_gemm" name="test_quantize_weight_int4_preserves_nibble_order_across_group_boundary" time="0.001" /><testcase classname="tests.ops.test_gemm" name="test_gemm_fp8_block128_single_k_block_uses_block_kernel" time="0.152"><properties><property name="op" value="GemmFp8Op" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="3.12e-02" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemm_fp8_rejects_unsupported_scale_grids" time="0.004" /><testcase classname="tests.ops.test_gemm" name="test_gemm_fp8_revalidates_cached_signature_dtypes" time="0.106" /><testcase classname="tests.ops.test_gemm" name="test_gemm_w4a16_rejects_invalid_metadata_shapes" time="0.001" /><testcase classname="tests.ops.test_gemm" name="test_gemv_boundary_lhs_row[3000-1024-dtype0-False]" time="0.029"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="3.12e-02" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemv_boundary_lhs_row[3000-1024-dtype1-False]" time="0.032"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="4.88e-04" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemv_boundary_lhs_row[1024-3000-dtype2-False]" time="0.030"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="6.25e-02" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemv_boundary_lhs_row[3001-1024-dtype3-False]" time="0.044"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="3.05e-05" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemv_boundary_rhs_col[3000-1024-dtype0-False]" time="0.004"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="3.12e-02" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemv_boundary_rhs_col[3000-1024-dtype1-False]" time="0.004"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="1.95e-03" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemv_boundary_rhs_col[1024-3000-dtype2-False]" time="0.005"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="6.25e-02" /></properties></testcase><testcase classname="tests.ops.test_gemm" name="test_gemv_boundary_rhs_col[3001-1024-dtype3-False]" time="0.005"><properties><property name="op" value="GemmOp" /><property name="op_module" value="tileops.ops.gemm" /><property name="max_abs_err" value="7.63e-06" /></properties></testcase></testsuite></testsuites>

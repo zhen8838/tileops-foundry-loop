@@ -1,0 +1,50 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.0.2, pluggy-1.6.0 -- /usr/bin/python
+cachedir: .pytest_cache
+rootdir: $CONTAINER_WORKSPACE/tileops
+configfile: pyproject.toml
+plugins: anyio-4.14.2, xdist-3.8.0, timeout-2.3.1
+collecting ... collected 39 items
+
+tests/ops/test_gemm.py::test_gemm[smoke-fp16-square] PASSED              [  2%]
+tests/ops/test_gemm.py::test_gemm[smoke-bf16-square] PASSED              [  5%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-trans-b-small-m] PASSED      [  7%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-nt-dense-ws] PASSED          [ 10%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-tuned-wide] PASSED           [ 12%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-tuned-wide-alt] PASSED       [ 15%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-thin-n] PASSED               [ 17%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-tuned-thin-n] PASSED         [ 20%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-tuned-thin-n-alt] PASSED     [ 23%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-trans-b-small-m] PASSED      [ 25%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-tuned-wide] PASSED           [ 28%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-tuned-wide-alt] PASSED       [ 30%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-thin-n] PASSED               [ 33%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-tuned-thin-n] PASSED         [ 35%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-tuned-thin-n-alt] PASSED     [ 38%]
+tests/ops/test_gemm.py::test_gemm_fp8[smoke-fp8-e4m3-per-tensor] PASSED  [ 41%]
+tests/ops/test_gemm.py::test_gemm_fp8[smoke-fp8-e4m3-block128] PASSED    [ 43%]
+tests/ops/test_gemm.py::test_gemm_fp8[smoke-fp8-e5m2-per-tensor] PASSED  [ 46%]
+tests/ops/test_gemm.py::test_gemm_fp8[full-fp8-e4m3-block128-large-m] PASSED [ 48%]
+tests/ops/test_gemm.py::test_gemm_fp8[full-fp8-e4m3-per-tensor-small-m-bias] PASSED [ 51%]
+tests/ops/test_gemm.py::test_gemm_fp8[full-fp8-e4m3-per-tensor-gemv] PASSED [ 53%]
+tests/ops/test_gemm.py::test_gemm_w4a16[smoke-w4a16-square] PASSED       [ 56%]
+tests/ops/test_gemm.py::test_gemm_w4a16[smoke-w4a16-rect] PASSED         [ 58%]
+tests/ops/test_gemm.py::test_gemm_w4a16[full-w4a16-m1] PASSED            [ 61%]
+tests/ops/test_gemm.py::test_gemm_w4a16[full-w4a16-m16] PASSED           [ 64%]
+tests/ops/test_gemm.py::test_quantize_weight_int4_keeps_one_sided_groups_in_range PASSED [ 66%]
+tests/ops/test_gemm.py::test_quantize_weight_int4_preserves_nibble_order_across_group_boundary PASSED [ 69%]
+tests/ops/test_gemm.py::test_gemm_fp8_block128_single_k_block_uses_block_kernel PASSED [ 71%]
+tests/ops/test_gemm.py::test_gemm_fp8_rejects_unsupported_scale_grids PASSED [ 74%]
+tests/ops/test_gemm.py::test_gemm_fp8_revalidates_cached_signature_dtypes PASSED [ 76%]
+tests/ops/test_gemm.py::test_gemm_w4a16_rejects_invalid_metadata_shapes PASSED [ 79%]
+tests/ops/test_gemm.py::test_gemv_boundary_lhs_row[3000-1024-dtype0-False] PASSED [ 82%]
+tests/ops/test_gemm.py::test_gemv_boundary_lhs_row[3000-1024-dtype1-False] PASSED [ 84%]
+tests/ops/test_gemm.py::test_gemv_boundary_lhs_row[1024-3000-dtype2-False] PASSED [ 87%]
+tests/ops/test_gemm.py::test_gemv_boundary_lhs_row[3001-1024-dtype3-False] PASSED [ 89%]
+tests/ops/test_gemm.py::test_gemv_boundary_rhs_col[3000-1024-dtype0-False] PASSED [ 92%]
+tests/ops/test_gemm.py::test_gemv_boundary_rhs_col[3000-1024-dtype1-False] PASSED [ 94%]
+tests/ops/test_gemm.py::test_gemv_boundary_rhs_col[1024-3000-dtype2-False] PASSED [ 97%]
+tests/ops/test_gemm.py::test_gemv_boundary_rhs_col[3001-1024-dtype3-False] PASSED [100%]
+
+- generated xml file: $CONTAINER_WORKSPACE/tileops/.artifacts/round-2-gemm-w4a16/gemm-full-retry.xml -
+============================= 39 passed in 42.48s ==============================

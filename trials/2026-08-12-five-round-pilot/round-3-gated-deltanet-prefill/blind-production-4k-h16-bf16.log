@@ -1,0 +1,4 @@
+GatedDeltaNetPrefillAuthoredKernel initialized with config: {'threads': 128}
+2026-08-11 19:10:46  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[5, 6]`
+2026-08-11 19:10:50  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+{"atol": 0.1, "dtype": "torch.bfloat16", "heads": 16, "kernel": "GatedDeltaNetPrefillAuthoredKernel", "max_o_abs": 0.0048828125, "max_state_abs": 0.004638671875, "o_dtype": "torch.bfloat16", "o_shape": [1, 4096, 16, 128], "passed": true, "rtol": 0.1, "seq_len": 4096, "state_dtype": "torch.bfloat16", "state_shape": [1, 16, 128, 128]}

@@ -1,0 +1,26 @@
+# TileOPs Benchmark Report
+Generated: 2026-08-11 21:25:19
+
+## Environment
+
+- **Torch version**: 2.10.0+cu129
+- **CUDA version (torch)**: 12.9
+- **GPU model**: NVIDIA H200
+- **Driver version**: 595.71.05
+- **GPU clocks**: SM current 1500 MHz, memory current 3201 MHz, application SM [Requested functionality has been deprecated] MHz, application memory [Requested functionality has been deprecated] MHz
+
+## Mamba2FwdOp
+
+### tileops-primary
+
+| batch | seqlen | n_heads | d_head | d_state | n_groups | dtype | label | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 2048 | 80 | 64 | 128 | 1 | torch.bfloat16 | mamba2-2p7b-b1-s2k | 0.8887 | 12.0888 | 0.0727 | 200.0000 | 0.3252 | 0.9163 | cupti |
+| 1 | 8192 | 64 | 64 | 128 | 1 | torch.float16 | mamba2-1p3b-b1-s8k | 1.3424 | 25.6109 | 0.1547 | 200.0000 | 0.4345 | 1.3732 | cupti |
+
+### mamba-primary
+
+| batch | seqlen | n_heads | d_head | d_state | n_groups | dtype | label | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 2048 | 80 | 64 | 128 | 1 | torch.bfloat16 | mamba2-2p7b-b1-s2k | 0.8031 | 13.3775 | 0.0805 | 158.0000 | 0.4637 | 1.3956 | cupti |
+| 1 | 8192 | 64 | 64 | 128 | 1 | torch.float16 | mamba2-1p3b-b1-s8k | 1.0165 | 33.8205 | 0.2042 | 135.0000 | 0.6780 | 1.6068 | cupti |

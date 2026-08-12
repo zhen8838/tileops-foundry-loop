@@ -15,6 +15,7 @@ config/                 Shared defaults and machine environment example
 scripts/                Container, preflight, dispatch, and PR commands
 templates/              Fillable round records and PR input
 examples/               Rendered PR reference
+trials/                 Sanitized multi-round outputs and retrospectives
 tileops_foundry_loop/   PR schema, validation, and renderer
 tests/                  Contract tests
 ```
@@ -31,8 +32,14 @@ The generated public result is visible in
 [examples/fused-moe/pr-body.md](examples/fused-moe/pr-body.md). Run
 `make check test` after repository changes.
 
-## Local status
+The first pilot's raw outputs and human adjudication are archived in
+[trials/2026-08-12-five-round-pilot/](trials/2026-08-12-five-round-pilot/README.md).
 
-This checkout is intentionally local-only until its GitHub owner, repository
-name, and visibility are chosen. It can be reviewed and amended here without
-creating external state.
+Import a completed local trial with:
+
+```bash
+uv run python scripts/archive_trial.py <state-directory> trials/<date-and-name>
+```
+
+The canonical public repository is
+[zhen8838/tileops-foundry-loop](https://github.com/zhen8838/tileops-foundry-loop).

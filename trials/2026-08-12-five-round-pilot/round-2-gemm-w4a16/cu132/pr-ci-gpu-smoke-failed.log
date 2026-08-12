@@ -1,0 +1,854 @@
+gpu-smoke	Set up job	﻿2026-08-12T00:42:36.5264693Z Current runner version: '2.336.0'
+gpu-smoke	Set up job	2026-08-12T00:42:36.5270618Z Runner name: 'hd03-gpu2-0031-gpu1'
+gpu-smoke	Set up job	2026-08-12T00:42:36.5271468Z Runner group name: 'Default'
+gpu-smoke	Set up job	2026-08-12T00:42:36.5272365Z Machine name: 'ca04cdcad15f'
+gpu-smoke	Set up job	2026-08-12T00:42:36.5274992Z ##[group]GITHUB_TOKEN Permissions
+gpu-smoke	Set up job	2026-08-12T00:42:36.5277030Z Checks: read
+gpu-smoke	Set up job	2026-08-12T00:42:36.5277569Z Contents: read
+gpu-smoke	Set up job	2026-08-12T00:42:36.5278084Z Metadata: read
+gpu-smoke	Set up job	2026-08-12T00:42:36.5278641Z PullRequests: read
+gpu-smoke	Set up job	2026-08-12T00:42:36.5279171Z ##[endgroup]
+gpu-smoke	Set up job	2026-08-12T00:42:36.5281035Z Secret source: Actions
+gpu-smoke	Set up job	2026-08-12T00:42:36.5282068Z Prepare workflow directory
+gpu-smoke	Set up job	2026-08-12T00:42:36.5569590Z Prepare all required actions
+gpu-smoke	Set up job	2026-08-12T00:42:36.5614732Z Getting action download info
+gpu-smoke	Set up job	2026-08-12T00:42:37.4651634Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+gpu-smoke	Set up job	2026-08-12T00:42:38.7028559Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+gpu-smoke	Set up job	2026-08-12T00:42:40.6473012Z Complete job name: gpu-smoke
+gpu-smoke	Checkout code for trusted branch	﻿2026-08-12T00:42:40.7277838Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7288078Z ##[group]Run actions/checkout@v4
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7289213Z with:
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7290109Z   repository: tile-ai/TileOPs
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7291145Z   ref: b94331bcbae7b15201a3e31367e6d5588809626f
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7292385Z   persist-credentials: false
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7293349Z   fetch-depth: 1
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7301649Z   token: ***
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7302786Z   ssh-strict: true
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7303602Z   ssh-user: git
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7304414Z   clean: true
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7305285Z   sparse-checkout-cone-mode: true
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7306283Z   fetch-tags: false
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7307161Z   show-progress: true
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7308154Z   lfs: false
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7308955Z   submodules: false
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7309808Z   set-safe-directory: true
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7310744Z   allow-unsafe-pr-checkout: false
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.7311973Z ##[endgroup]
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8323821Z Syncing repository: tile-ai/TileOPs
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8326896Z ##[group]Getting Git version info
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8328467Z Working directory is '$HOST_HOME/runner/_work/TileOPs/TileOPs'
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8330857Z [command]/usr/bin/git version
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8332009Z git version 2.34.1
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8335441Z ##[endgroup]
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8341939Z Temporarily overriding HOME='$HOST_HOME/runner/_work/_temp/c91c5c3b-b16d-4b06-bb9c-cae55c76dd82' before making global git config changes
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8345050Z Adding repository directory to the temporary git global config as a safe directory
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8347591Z [command]/usr/bin/git config --global --add safe.directory $HOST_HOME/runner/_work/TileOPs/TileOPs
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8381810Z Deleting the contents of '$HOST_HOME/runner/_work/TileOPs/TileOPs'
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8384976Z ##[group]Initializing the repository
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8388367Z [command]/usr/bin/git init $HOST_HOME/runner/_work/TileOPs/TileOPs
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8430820Z hint: Using 'master' as the name for the initial branch. This default branch name
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8432994Z hint: is subject to change. To configure the initial branch name to use in all
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8435052Z hint: of your new repositories, which will suppress this warning, call:
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8436581Z hint:
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8437675Z hint: 	git config --global init.defaultBranch <name>
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8439015Z hint:
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8440253Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8442303Z hint: 'development'. The just-created branch can be renamed via this command:
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8443981Z hint:
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8445223Z hint: 	git branch -m <name>
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8446940Z Initialized empty Git repository in $HOST_HOME/runner/_work/TileOPs/TileOPs/.git/
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8450396Z [command]/usr/bin/git remote add origin https://github.com/tile-ai/TileOPs
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8489894Z ##[endgroup]
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8491607Z ##[group]Disabling automatic garbage collection
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8493092Z [command]/usr/bin/git config --local gc.auto 0
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8525139Z ##[endgroup]
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8526735Z ##[group]Setting up auth
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8530266Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8582302Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.8980907Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.9009536Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.9399064Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.9432932Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.9786107Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.9831563Z ##[endgroup]
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.9837143Z ##[group]Fetching the repository
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:40.9845171Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin b94331bcbae7b15201a3e31367e6d5588809626f
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:41.3196292Z remote: Web page content is not allowed. This service is for resource downloads only.
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:41.3255911Z ##[error]fatal: unable to access 'https://gh-proxy.com/https://github.com/tile-ai/TileOPs/': The requested URL returned error: 403
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:41.3275891Z The process '/usr/bin/git' failed with exit code 128
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:41.3277925Z Waiting 16 seconds before trying again
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:57.3260213Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin b94331bcbae7b15201a3e31367e6d5588809626f
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9148988Z From https://gh-proxy.com/https://github.com/tile-ai/TileOPs
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9149962Z  * branch            b94331bcbae7b15201a3e31367e6d5588809626f -> FETCH_HEAD
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9178424Z ##[endgroup]
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9178877Z ##[group]Determining the checkout info
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9180362Z ##[endgroup]
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9187610Z [command]/usr/bin/git sparse-checkout disable
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9254073Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9292546Z ##[group]Checking out the ref
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9294435Z [command]/usr/bin/git checkout --progress --force b94331bcbae7b15201a3e31367e6d5588809626f
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9778144Z Note: switching to 'b94331bcbae7b15201a3e31367e6d5588809626f'.
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9778537Z
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9778876Z You are in 'detached HEAD' state. You can look around, make experimental
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9779497Z changes and commit them, and you can discard any commits you make in this
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9780006Z state without impacting any branches by switching back to a branch.
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9780317Z
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9780586Z If you want to create a new branch to retain commits you create, you may
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9781100Z do so (now or later) by using -c with the switch command. Example:
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9781352Z
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9781517Z   git switch -c <new-branch-name>
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9781835Z
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9782035Z Or undo this operation with:
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9782699Z
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9782837Z   git switch -
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9783024Z
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9783370Z Turn off this advice by setting config variable advice.detachedHead to false
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9783708Z
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9783986Z HEAD is now at b94331b [Perf] Add fused W4A16 decode kernel
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9786858Z ##[endgroup]
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9860144Z [command]/usr/bin/git log -1 --format=%H
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9916379Z b94331bcbae7b15201a3e31367e6d5588809626f
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9938432Z ##[group]Removing auth
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:58.9950096Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:59.0015348Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:59.0443227Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:59.0476601Z http.https://github.com/.extraheader
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:59.0491513Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:59.0547118Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:59.0907749Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:59.0959392Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+gpu-smoke	Checkout code for trusted branch	2026-08-12T00:42:59.1268487Z ##[endgroup]
+gpu-smoke	Checkout trusted actions (base repo)	﻿2026-08-12T00:42:59.1971323Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1974853Z ##[group]Run actions/checkout@v4
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1975471Z with:
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1976212Z   repository: tile-ai/TileOPs
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1976932Z   ref: b94331bcbae7b15201a3e31367e6d5588809626f
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1977619Z   path: .trusted
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1978223Z   persist-credentials: false
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1978869Z   fetch-depth: 1
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1979358Z   sparse-checkout: .github/actions
+gpu-smoke	Checkout trusted actions (base repo)
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1985390Z   token: ***
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1985979Z   ssh-strict: true
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1986440Z   ssh-user: git
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1987160Z   clean: true
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1987801Z   sparse-checkout-cone-mode: true
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1988599Z   fetch-tags: false
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1989231Z   show-progress: true
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1989684Z   lfs: false
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1990098Z   submodules: false
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1990552Z   set-safe-directory: true
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1991154Z   allow-unsafe-pr-checkout: false
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.1991746Z ##[endgroup]
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.2857811Z Syncing repository: tile-ai/TileOPs
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.2859559Z ##[group]Getting Git version info
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.2860958Z Working directory is '$HOST_HOME/runner/_work/TileOPs/TileOPs/.trusted'
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.2881534Z [command]/usr/bin/git version
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.2940978Z git version 2.34.1
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.2959565Z ##[endgroup]
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.2971390Z Temporarily overriding HOME='$HOST_HOME/runner/_work/_temp/ff49ef4e-cc86-42bb-9c62-7abdcbeab05b' before making global git config changes
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.2974163Z Adding repository directory to the temporary git global config as a safe directory
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.2976377Z [command]/usr/bin/git config --global --add safe.directory $HOST_HOME/runner/_work/TileOPs/TileOPs/.trusted
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3019997Z ##[group]Initializing the repository
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3023916Z [command]/usr/bin/git init $HOST_HOME/runner/_work/TileOPs/TileOPs/.trusted
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3078765Z hint: Using 'master' as the name for the initial branch. This default branch name
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3080491Z hint: is subject to change. To configure the initial branch name to use in all
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3082169Z hint: of your new repositories, which will suppress this warning, call:
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3083380Z hint:
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3084254Z hint: 	git config --global init.defaultBranch <name>
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3085270Z hint:
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3086275Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3087941Z hint: 'development'. The just-created branch can be renamed via this command:
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3089194Z hint:
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3089900Z hint: 	git branch -m <name>
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3091394Z Initialized empty Git repository in $HOST_HOME/runner/_work/TileOPs/TileOPs/.trusted/.git/
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3094349Z [command]/usr/bin/git remote add origin https://github.com/tile-ai/TileOPs
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3127945Z ##[endgroup]
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3129202Z ##[group]Disabling automatic garbage collection
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3130642Z [command]/usr/bin/git config --local gc.auto 0
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3159164Z ##[endgroup]
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3160324Z ##[group]Setting up auth
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3165527Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3214374Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3519611Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3554921Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3840852Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.3890673Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.4163770Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.4196744Z ##[endgroup]
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.4198138Z ##[group]Fetching the repository
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:42:59.4204851Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --filter=blob:none --depth=1 origin b94331bcbae7b15201a3e31367e6d5588809626f
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:00.4561289Z From https://gh-proxy.com/https://github.com/tile-ai/TileOPs
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:00.4563042Z  * branch            b94331bcbae7b15201a3e31367e6d5588809626f -> FETCH_HEAD
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:00.4588537Z ##[endgroup]
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:00.4594450Z ##[group]Determining the checkout info
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:00.4595896Z ##[endgroup]
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:00.4597335Z ##[group]Setting up sparse checkout
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:00.4607394Z [command]/usr/bin/git sparse-checkout set .github/actions
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:00.4666789Z ##[endgroup]
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:00.4667944Z ##[group]Checking out the ref
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:00.4680188Z [command]/usr/bin/git checkout --progress --force b94331bcbae7b15201a3e31367e6d5588809626f
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:00.7741485Z remote: Web page content is not allowed. This service is for resource downloads only.
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:00.7746162Z ##[error]fatal: unable to access 'https://gh-proxy.com/https://github.com/tile-ai/TileOPs/': The requested URL returned error: 403
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0322277Z Updating files: 100% (2/2)
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0323427Z Updating files: 100% (2/2), done.
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0330314Z Note: switching to 'b94331bcbae7b15201a3e31367e6d5588809626f'.
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0331199Z
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0332045Z You are in 'detached HEAD' state. You can look around, make experimental
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0334378Z changes and commit them, and you can discard any commits you make in this
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0335897Z state without impacting any branches by switching back to a branch.
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0336791Z
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0337403Z If you want to create a new branch to retain commits you create, you may
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0338838Z do so (now or later) by using -c with the switch command. Example:
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0339710Z
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0340083Z   git switch -c <new-branch-name>
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0340664Z
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0341006Z Or undo this operation with:
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0341543Z
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0341942Z   git switch -
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0342410Z
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0343195Z Turn off this advice by setting config variable advice.detachedHead to false
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0344243Z
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0344797Z HEAD is now at b94331b [Perf] Add fused W4A16 decode kernel
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0347711Z ##[endgroup]
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0421584Z [command]/usr/bin/git log -1 --format=%H
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0472826Z b94331bcbae7b15201a3e31367e6d5588809626f
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0493548Z ##[group]Removing auth
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0503841Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0552237Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0914900Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0947753Z http.https://github.com/.extraheader
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.0965949Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.1016190Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.1341848Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.1389999Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+gpu-smoke	Checkout trusted actions (base repo)	2026-08-12T00:43:03.1739165Z ##[endgroup]
+gpu-smoke	Reclaim runner disk	﻿2026-08-12T00:43:03.2481401Z Prepare all required actions
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2782392Z ##[group]Run ./.trusted/.github/actions/reclaim-runner-disk
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2782790Z with:
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2783038Z   reclaim-below-gib: 10
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2783334Z   cache-trim-cooldown-minutes: 120
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2783799Z   cache-dirs: $CI_CACHE/triton
+gpu-smoke	Reclaim runner disk	$CI_CACHE/pip
+gpu-smoke	Reclaim runner disk	$CI_CACHE/tilelang/tmp
+gpu-smoke	Reclaim runner disk
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2784269Z   atomic-cache-dirs: $CI_CACHE/tilelang/autotuner
+gpu-smoke	Reclaim runner disk
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2784634Z   df-paths: $CI_CACHE
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2785038Z   skip-atomic-age-trim: true
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2785367Z   cache-age-days: 7
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2785662Z   min-avail-gib: 5
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2785990Z   force-reclaim: false
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2786363Z ##[endgroup]
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2852328Z ##[start-action display=Reclaim runner disk;id=__self.__run]
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2892062Z ##[group]Run set -uo pipefail
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2892896Z ^[[36;1mset -uo pipefail^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2893151Z ^[[36;1m^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2893497Z ^[[36;1m# The reclaim primitives (sentinel-repair, atomic-trim, trim-files)^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2894034Z ^[[36;1m# live in reclaim_cache.sh (colocated with this action.yml) so^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2894611Z ^[[36;1m# they can be exercised under pytest without a self-hosted^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2895044Z ^[[36;1m# runner, *and* so the gpu-smoke trusted-action sparse-checkout^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2895466Z ^[[36;1m# (which only pulls `.github/actions`) still picks them up.^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2895889Z ^[[36;1m# This composite action is a thin policy wrapper — gating (when^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2896269Z ^[[36;1m# to run), not mechanism (how to trim).^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2897890Z ^[[36;1m#^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2898122Z ^[[36;1m# ${GITHUB_ACTION_PATH} resolves to^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2898445Z ^[[36;1m#   .../.github/actions/reclaim-runner-disk^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2898832Z ^[[36;1m# and the script sits alongside action.yml so the trusted-action^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2899276Z ^[[36;1m# sparse-checkout (which only pulls .github/actions) still picks^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2899694Z ^[[36;1m# it up on the gpu-smoke job.^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2900143Z ^[[36;1mRECLAIM_SCRIPT="${GITHUB_ACTION_PATH}/reclaim_cache.sh"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2900601Z ^[[36;1mif [[ ! -f "${RECLAIM_SCRIPT}" || ! -r "${RECLAIM_SCRIPT}" ]]; then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2901111Z ^[[36;1m  echo "::error::reclaim-runner-disk: expected ${RECLAIM_SCRIPT} to exist and be readable"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2901554Z ^[[36;1m  exit 1^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2901825Z ^[[36;1mfi^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2902019Z ^[[36;1m^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2902322Z ^[[36;1m# Parse a newline-separated input (as received from YAML `|` block^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2902766Z ^[[36;1m# scalars) into a bash array, stripping CR and skipping blank^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2903149Z ^[[36;1m# lines. Usage:^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2903494Z ^[[36;1m#   parse_list_into_array TARGET_ARRAY <<< "${INPUT_VAR}"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2903909Z ^[[36;1m# The named array is declared via `declare -n`; callers must have^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2904372Z ^[[36;1m# declared the target array with `local -a`/`declare -a` first, or^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2904804Z ^[[36;1m# let this helper create it implicitly (we do the latter — the^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2905228Z ^[[36;1m# helper resets the target to a fresh empty array on each call).^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2905583Z ^[[36;1mparse_list_into_array() {^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2905857Z ^[[36;1m  local -n _target_array="$1"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2906127Z ^[[36;1m  _target_array=()^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2906371Z ^[[36;1m  local _line^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2906647Z ^[[36;1m  while IFS= read -r _line; do^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2907104Z ^[[36;1m    _line="${_line//$'\r'/}"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2907379Z ^[[36;1m    [[ -z "$_line" ]] && continue^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2907657Z ^[[36;1m    _target_array+=( "$_line" )^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2907904Z ^[[36;1m  done^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2908108Z ^[[36;1m}^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2908293Z ^[[36;1m^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2908786Z ^[[36;1m# Validate numeric inputs up-front so typos fail with a clear error^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2909287Z ^[[36;1m# instead of a cryptic bash arithmetic/find error deeper in the script.^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2909842Z ^[[36;1mfor var in CACHE_AGE_DAYS MIN_AVAIL_GIB RECLAIM_BELOW_GIB CACHE_TRIM_COOLDOWN_MINUTES; do^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2910269Z ^[[36;1m  val="${!var}"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2910522Z ^[[36;1m  if [[ ! "${val}" =~ ^[0-9]+$ ]]; then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2910974Z ^[[36;1m    echo "::error::reclaim-runner-disk: input ${var}='${val}' is not a non-negative integer"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2911411Z ^[[36;1m    exit 1^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2911627Z ^[[36;1m  fi^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2911984Z ^[[36;1mdone^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2912214Z ^[[36;1m^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2912429Z ^[[36;1mif [[ -n "${DF_PATHS}" ]]; then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2912735Z ^[[36;1m  read -r -a DF_TARGETS <<< "${DF_PATHS}"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2913022Z ^[[36;1melse^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2913277Z ^[[36;1m  DF_TARGETS=()^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2913641Z ^[[36;1m  for path in "${RUNNER_TEMP:-}" $CI_CACHE; do^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2913989Z ^[[36;1m    [[ -n "${path}" ]] && DF_TARGETS+=( "${path}" )^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2914284Z ^[[36;1m  done^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2914484Z ^[[36;1mfi^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2914677Z ^[[36;1m^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2914883Z ^[[36;1mecho "Disk before reclaim:"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2915177Z ^[[36;1mdf -h "${DF_TARGETS[@]}" 2>/dev/null || true^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2915450Z ^[[36;1m^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2915662Z ^[[36;1mif [[ -z "${RUNNER_TEMP:-}" ]]; then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2916125Z ^[[36;1m  echo "::error::reclaim-runner-disk: RUNNER_TEMP is unset; cannot enforce disk floor"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2916683Z ^[[36;1m  exit 1^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2917000Z ^[[36;1mfi^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2917201Z ^[[36;1m^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2917488Z ^[[36;1mAVAIL_KB=$(df -Pk "${RUNNER_TEMP}" | awk 'NR==2 {print $4}')^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2917864Z ^[[36;1mMIN_KB=$(( MIN_AVAIL_GIB * 1024 * 1024 ))^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2918226Z ^[[36;1mRECLAIM_BELOW_KB=$(( RECLAIM_BELOW_GIB * 1024 * 1024 ))^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2918733Z ^[[36;1m# Stamp lives on the persistent bind-mounted cache (not the ephemeral container fs under^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2919321Z ^[[36;1m# $HOST_HOME so the cache-trim cooldown survives across ephemeral runner jobs.^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2919982Z ^[[36;1mCACHE_TRIM_STAMP="$CI_CACHE/.ci-maintenance/reclaim-runner-disk-cache-trim.stamp"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2920504Z ^[[36;1mDID_RECLAIM="false"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2920759Z ^[[36;1mSHOULD_RECLAIM="false"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2920996Z ^[[36;1m^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2921276Z ^[[36;1m# 0) Unconditional sentinel-repair on atomic cache roots.^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2921721Z ^[[36;1m#    Runs regardless of SHOULD_RECLAIM so that half-dead state^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2922142Z ^[[36;1m#    left by an earlier file-level trim (directory exists but^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2922563Z ^[[36;1m#    best_config.json missing) is healed on the *next* invocation,^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2922993Z ^[[36;1m#    not only when disk pressure crosses the reclaim threshold.^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2923409Z ^[[36;1m#    The per-subdir cost is a single readdir + stat, so this is^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2923750Z ^[[36;1m#    safe to run every time.^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2924151Z ^[[36;1mif [[ -n "${ATOMIC_CACHE_DIRS}" ]]; then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2924586Z ^[[36;1m  parse_list_into_array ATOMIC_ARGS <<< "${ATOMIC_CACHE_DIRS}"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2924939Z ^[[36;1m  if (( ${#ATOMIC_ARGS[@]} > 0 )); then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2925313Z ^[[36;1m    bash "${RECLAIM_SCRIPT}" sentinel-repair "${ATOMIC_ARGS[@]}" || true^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2925671Z ^[[36;1m  fi^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2925870Z ^[[36;1mfi^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2926060Z ^[[36;1m^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2926281Z ^[[36;1mif [[ "${FORCE_RECLAIM}" == "true" ]]; then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2926570Z ^[[36;1m  SHOULD_RECLAIM="true"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2926897Z ^[[36;1m  echo "force-reclaim enabled: running full reclaim pass"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2927433Z ^[[36;1melif [[ -n "${AVAIL_KB:-}" && "${AVAIL_KB}" -lt "${RECLAIM_BELOW_KB}" ]]; then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2927803Z ^[[36;1m  SHOULD_RECLAIM="true"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2928155Z ^[[36;1m  echo "Free space below ${RECLAIM_BELOW_GIB}GiB: running reclaim pass"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2928511Z ^[[36;1melse^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2928774Z ^[[36;1m  echo "Free space is healthy; skipping reclaim pass"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2929087Z ^[[36;1mfi^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2929281Z ^[[36;1m^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2929553Z ^[[36;1m# 1) Age-based trim of the file-granularity cache roots, plus^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2929956Z ^[[36;1m#    atomic-granularity trim of atomic cache roots.^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2930280Z ^[[36;1mSHOULD_TRIM_CACHE="false"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2930698Z ^[[36;1mif [[ "${SHOULD_RECLAIM}" == "true" && ( -n "${CACHE_DIRS}" || -n "${ATOMIC_CACHE_DIRS}" ) ]]; then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2931219Z ^[[36;1m  if [[ "${FORCE_RECLAIM}" == "true" || "${CACHE_TRIM_COOLDOWN_MINUTES}" == "0" ]]; then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2931615Z ^[[36;1m    SHOULD_TRIM_CACHE="true"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2932101Z ^[[36;1m  elif [[ ! -e "${CACHE_TRIM_STAMP}" ]]; then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2932408Z ^[[36;1m    SHOULD_TRIM_CACHE="true"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2932662Z ^[[36;1m  else^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2932878Z ^[[36;1m    now_epoch=$(date +%s)^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2933228Z ^[[36;1m    stamp_epoch=$(stat -c %Y "${CACHE_TRIM_STAMP}" 2>/dev/null || echo 0)^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2933662Z ^[[36;1m    cooldown_seconds=$(( CACHE_TRIM_COOLDOWN_MINUTES * 60 ))^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2934062Z ^[[36;1m    if (( now_epoch - stamp_epoch >= cooldown_seconds )); then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2934492Z ^[[36;1m      SHOULD_TRIM_CACHE="true"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2934752Z ^[[36;1m    else^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2935109Z ^[[36;1m      remaining_minutes=$(( (cooldown_seconds - (now_epoch - stamp_epoch) + 59) / 60 ))^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2935638Z ^[[36;1m      echo "Skipping cache trim: ${remaining_minutes} minute(s) left in cooldown"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2936020Z ^[[36;1m    fi^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2936224Z ^[[36;1m  fi^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2936423Z ^[[36;1mfi^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2936614Z ^[[36;1m^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2936847Z ^[[36;1mif [[ "${SHOULD_TRIM_CACHE}" == "true" ]]; then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2937150Z ^[[36;1m  DID_RECLAIM="true"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2937383Z ^[[36;1m^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2937683Z ^[[36;1m  # File-level trim for non-atomic roots (triton cache, pip, wheel).^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2938061Z ^[[36;1m  if [[ -n "${CACHE_DIRS}" ]]; then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2938405Z ^[[36;1m    parse_list_into_array FILE_TRIM_ARGS <<< "${CACHE_DIRS}"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2938768Z ^[[36;1m    if (( ${#FILE_TRIM_ARGS[@]} > 0 )); then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2939202Z ^[[36;1m      bash "${RECLAIM_SCRIPT}" trim-files "${CACHE_AGE_DAYS}" "${FILE_TRIM_ARGS[@]}" || true^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2939626Z ^[[36;1m    fi^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2939842Z ^[[36;1m  fi^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2940038Z ^[[36;1m^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2940300Z ^[[36;1m  # Whole-subdir trim for atomic roots (tilelang autotuner).^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2940712Z ^[[36;1m  # Atomic roots are NEVER file-trimmed: doing so can strand a^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2941122Z ^[[36;1m  # subdir without its best_config.json sentinel and crash the^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2941454Z ^[[36;1m  # next consumer.^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2941730Z ^[[36;1m  #^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2942009Z ^[[36;1m  # Callers that run on every PR (gpu-smoke.yml) opt out via^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2942443Z ^[[36;1m  # skip-atomic-age-trim so the destructive whole-subdir eviction^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2942880Z ^[[36;1m  # only happens via the daily runner-maintenance.yml job;^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2943301Z ^[[36;1m  # sentinel-repair above still ran unconditionally, so half-dead^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2943703Z ^[[36;1m  # state is healed regardless of this opt-out.^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2944062Z ^[[36;1m  if [[ "${SKIP_ATOMIC_AGE_TRIM}" == "true" ]]; then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2944500Z ^[[36;1m    echo "Skipping atomic age-trim (opted out)"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2944833Z ^[[36;1m  elif [[ -n "${ATOMIC_CACHE_DIRS}" ]]; then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2945216Z ^[[36;1m    parse_list_into_array ATOMIC_TRIM_ARGS <<< "${ATOMIC_CACHE_DIRS}"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2945603Z ^[[36;1m    if (( ${#ATOMIC_TRIM_ARGS[@]} > 0 )); then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2946039Z ^[[36;1m      bash "${RECLAIM_SCRIPT}" atomic-trim "${CACHE_AGE_DAYS}" "${ATOMIC_TRIM_ARGS[@]}" || true^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2946466Z ^[[36;1m    fi^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2946669Z ^[[36;1m  fi^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2946866Z ^[[36;1m^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2947109Z ^[[36;1m  mkdir -p "$(dirname "${CACHE_TRIM_STAMP}")"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2947415Z ^[[36;1m  touch "${CACHE_TRIM_STAMP}"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2947672Z ^[[36;1mfi^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2947867Z ^[[36;1m^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2948094Z ^[[36;1mif [[ "${SHOULD_RECLAIM}" != "true" ]]; then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2948519Z ^[[36;1m  echo "Reclaim work skipped because free space is above the proactive threshold"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2948960Z ^[[36;1melif [[ "${DID_RECLAIM}" != "true" ]]; then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2949322Z ^[[36;1m  echo "Reclaim pass ran, but nothing was eligible for deletion"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2949675Z ^[[36;1mfi^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2949871Z ^[[36;1m^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2950084Z ^[[36;1mecho "Disk after reclaim:"^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2950369Z ^[[36;1mdf -h "${DF_TARGETS[@]}" 2>/dev/null || true^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2950659Z ^[[36;1m^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2950930Z ^[[36;1m# Hard guard: abort early with a clear message if still near-full.^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2951479Z ^[[36;1mAVAIL_KB=$(df -Pk "${RUNNER_TEMP}" | awk 'NR==2 {print $4}')^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2951944Z ^[[36;1mif [[ -n "${AVAIL_KB:-}" && "${AVAIL_KB}" -lt "${MIN_KB}" ]]; then^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2952621Z ^[[36;1m  echo "::error::Runner ${RUNNER_NAME:-unknown} has <${MIN_AVAIL_GIB}GiB free on ${RUNNER_TEMP} after reclaim (${AVAIL_KB} KiB). Manual cleanup required."^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2953209Z ^[[36;1m  exit 1^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2953414Z ^[[36;1mfi^[[0m
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2964682Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2965029Z env:
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2965230Z   CACHE_AGE_DAYS: 7
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2965445Z   MIN_AVAIL_GIB: 5
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2965654Z   RECLAIM_BELOW_GIB: 10
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2965884Z   CACHE_TRIM_COOLDOWN_MINUTES: 120
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2966276Z   CACHE_DIRS: $CI_CACHE/triton
+gpu-smoke	Reclaim runner disk	$CI_CACHE/pip
+gpu-smoke	Reclaim runner disk	$CI_CACHE/tilelang/tmp
+gpu-smoke	Reclaim runner disk
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2966659Z   ATOMIC_CACHE_DIRS: $CI_CACHE/tilelang/autotuner
+gpu-smoke	Reclaim runner disk
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2966942Z   DF_PATHS: $CI_CACHE
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2967177Z   FORCE_RECLAIM: false
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2967399Z   SKIP_ATOMIC_AGE_TRIM: true
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.2967638Z ##[endgroup]
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.3029513Z Disk before reclaim:
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.3049322Z Filesystem      Size  Used Avail Use% Mounted on
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.3050447Z /dev/nvme2n1    3.5T  710G  2.8T  21% $CI_CACHE
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.3098073Z Free space is healthy; skipping reclaim pass
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.3099363Z Reclaim work skipped because free space is above the proactive threshold
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.3100565Z Disk after reclaim:
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.3115209Z Filesystem      Size  Used Avail Use% Mounted on
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.3116251Z /dev/nvme2n1    3.5T  710G  2.8T  21% $CI_CACHE
+gpu-smoke	Reclaim runner disk	2026-08-12T00:43:03.3153130Z ##[end-action id=__self.__run;outcome=success;conclusion=success;duration_ms=29]
+gpu-smoke	Validate GPU frequency	﻿2026-08-12T00:43:03.3187468Z ##[group]Run set -euo pipefail
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3187845Z ^[[36;1mset -euo pipefail^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3188137Z ^[[36;1mTARGET_CLOCK_MHZ=1500^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3188424Z ^[[36;1mRETRIES=5^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3188673Z ^[[36;1mSLEEP_SECONDS=2^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3188917Z ^[[36;1m^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3189216Z ^[[36;1mif ! command -v nvidia-smi >/dev/null 2>&1; then^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3189669Z ^[[36;1m  echo "::error::nvidia-smi is not available on this runner."^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3190048Z ^[[36;1m  exit 1^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3190274Z ^[[36;1mfi^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3190488Z ^[[36;1m^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3190714Z ^[[36;1mecho "Detected GPUs:"^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3190993Z ^[[36;1mnvidia-smi -L^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3191240Z ^[[36;1m^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3191450Z ^[[36;1mattempt=1^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3191778Z ^[[36;1mwhile [ "$attempt" -le "$RETRIES" ]; do^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3192161Z ^[[36;1m  echo "Validation attempt ${attempt}/${RETRIES}"^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3192551Z ^[[36;1m  mismatch=0^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3192874Z ^[[36;1m  while IFS=',' read -r gpu_index gpu_name gpu_clock; do^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3193282Z ^[[36;1m    gpu_index="$(echo "$gpu_index" | xargs)"^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3193634Z ^[[36;1m    gpu_name="$(echo "$gpu_name" | xargs)"^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3193984Z ^[[36;1m    gpu_clock="$(echo "$gpu_clock" | xargs)"^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3194384Z ^[[36;1m    echo "GPU ${gpu_index} (${gpu_name}) clock: ${gpu_clock} MHz"^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3194816Z ^[[36;1m    if [[ "$gpu_clock" != "$TARGET_CLOCK_MHZ" ]]; then^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3195159Z ^[[36;1m      mismatch=1^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3195409Z ^[[36;1m    fi^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3195881Z ^[[36;1m  done < <(nvidia-smi --query-gpu=index,name,clocks.current.graphics --format=csv,noheader,nounits)^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3196395Z ^[[36;1m^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3196634Z ^[[36;1m  if [[ "$mismatch" -eq 0 ]]; then^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3197006Z ^[[36;1m    echo "All GPUs locked at ${TARGET_CLOCK_MHZ} MHz."^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3197353Z ^[[36;1m    break^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3197582Z ^[[36;1m  fi^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3197940Z ^[[36;1m^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3198188Z ^[[36;1m  if [[ "$attempt" -eq "$RETRIES" ]]; then^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3198703Z ^[[36;1m    echo "::error::GPU frequency validation failed. Expected ${TARGET_CLOCK_MHZ} MHz on all GPUs."^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3199194Z ^[[36;1m    exit 1^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3199424Z ^[[36;1m  fi^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3199650Z ^[[36;1m^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3199879Z ^[[36;1m  sleep "$SLEEP_SECONDS"^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3200164Z ^[[36;1m  attempt=$((attempt + 1))^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3200437Z ^[[36;1mdone^[[0m
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3208051Z shell: /usr/bin/bash -e {0}
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3208528Z ##[endgroup]
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3235170Z Detected GPUs:
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3427781Z GPU 0: NVIDIA H200 (UUID: GPU-3a3112ff-837c-3b87-38d1-cb203d656589)
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3458675Z Validation attempt 1/5
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3781379Z GPU 0 (NVIDIA H200) clock: 1500 MHz
+gpu-smoke	Validate GPU frequency	2026-08-12T00:43:03.3782398Z All GPUs locked at 1500 MHz.
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	﻿2026-08-12T00:43:03.3864718Z ##[group]Run bash scripts/ci/install_tileops.sh
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:03.3866019Z ^[[36;1mbash scripts/ci/install_tileops.sh^[[0m
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:03.3886594Z shell: /usr/bin/bash -e {0}
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:03.3887474Z ##[endgroup]
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:05.9706561Z Defaulting to user installation because normal site-packages is not writeable
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:06.0343262Z Obtaining file://$HOST_HOME/runner/_work/TileOPs/TileOPs
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:06.0360643Z   Installing build dependencies: started
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:11.5246393Z   Installing build dependencies: finished with status 'done'
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:11.5260622Z   Checking if build backend supports build_editable: started
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:11.7633890Z   Checking if build backend supports build_editable: finished with status 'done'
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:11.7653136Z   Getting requirements to build editable: started
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:12.2137089Z   Getting requirements to build editable: finished with status 'done'
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:12.2159051Z   Preparing editable metadata (pyproject.toml): started
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:12.4867352Z   Preparing editable metadata (pyproject.toml): finished with status 'done'
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:12.5115921Z Building wheels for collected packages: tileops
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:12.5135094Z   Building editable for tileops (pyproject.toml): started
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:12.8786253Z   Building editable for tileops (pyproject.toml): finished with status 'done'
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:12.8800547Z   Created wheel for tileops: filename=tileops-0.0.1.dev1+gb94331bcb-0.editable-py3-none-any.whl size=5232 sha256=8530773294aa27b1ac46432ce0f664286773441d21939dfcebfdda54900b0a89
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:12.8805207Z   Stored in directory: $TMP_PATH
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:12.8876402Z Successfully built tileops
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:12.9183721Z Installing collected packages: tileops
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:12.9275978Z Successfully installed tileops-0.0.1.dev1+gb94331bcb
+gpu-smoke	Install TileOPs (image-baked stack, --no-deps)	2026-08-12T00:43:14.7080413Z install_tileops: tileops + tilelang import OK
+gpu-smoke	Run tests	﻿2026-08-12T00:43:15.0222700Z ##[group]Run set -euo pipefail
+gpu-smoke	Run tests	2026-08-12T00:43:15.0224701Z ^[[36;1mset -euo pipefail^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0226691Z ^[[36;1m# Per-test hang guard: a stuck kernel (e.g. a cold-compile loop or a spinning CUDA^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0229366Z ^[[36;1m# call) fails as a timeout with a thread dump instead of wedging the job. --no-deps^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0231885Z ^[[36;1m# tileops install doesn't bring this; pin via constraints.txt so the install is^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0234404Z ^[[36;1m# deterministic (the runner image should bake it and drop this install — follow-up).^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0236755Z ^[[36;1mpython3 -m pip install -q -c constraints.txt pytest-timeout^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0238640Z ^[[36;1mcurrent_dir="$(pwd)"^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0240424Z ^[[36;1mexport PYTHONPATH="${current_dir}${PYTHONPATH:+:$PYTHONPATH}"^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0242553Z ^[[36;1mecho "PYTHONPATH=$PYTHONPATH"^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0243988Z ^[[36;1mpython3 - <<'PY'^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0245387Z ^[[36;1mimport os^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0248185Z ^[[36;1m^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0249454Z ^[[36;1mprint("Runtime cache env:")^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0251366Z ^[[36;1mfor key in ("TILELANG_CACHE_DIR", "TILELANG_TMP_DIR", "TRITON_CACHE_DIR"):^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0253518Z ^[[36;1m    print(f"{key}={os.environ.get(key)}")^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0255178Z ^[[36;1mPY^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0256350Z ^[[36;1m^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0257652Z ^[[36;1mTEST_MARK_EXPR="smoke or full"^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0259593Z ^[[36;1mif [[ "$EVENT_NAME" == "pull_request" ]]; then^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0261022Z ^[[36;1m  TEST_MARK_EXPR="smoke"^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0262533Z ^[[36;1mfi^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0263785Z ^[[36;1m^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0265082Z ^[[36;1mecho "Resolved test scope: ${TEST_SCOPE}"^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0266789Z ^[[36;1mecho "Resolved pytest targets: ${PYTEST_TARGETS}"^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0268854Z ^[[36;1mecho "Diff-scoped full-tier targets: ${FULL_TIER_TARGETS:-<none>}"^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0270856Z ^[[36;1mread -r -a TARGETS <<< "${PYTEST_TARGETS}"^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0272598Z ^[[36;1mread -r -a FULL_TARGETS <<< "${FULL_TIER_TARGETS:-}"^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0274503Z ^[[36;1m^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0276036Z ^[[36;1m# Diff-scoped full-tier PR gate: changed test files run^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0278057Z ^[[36;1m# -m "smoke or full"; everything else stays smoke-only for latency.^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0279903Z ^[[36;1m# Residual gap (accepted): a PR breaking full-tier cases in files it^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0281787Z ^[[36;1m# does not touch is only caught by the push-to-main run — closing it^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0284143Z ^[[36;1m# would cost a full suite per PR. Push-tier failure triage: bisect^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0285772Z ^[[36;1m# PRs merged since the last green push run.^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0287569Z ^[[36;1mif [[ "$EVENT_NAME" == "pull_request" && "${#FULL_TARGETS[@]}" -gt 0 ]]; then^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0289281Z ^[[36;1m  if [[ "$TEST_SCOPE" == "targeted" ]]; then^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0290869Z ^[[36;1m    # Targeted scope already selects exactly these files; promote^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0292803Z ^[[36;1m    # the single pass instead of running twice.^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0294150Z ^[[36;1m    TEST_MARK_EXPR="smoke or full"^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0295472Z ^[[36;1m    FULL_TARGETS=()^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0296644Z ^[[36;1m  else^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0298293Z ^[[36;1m    echo "Running diff-scoped pytest -m \"smoke or full\" on ${#FULL_TARGETS[@]} changed test file(s)"^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0300339Z ^[[36;1m    diff_status=0^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0301792Z ^[[36;1m    python3 -m pytest -q "${FULL_TARGETS[@]}" -m "smoke or full" \^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0303453Z ^[[36;1m      --timeout=600 --timeout-method=thread \^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0305241Z ^[[36;1m      --junit-xml=gpu_smoke_full_results.xml | tee gpu_smoke_full.log \^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0306826Z ^[[36;1m      || diff_status=$?^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0308121Z ^[[36;1m    # Exit 5 = no tests collected; not a failure.^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0309703Z ^[[36;1m    if [[ "$diff_status" -ne 0 && "$diff_status" -ne 5 ]]; then^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0311644Z ^[[36;1m      exit "$diff_status"^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0312912Z ^[[36;1m    fi^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0314118Z ^[[36;1m    # Already ran above; exclude from the smoke pass.^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0315538Z ^[[36;1m    for full_target in "${FULL_TARGETS[@]}"; do^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0317064Z ^[[36;1m      TARGETS+=("--ignore=${full_target}")^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0318277Z ^[[36;1m    done^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0319234Z ^[[36;1m  fi^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0320229Z ^[[36;1mfi^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0321138Z ^[[36;1m^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0322530Z ^[[36;1m# Marker the baseline pass actually executes; the report step^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0324021Z ^[[36;1m# labels the tier from it.^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0325399Z ^[[36;1mecho "EXECUTED_MARK_EXPR=${TEST_MARK_EXPR}" >> "$GITHUB_ENV"^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0326931Z ^[[36;1m^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0328242Z ^[[36;1mecho "Running pytest -m \"${TEST_MARK_EXPR}\" on ${#TARGETS[@]} target(s)"^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0330425Z ^[[36;1mpython3 -m pytest -q "${TARGETS[@]}" -m "${TEST_MARK_EXPR}" \^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0332118Z ^[[36;1m  --timeout=600 --timeout-method=thread \^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0333644Z ^[[36;1m  --junit-xml=gpu_smoke_results.xml | tee gpu_smoke.log^[[0m
+gpu-smoke	Run tests	2026-08-12T00:43:15.0357844Z shell: /usr/bin/bash -e {0}
+gpu-smoke	Run tests	2026-08-12T00:43:15.0359120Z env:
+gpu-smoke	Run tests	2026-08-12T00:43:15.0360140Z   EVENT_NAME: pull_request
+gpu-smoke	Run tests	2026-08-12T00:43:15.0361220Z   TEST_SCOPE: full-smoke
+gpu-smoke	Run tests	2026-08-12T00:43:15.0362529Z   PYTEST_TARGETS: tests
+gpu-smoke	Run tests	2026-08-12T00:43:15.0363656Z   FULL_TIER_TARGETS: tests/ops/test_gemm.py
+gpu-smoke	Run tests	2026-08-12T00:43:15.0364908Z ##[endgroup]
+gpu-smoke	Run tests	2026-08-12T00:43:15.7989636Z PYTHONPATH=$HOST_HOME/runner/_work/TileOPs/TileOPs
+gpu-smoke	Run tests	2026-08-12T00:43:15.8099665Z Runtime cache env:
+gpu-smoke	Run tests	2026-08-12T00:43:15.8101054Z TILELANG_CACHE_DIR=$CI_CACHE/tilelang
+gpu-smoke	Run tests	2026-08-12T00:43:15.8102497Z TILELANG_TMP_DIR=$CI_CACHE/tilelang/tmp
+gpu-smoke	Run tests	2026-08-12T00:43:15.8103683Z TRITON_CACHE_DIR=$CI_CACHE/triton
+gpu-smoke	Run tests	2026-08-12T00:43:15.8119790Z Resolved test scope: full-smoke
+gpu-smoke	Run tests	2026-08-12T00:43:15.8121010Z Resolved pytest targets: tests
+gpu-smoke	Run tests	2026-08-12T00:43:15.8122427Z Diff-scoped full-tier targets: tests/ops/test_gemm.py
+gpu-smoke	Run tests	2026-08-12T00:43:15.8124180Z Running diff-scoped pytest -m "smoke or full" on 1 changed test file(s)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2302562Z ....F..F...............................                                  [100%]
+gpu-smoke	Run tests	2026-08-12T00:43:32.2304892Z =================================== FAILURES ===================================
+gpu-smoke	Run tests	2026-08-12T00:43:32.2306600Z _______________________ test_gemm[full-fp16-tuned-wide] ________________________
+gpu-smoke	Run tests	2026-08-12T00:43:32.2307685Z
+gpu-smoke	Run tests	2026-08-12T00:43:32.2308430Z m = 1, n = 7168, k = 16384, dtype = torch.float16, trans_a = False
+gpu-smoke	Run tests	2026-08-12T00:43:32.2309981Z trans_b = True, tune = True
+gpu-smoke	Run tests	2026-08-12T00:43:32.2310816Z
+gpu-smoke	Run tests	2026-08-12T00:43:32.2311231Z     @GemmFixture
+gpu-smoke	Run tests	2026-08-12T00:43:32.2312864Z     def test_gemm(m: int, n: int, k: int, dtype: torch.dtype, trans_a: bool, trans_b: bool,
+gpu-smoke	Run tests	2026-08-12T00:43:32.2314801Z                   tune: bool) -> None:
+gpu-smoke	Run tests	2026-08-12T00:43:32.2316228Z         test = GemmTest(m, n, k, dtype, trans_a, trans_b)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2317769Z         op = GemmOp(trans_a=trans_a, trans_b=trans_b, tune=tune)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2319305Z         if dtype == torch.float16:
+gpu-smoke	Run tests	2026-08-12T00:43:32.2320566Z             tolerances = {"atol": 1e-3, "rtol": 1e-3}
+gpu-smoke	Run tests	2026-08-12T00:43:32.2321831Z         else:
+gpu-smoke	Run tests	2026-08-12T00:43:32.2323065Z             tolerances = {"atol": 1.6e-2, "rtol": 1.6e-2}
+gpu-smoke	Run tests	2026-08-12T00:43:32.2324495Z >       test.check(op, *test.gen_inputs(), **tolerances)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2325306Z
+gpu-smoke	Run tests	2026-08-12T00:43:32.2325923Z tests/ops/test_gemm.py:191:
+gpu-smoke	Run tests	2026-08-12T00:43:32.2327378Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+gpu-smoke	Run tests	2026-08-12T00:43:32.2328785Z tests/test_base.py:136: in check
+gpu-smoke	Run tests	2026-08-12T00:43:32.2330034Z     cmp(output, output_ref)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2331293Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+gpu-smoke	Run tests	2026-08-12T00:43:32.2333109Z
+gpu-smoke	Run tests	2026-08-12T00:43:32.2333794Z output = tensor([[-241.3750,  130.5000,  134.3750,  ..., -151.8750,  -99.0000,
+gpu-smoke	Run tests	2026-08-12T00:43:32.2335549Z           -56.0625]], device='cuda:0', dtype=torch.float16)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2337231Z output_ref = tensor([[-241.3750,  130.5000,  134.3750,  ..., -151.8750,  -99.0000,
+gpu-smoke	Run tests	2026-08-12T00:43:32.2338883Z           -56.0625]], device='cuda:0', dtype=torch.float16)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2340207Z atol = 0.001, rtol = 0.001
+gpu-smoke	Run tests	2026-08-12T00:43:32.2340947Z
+gpu-smoke	Run tests	2026-08-12T00:43:32.2342245Z     def allclose_compare(output: torch.Tensor, output_ref: torch.Tensor, atol: float = 1e-8, rtol: float = 1e-5) -> None:
+gpu-smoke	Run tests	2026-08-12T00:43:32.2344444Z         """Default comparison using torch.allclose."""
+gpu-smoke	Run tests	2026-08-12T00:43:32.2346168Z         output, output_ref = torch.broadcast_tensors(output, output_ref)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2347719Z >       torch.testing.assert_close(
+gpu-smoke	Run tests	2026-08-12T00:43:32.2348884Z             output,
+gpu-smoke	Run tests	2026-08-12T00:43:32.2349924Z             output_ref,
+gpu-smoke	Run tests	2026-08-12T00:43:32.2351346Z             atol=atol,
+gpu-smoke	Run tests	2026-08-12T00:43:32.2352439Z             rtol=rtol,
+gpu-smoke	Run tests	2026-08-12T00:43:32.2353391Z             equal_nan=True,
+gpu-smoke	Run tests	2026-08-12T00:43:32.2354528Z         )
+gpu-smoke	Run tests	2026-08-12T00:43:32.2355590Z E       AssertionError: Tensor-likes are not close!
+gpu-smoke	Run tests	2026-08-12T00:43:32.2356863Z E
+gpu-smoke	Run tests	2026-08-12T00:43:32.2357922Z E       Mismatched elements: 11 / 7168 (0.2%)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2359571Z E       Greatest absolute difference: 0.00390625 at index (0, 3966) (up to 0.001 allowed)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2361893Z E       Greatest relative difference: 0.01556396484375 at index (0, 6334) (up to 0.001 allowed)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2363085Z
+gpu-smoke	Run tests	2026-08-12T00:43:32.2363647Z tests/test_base.py:42: AssertionError
+gpu-smoke	Run tests	2026-08-12T00:43:32.2365106Z ----------------------------- Captured stdout call -----------------------------
+gpu-smoke	Run tests	2026-08-12T00:43:32.2366774Z Start autotuning GemvKernel...
+gpu-smoke	Run tests	2026-08-12T00:43:32.2368141Z Best config: {'block_n': 1, 'reduce_threads': 32, 'num_stages': 2}
+gpu-smoke	Run tests	2026-08-12T00:43:32.2370101Z GemvKernel initialized with config: {'block_n': 1, 'reduce_threads': 32, 'num_stages': 2}
+gpu-smoke	Run tests	2026-08-12T00:43:32.2372870Z 2026-08-12 00:43:22  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemv_main` with `out_idx=[2]`
+gpu-smoke	Run tests	2026-08-12T00:43:32.2375760Z 2026-08-12 00:43:22  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemv_main`
+gpu-smoke	Run tests	2026-08-12T00:43:32.2378177Z ______________________ test_gemm[full-fp16-tuned-thin-n] _______________________
+gpu-smoke	Run tests	2026-08-12T00:43:32.2379289Z
+gpu-smoke	Run tests	2026-08-12T00:43:32.2379886Z m = 7168, n = 1, k = 16384, dtype = torch.float16, trans_a = False
+gpu-smoke	Run tests	2026-08-12T00:43:32.2381261Z trans_b = False, tune = False
+gpu-smoke	Run tests	2026-08-12T00:43:32.2382187Z
+gpu-smoke	Run tests	2026-08-12T00:43:32.2382560Z     @GemmFixture
+gpu-smoke	Run tests	2026-08-12T00:43:32.2384001Z     def test_gemm(m: int, n: int, k: int, dtype: torch.dtype, trans_a: bool, trans_b: bool,
+gpu-smoke	Run tests	2026-08-12T00:43:32.2385705Z                   tune: bool) -> None:
+gpu-smoke	Run tests	2026-08-12T00:43:32.2387038Z         test = GemmTest(m, n, k, dtype, trans_a, trans_b)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2388582Z         op = GemmOp(trans_a=trans_a, trans_b=trans_b, tune=tune)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2390011Z         if dtype == torch.float16:
+gpu-smoke	Run tests	2026-08-12T00:43:32.2391239Z             tolerances = {"atol": 1e-3, "rtol": 1e-3}
+gpu-smoke	Run tests	2026-08-12T00:43:32.2392519Z         else:
+gpu-smoke	Run tests	2026-08-12T00:43:32.2393699Z             tolerances = {"atol": 1.6e-2, "rtol": 1.6e-2}
+gpu-smoke	Run tests	2026-08-12T00:43:32.2395153Z >       test.check(op, *test.gen_inputs(), **tolerances)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2396017Z
+gpu-smoke	Run tests	2026-08-12T00:43:32.2396654Z tests/ops/test_gemm.py:191:
+gpu-smoke	Run tests	2026-08-12T00:43:32.2397973Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+gpu-smoke	Run tests	2026-08-12T00:43:32.2399316Z tests/test_base.py:136: in check
+gpu-smoke	Run tests	2026-08-12T00:43:32.2400525Z     cmp(output, output_ref)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2401861Z _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+gpu-smoke	Run tests	2026-08-12T00:43:32.2402716Z
+gpu-smoke	Run tests	2026-08-12T00:43:32.2403252Z output = tensor([[  -5.4180],
+gpu-smoke	Run tests	2026-08-12T00:43:32.2404682Z         [ 177.7500],
+gpu-smoke	Run tests	2026-08-12T00:43:32.2405652Z         [ 130.1250],
+gpu-smoke	Run tests	2026-08-12T00:43:32.2406648Z         ...,
+gpu-smoke	Run tests	2026-08-12T00:43:32.2407603Z         [ -34.2500],
+gpu-smoke	Run tests	2026-08-12T00:43:32.2408506Z         [ -43.6250],
+gpu-smoke	Run tests	2026-08-12T00:43:32.2409770Z         [-218.3750]], device='cuda:0', dtype=torch.float16)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2411121Z output_ref = tensor([[  -5.4180],
+gpu-smoke	Run tests	2026-08-12T00:43:32.2412310Z         [ 177.7500],
+gpu-smoke	Run tests	2026-08-12T00:43:32.2413311Z         [ 130.1250],
+gpu-smoke	Run tests	2026-08-12T00:43:32.2414234Z         ...,
+gpu-smoke	Run tests	2026-08-12T00:43:32.2415225Z         [ -34.2500],
+gpu-smoke	Run tests	2026-08-12T00:43:32.2416142Z         [ -43.6250],
+gpu-smoke	Run tests	2026-08-12T00:43:32.2417208Z         [-218.3750]], device='cuda:0', dtype=torch.float16)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2418635Z atol = 0.001, rtol = 0.001
+gpu-smoke	Run tests	2026-08-12T00:43:32.2419204Z
+gpu-smoke	Run tests	2026-08-12T00:43:32.2420519Z     def allclose_compare(output: torch.Tensor, output_ref: torch.Tensor, atol: float = 1e-8, rtol: float = 1e-5) -> None:
+gpu-smoke	Run tests	2026-08-12T00:43:32.2422742Z         """Default comparison using torch.allclose."""
+gpu-smoke	Run tests	2026-08-12T00:43:32.2424616Z         output, output_ref = torch.broadcast_tensors(output, output_ref)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2426171Z >       torch.testing.assert_close(
+gpu-smoke	Run tests	2026-08-12T00:43:32.2427360Z             output,
+gpu-smoke	Run tests	2026-08-12T00:43:32.2428339Z             output_ref,
+gpu-smoke	Run tests	2026-08-12T00:43:32.2429397Z             atol=atol,
+gpu-smoke	Run tests	2026-08-12T00:43:32.2430484Z             rtol=rtol,
+gpu-smoke	Run tests	2026-08-12T00:43:32.2431536Z             equal_nan=True,
+gpu-smoke	Run tests	2026-08-12T00:43:32.2432638Z         )
+gpu-smoke	Run tests	2026-08-12T00:43:32.2433707Z E       AssertionError: Tensor-likes are not close!
+gpu-smoke	Run tests	2026-08-12T00:43:32.2434993Z E
+gpu-smoke	Run tests	2026-08-12T00:43:32.2436045Z E       Mismatched elements: 15 / 7168 (0.2%)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2437737Z E       Greatest absolute difference: 0.00390625 at index (1401, 0) (up to 0.001 allowed)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2439768Z E       Greatest relative difference: 0.200927734375 at index (712, 0) (up to 0.001 allowed)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2441140Z
+gpu-smoke	Run tests	2026-08-12T00:43:32.2441590Z tests/test_base.py:42: AssertionError
+gpu-smoke	Run tests	2026-08-12T00:43:32.2443304Z ----------------------------- Captured stdout call -----------------------------
+gpu-smoke	Run tests	2026-08-12T00:43:32.2445274Z GemvKernel initialized with config: {'block_n': 8, 'reduce_threads': 32, 'num_stages': 2}
+gpu-smoke	Run tests	2026-08-12T00:43:32.2447943Z 2026-08-12 00:43:23  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemv_main` with `out_idx=[2]`
+gpu-smoke	Run tests	2026-08-12T00:43:32.2450840Z 2026-08-12 00:43:23  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemv_main`
+gpu-smoke	Run tests	2026-08-12T00:43:32.2453094Z =========================== short test summary info ============================
+gpu-smoke	Run tests	2026-08-12T00:43:32.2469387Z FAILED tests/ops/test_gemm.py::test_gemm[full-fp16-tuned-wide] - AssertionError: Tensor-likes are not close!
+gpu-smoke	Run tests	2026-08-12T00:43:32.2471005Z
+gpu-smoke	Run tests	2026-08-12T00:43:32.2471659Z Mismatched elements: 11 / 7168 (0.2%)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2473427Z Greatest absolute difference: 0.00390625 at index (0, 3966) (up to 0.001 allowed)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2475472Z Greatest relative difference: 0.01556396484375 at index (0, 6334) (up to 0.001 allowed)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2478005Z FAILED tests/ops/test_gemm.py::test_gemm[full-fp16-tuned-thin-n] - AssertionError: Tensor-likes are not close!
+gpu-smoke	Run tests	2026-08-12T00:43:32.2479464Z
+gpu-smoke	Run tests	2026-08-12T00:43:32.2480005Z Mismatched elements: 15 / 7168 (0.2%)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2481503Z Greatest absolute difference: 0.00390625 at index (1401, 0) (up to 0.001 allowed)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2483678Z Greatest relative difference: 0.200927734375 at index (712, 0) (up to 0.001 allowed)
+gpu-smoke	Run tests	2026-08-12T00:43:32.2485325Z 2 failed, 37 passed in 14.37s
+gpu-smoke	Run tests	2026-08-12T00:43:32.9133439Z ##[error]Process completed with exit code 1.
+gpu-smoke	Generate gpu-smoke report	﻿2026-08-12T00:43:33.0269036Z ##[group]Run set -euo pipefail
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0269497Z ^[[36;1mset -euo pipefail^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0269832Z ^[[36;1m^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0270196Z ^[[36;1m# Set by Run tests once the tier is resolved; fall back to the^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0270713Z ^[[36;1m# event default only if Run tests died before resolving it.^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0271182Z ^[[36;1mif [[ -n "${EXECUTED_MARK_EXPR:-}" ]]; then^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0271592Z ^[[36;1m  REPORT_TARGET="${EXECUTED_MARK_EXPR// or /, }"^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0272076Z ^[[36;1melse^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0272374Z ^[[36;1m  REPORT_TARGET="smoke, full"^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0272750Z ^[[36;1m  if [[ "$EVENT_NAME" == "pull_request" ]]; then^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0273146Z ^[[36;1m    REPORT_TARGET="smoke"^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0273468Z ^[[36;1m  fi^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0273763Z ^[[36;1mfi^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0274025Z ^[[36;1m^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0274304Z ^[[36;1mif [[ -f gpu_smoke_results.xml ]]; then^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0274736Z ^[[36;1m  python3 scripts/gpu_smoke_report.py \^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0275203Z ^[[36;1m    --test-xml gpu_smoke_results.xml \^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0275620Z ^[[36;1m    --target "${REPORT_TARGET}" \^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0275987Z ^[[36;1m    --output gpu_smoke_main_report.md \^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0276406Z ^[[36;1m    || echo "::warning::gpu_smoke_report.py failed"^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0276939Z ^[[36;1mfi^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0277229Z ^[[36;1m^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0277556Z ^[[36;1mif [[ -f gpu_smoke_full_results.xml ]]; then^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0277954Z ^[[36;1m  python3 scripts/gpu_smoke_report.py \^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0278342Z ^[[36;1m    --test-xml gpu_smoke_full_results.xml \^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0278810Z ^[[36;1m    --target "smoke, full (diff-scoped changed test files)" \^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0279253Z ^[[36;1m    --output gpu_smoke_diff_report.md \^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0279649Z ^[[36;1m    || echo "::warning::gpu_smoke_report.py failed"^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0280029Z ^[[36;1mfi^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0280307Z ^[[36;1m^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0280689Z ^[[36;1mfor part in gpu_smoke_main_report.md gpu_smoke_diff_report.md; do^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0281139Z ^[[36;1m  if [[ -f "$part" ]]; then^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0281535Z ^[[36;1m    cat "$part" >> gpu_smoke_report.md^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0282030Z ^[[36;1m  fi^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0282345Z ^[[36;1mdone^[[0m
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0289392Z shell: /usr/bin/bash -e {0}
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0289703Z env:
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0290055Z   EVENT_NAME: pull_request
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0290374Z ##[endgroup]
+gpu-smoke	Generate gpu-smoke report	2026-08-12T00:43:33.0703081Z Report written to gpu_smoke_diff_report.md
+gpu-smoke	Post gpu-smoke report to step summary	﻿2026-08-12T00:43:33.1460543Z ##[group]Run cat gpu_smoke_report.md >> "$GITHUB_STEP_SUMMARY"
+gpu-smoke	Post gpu-smoke report to step summary	2026-08-12T00:43:33.1462449Z ^[[36;1mcat gpu_smoke_report.md >> "$GITHUB_STEP_SUMMARY"^[[0m
+gpu-smoke	Post gpu-smoke report to step summary	2026-08-12T00:43:33.1483924Z shell: /usr/bin/bash -e {0}
+gpu-smoke	Post gpu-smoke report to step summary	2026-08-12T00:43:33.1485125Z ##[endgroup]
+gpu-smoke	Cache stats	﻿2026-08-12T00:43:33.1688940Z ##[group]Run # Cache stats is informational only. Do NOT use `set -e`: a transient
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1691381Z ^[[36;1m# Cache stats is informational only. Do NOT use `set -e`: a transient^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1693427Z ^[[36;1m# failure in find/du/wc (e.g. a cache file vanishing mid-scan due to a^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1695160Z ^[[36;1m# concurrent cleanup) must not fail the gpu-smoke job.^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1696747Z ^[[36;1mset -u^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1697926Z ^[[36;1mecho "=== Cache stats (is_fork=${IS_FORK}) ==="^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1700165Z ^[[36;1mfor cache_dir in "${TILELANG_CACHE_DIR:-}" "${TRITON_CACHE_DIR:-}" "${PIP_CACHE_DIR:-}"; do^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1702092Z ^[[36;1m  if [[ -z "${cache_dir}" ]]; then^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1703305Z ^[[36;1m    continue^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1704417Z ^[[36;1m  fi^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1705448Z ^[[36;1m  if [[ -d "${cache_dir}" ]]; then^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1706938Z ^[[36;1m    # Tolerate errors from find/du/wc; emit "unknown" when a scan^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1709134Z ^[[36;1m    # fails rather than aborting the step. Enable pipefail inside^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1710819Z ^[[36;1m    # the subshell so a find/du failure upstream of wc/cut^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1712628Z ^[[36;1m    # propagates to the || fallback instead of being masked.^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1714845Z ^[[36;1m    file_count=$(set -o pipefail; find "${cache_dir}" -type f 2>/dev/null | wc -l 2>/dev/null) || file_count="unknown"^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1717597Z ^[[36;1m    cache_size=$(set -o pipefail; du -sh "${cache_dir}" 2>/dev/null | cut -f1 2>/dev/null) || cache_size="unknown"^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1719738Z ^[[36;1m    if [[ -z "${file_count}" ]]; then file_count="unknown"; fi^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1721425Z ^[[36;1m    if [[ -z "${cache_size}" ]]; then cache_size="unknown"; fi^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1723167Z ^[[36;1m    echo "${cache_dir}: ${file_count} files, ${cache_size}"^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1724552Z ^[[36;1m  else^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1725650Z ^[[36;1m    echo "${cache_dir}: does not exist"^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1726900Z ^[[36;1m  fi^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1727890Z ^[[36;1mdone^[[0m
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1749299Z shell: /usr/bin/bash -e {0}
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1750388Z env:
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1751548Z   IS_FORK: false
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1752810Z ##[endgroup]
+gpu-smoke	Cache stats	2026-08-12T00:43:33.1810004Z === Cache stats (is_fork=false) ===
+gpu-smoke	Cache stats	2026-08-12T00:43:33.6640968Z $CI_CACHE/tilelang: 100589 files, 4.9G
+gpu-smoke	Cache stats	2026-08-12T00:43:33.7337600Z $CI_CACHE/triton: 17019 files, 1006M
+gpu-smoke	Cache stats	2026-08-12T00:43:33.7397994Z $CI_CACHE/pip: 0 files, 4.0K
+gpu-smoke	Upload artifacts	﻿2026-08-12T00:43:33.7560805Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+gpu-smoke	Upload artifacts	2026-08-12T00:43:33.7565412Z ##[group]Run actions/upload-artifact@v4
+gpu-smoke	Upload artifacts	2026-08-12T00:43:33.7567016Z with:
+gpu-smoke	Upload artifacts	2026-08-12T00:43:33.7567962Z   name: gpu_smoke.log
+gpu-smoke	Upload artifacts	2026-08-12T00:43:33.7569722Z   path: gpu_smoke.log
+gpu-smoke	Upload artifacts	gpu_smoke_results.xml
+gpu-smoke	Upload artifacts	gpu_smoke_full.log
+gpu-smoke	Upload artifacts	gpu_smoke_full_results.xml
+gpu-smoke	Upload artifacts	gpu_smoke_report.md
+gpu-smoke	Upload artifacts
+gpu-smoke	Upload artifacts	2026-08-12T00:43:33.7571667Z   retention-days: 7
+gpu-smoke	Upload artifacts	2026-08-12T00:43:33.7572783Z   if-no-files-found: warn
+gpu-smoke	Upload artifacts	2026-08-12T00:43:33.7573966Z   compression-level: 6
+gpu-smoke	Upload artifacts	2026-08-12T00:43:33.7574989Z   overwrite: false
+gpu-smoke	Upload artifacts	2026-08-12T00:43:33.7576005Z   include-hidden-files: false
+gpu-smoke	Upload artifacts	2026-08-12T00:43:33.7577241Z ##[endgroup]
+gpu-smoke	Upload artifacts	2026-08-12T00:43:33.9243523Z (node:1064) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+gpu-smoke	Upload artifacts	2026-08-12T00:43:33.9246377Z (Use `node --trace-deprecation ...` to show where the warning was created)
+gpu-smoke	Upload artifacts	2026-08-12T00:43:33.9299038Z Multiple search paths detected. Calculating the least common ancestor of all paths
+gpu-smoke	Upload artifacts	2026-08-12T00:43:33.9304786Z The least common ancestor is $HOST_HOME/runner/_work/TileOPs/TileOPs. This will be the root directory of the artifact
+gpu-smoke	Upload artifacts	2026-08-12T00:43:33.9307037Z With the provided path, there will be 3 files uploaded
+gpu-smoke	Upload artifacts	2026-08-12T00:43:33.9309070Z Artifact name is valid!
+gpu-smoke	Upload artifacts	2026-08-12T00:43:33.9310191Z Root directory input is valid!
+gpu-smoke	Upload artifacts	2026-08-12T00:43:34.9003107Z Beginning upload of artifact content to blob storage
+gpu-smoke	Upload artifacts	2026-08-12T00:43:34.9284480Z (node:1064) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+gpu-smoke	Upload artifacts	2026-08-12T00:43:35.9645944Z Uploaded bytes 3945
+gpu-smoke	Upload artifacts	2026-08-12T00:43:36.2394761Z Finished uploading artifact content to blob storage!
+gpu-smoke	Upload artifacts	2026-08-12T00:43:36.2397453Z SHA256 digest of uploaded artifact zip is cb15326e85d9660ec3eaf4831a1834a2038425e2fa8e677012fdffa46be5fccc
+gpu-smoke	Upload artifacts	2026-08-12T00:43:36.2402373Z Finalizing artifact upload
+gpu-smoke	Upload artifacts	2026-08-12T00:43:36.6055268Z Artifact gpu_smoke.log.zip successfully finalized. Artifact ID 9124304141
+gpu-smoke	Upload artifacts	2026-08-12T00:43:36.6057667Z Artifact gpu_smoke.log has been successfully uploaded! Final size is 3945 bytes. Artifact ID is 9124304141
+gpu-smoke	Upload artifacts	2026-08-12T00:43:36.6071292Z Artifact download URL: https://github.com/tile-ai/TileOPs/actions/runs/31524011426/artifacts/9124304141
+gpu-smoke	Post Checkout trusted actions (base repo)	﻿2026-08-12T00:43:36.6975519Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+gpu-smoke	Post Checkout trusted actions (base repo)	2026-08-12T00:43:36.6977667Z Post job cleanup.
+gpu-smoke	Post Checkout trusted actions (base repo)	2026-08-12T00:43:36.7804889Z [command]/usr/bin/git version
+gpu-smoke	Post Checkout trusted actions (base repo)	2026-08-12T00:43:36.7856436Z git version 2.34.1
+gpu-smoke	Post Checkout trusted actions (base repo)	2026-08-12T00:43:36.7887569Z Temporarily overriding HOME='$HOST_HOME/runner/_work/_temp/4638edd6-056c-4975-8f14-ccf4d94523e1' before making global git config changes
+gpu-smoke	Post Checkout trusted actions (base repo)	2026-08-12T00:43:36.7890157Z Adding repository directory to the temporary git global config as a safe directory
+gpu-smoke	Post Checkout trusted actions (base repo)	2026-08-12T00:43:36.7892470Z [command]/usr/bin/git config --global --add safe.directory $HOST_HOME/runner/_work/TileOPs/TileOPs/.trusted
+gpu-smoke	Post Checkout trusted actions (base repo)	2026-08-12T00:43:36.7924967Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+gpu-smoke	Post Checkout trusted actions (base repo)	2026-08-12T00:43:36.7955017Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+gpu-smoke	Post Checkout trusted actions (base repo)	2026-08-12T00:43:36.8297615Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+gpu-smoke	Post Checkout trusted actions (base repo)	2026-08-12T00:43:36.8327754Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+gpu-smoke	Post Checkout trusted actions (base repo)	2026-08-12T00:43:36.8687493Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+gpu-smoke	Post Checkout trusted actions (base repo)	2026-08-12T00:43:36.8727456Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+gpu-smoke	Post Checkout code for trusted branch	﻿2026-08-12T00:43:36.9354352Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+gpu-smoke	Post Checkout code for trusted branch	2026-08-12T00:43:36.9358347Z Post job cleanup.
+gpu-smoke	Post Checkout code for trusted branch	2026-08-12T00:43:37.0183985Z [command]/usr/bin/git version
+gpu-smoke	Post Checkout code for trusted branch	2026-08-12T00:43:37.0217474Z git version 2.34.1
+gpu-smoke	Post Checkout code for trusted branch	2026-08-12T00:43:37.0247046Z Temporarily overriding HOME='$HOST_HOME/runner/_work/_temp/5795e57c-4dd5-49c7-a825-a9b61c9dc8b3' before making global git config changes
+gpu-smoke	Post Checkout code for trusted branch	2026-08-12T00:43:37.0249571Z Adding repository directory to the temporary git global config as a safe directory
+gpu-smoke	Post Checkout code for trusted branch	2026-08-12T00:43:37.0251816Z [command]/usr/bin/git config --global --add safe.directory $HOST_HOME/runner/_work/TileOPs/TileOPs
+gpu-smoke	Post Checkout code for trusted branch	2026-08-12T00:43:37.0309490Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+gpu-smoke	Post Checkout code for trusted branch	2026-08-12T00:43:37.0356369Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+gpu-smoke	Post Checkout code for trusted branch	2026-08-12T00:43:37.0679659Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+gpu-smoke	Post Checkout code for trusted branch	2026-08-12T00:43:37.0708633Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+gpu-smoke	Post Checkout code for trusted branch	2026-08-12T00:43:37.1042598Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+gpu-smoke	Post Checkout code for trusted branch	2026-08-12T00:43:37.1071586Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+gpu-smoke	Complete job	﻿2026-08-12T00:43:37.1635013Z Cleaning up orphan processes
+gpu-smoke	Complete job	2026-08-12T00:43:37.1747756Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "$TRIAL_SOURCE/round-1-fused-moe-experts/index_select_lowering_repro.py", line 21, in <module>
+    HirToTirPass().run(module)
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/passes/transforms/hir_to_tir.py", line 1847, in run
+    _lower_function(
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/passes/transforms/hir_to_tir.py", line 1465, in _lower_function
+    _lower_single_output(lo, _elem, _out_var)
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/passes/transforms/hir_to_tir.py", line 1387, in _lower_single_output
+    src = lo.lower_expr(body_expr)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/passes/transforms/hir_to_tir.py", line 468, in lower_expr
+    result = handler(self, target, expr)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/passes/transforms/hir_to_tir.py", line 1198, in _lower_index_select
+    raise NotImplementedError(
+NotImplementedError: IndexSelect HIR-to-TIR lowering supports only a one-element index

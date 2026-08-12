@@ -1,0 +1,39 @@
+{
+  "rows": [
+    {
+      "label": "mamba2-2p7b-b1-s2k",
+      "old_candidate": 1.2297820000000002,
+      "new_candidate": 0.7265925,
+      "candidate_old_over_new": 1.6925332975498648,
+      "old_base": 1.2323265,
+      "new_base": 0.718752,
+      "base_old_over_new": 1.7145364465072797,
+      "old_official": 0.8055720000000001,
+      "new_official": 0.777232,
+      "official_old_over_new": 1.0364627292751714
+    },
+    {
+      "label": "mamba2-1p3b-b1-s8k",
+      "old_candidate": 1.346375,
+      "new_candidate": 0.8170259999999999,
+      "candidate_old_over_new": 1.6478973741349727,
+      "old_base": 1.351511,
+      "new_base": 0.8177780000000001,
+      "base_old_over_new": 1.652662458515636,
+      "old_official": 1.010517,
+      "new_official": 0.8928505,
+      "official_old_over_new": 1.1317874604987062
+    }
+  ],
+  "geomean": {
+    "old_candidate": 1.286758617709631,
+    "new_candidate": 0.7704835909381846,
+    "candidate_old_over_new": 1.6700662192465392,
+    "old_base": 1.2905436142732643,
+    "new_base": 0.7666678374993958,
+    "base_old_over_new": 1.6833151870340215,
+    "old_official": 0.9022439807081011,
+    "new_official": 0.8330378021530596,
+    "official_old_over_new": 1.0830768764348653
+  }
+}

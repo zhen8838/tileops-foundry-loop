@@ -1,0 +1,39 @@
+# TileOPs Benchmark Report
+Generated: 2026-08-11 17:05:06
+
+## Environment
+
+- **Torch version**: 2.10.0+cu129
+- **CUDA version (torch)**: 12.9
+- **GPU model**: NVIDIA H200
+- **Driver version**: 595.71.05
+- **GPU clocks**: SM current 1500 MHz, memory current 3201 MHz, application SM [Requested functionality has been deprecated] MHz, application memory [Requested functionality has been deprecated] MHz
+
+## FusedMoEExpertsNopadPersistent3WGFwdOp
+
+### tileops-fused-act
+
+| num_tokens | num_experts | top_k | hidden_size | ffn_size | dtype | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing | fallback_reason |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 512 | 128 | 8 | 7168 | 2048 | torch.bfloat16 | 3.0369 | 118.7980 | 3.7173 | 61.0000 | 3.0308 | 3.0493 | cuda-events | cupti-python is unavailable. Install it with `pip install --no-deps cupti-python==12.8.0`; --no-deps is required or it downgrades torch's cuda-bindings pin. |
+| 4096 | 128 | 8 | 7168 | 2048 | torch.bfloat16 | 6.0420 | 477.6937 | 1.8854 | 33.0000 | 5.7108 | 6.3969 | cuda-events | cupti-python is unavailable. Install it with `pip install --no-deps cupti-python==12.8.0`; --no-deps is required or it downgrades torch's cuda-bindings pin. |
+| 512 | 256 | 8 | 7168 | 2048 | torch.bfloat16 | 5.7930 | 62.2786 | 3.8949 | 32.0000 | 5.7737 | 5.8215 | cuda-events | cupti-python is unavailable. Install it with `pip install --no-deps cupti-python==12.8.0`; --no-deps is required or it downgrades torch's cuda-bindings pin. |
+| 4096 | 256 | 8 | 7168 | 2048 | torch.bfloat16 | 8.1298 | 355.0174 | 2.7880 | 23.0000 | 7.8985 | 8.2797 | cuda-events | cupti-python is unavailable. Install it with `pip install --no-deps cupti-python==12.8.0`; --no-deps is required or it downgrades torch's cuda-bindings pin. |
+
+### base-incumbent
+
+| num_tokens | num_experts | top_k | hidden_size | ffn_size | dtype | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing | fallback_reason |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 512 | 128 | 8 | 7168 | 2048 | torch.bfloat16 | 3.1552 | 114.3425 | 3.5779 | 56.0000 | 3.1469 | 3.1737 | cuda-events | cupti-python is unavailable. Install it with `pip install --no-deps cupti-python==12.8.0`; --no-deps is required or it downgrades torch's cuda-bindings pin. |
+| 4096 | 128 | 8 | 7168 | 2048 | torch.bfloat16 | 5.7479 | 502.1354 | 1.9819 | 32.0000 | 5.7391 | 5.7678 | cuda-events | cupti-python is unavailable. Install it with `pip install --no-deps cupti-python==12.8.0`; --no-deps is required or it downgrades torch's cuda-bindings pin. |
+| 512 | 256 | 8 | 7168 | 2048 | torch.bfloat16 | 6.0943 | 59.1992 | 3.7024 | 28.0000 | 6.0854 | 6.1130 | cuda-events | cupti-python is unavailable. Install it with `pip install --no-deps cupti-python==12.8.0`; --no-deps is required or it downgrades torch's cuda-bindings pin. |
+| 4096 | 256 | 8 | 7168 | 2048 | torch.bfloat16 | 8.1776 | 352.9399 | 2.7717 | 22.0000 | 8.1000 | 8.3025 | cuda-events | cupti-python is unavailable. Install it with `pip install --no-deps cupti-python==12.8.0`; --no-deps is required or it downgrades torch's cuda-bindings pin. |
+
+### vllm-triton
+
+| num_tokens | num_experts | top_k | hidden_size | ffn_size | dtype | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing | fallback_reason |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 512 | 128 | 8 | 7168 | 2048 | torch.bfloat16 | 3.0022 | 120.1706 | 3.7602 | 60.0000 | 2.9848 | 3.0260 | cuda-events | cupti-python is unavailable. Install it with `pip install --no-deps cupti-python==12.8.0`; --no-deps is required or it downgrades torch's cuda-bindings pin. |
+| 4096 | 128 | 8 | 7168 | 2048 | torch.bfloat16 | 7.3834 | 390.9068 | 1.5429 | 27.0000 | 7.0425 | 8.5899 | cuda-events | cupti-python is unavailable. Install it with `pip install --no-deps cupti-python==12.8.0`; --no-deps is required or it downgrades torch's cuda-bindings pin. |
+| 512 | 256 | 8 | 7168 | 2048 | torch.bfloat16 | 5.6403 | 63.9645 | 4.0004 | 32.0000 | 5.6260 | 5.6723 | cuda-events | cupti-python is unavailable. Install it with `pip install --no-deps cupti-python==12.8.0`; --no-deps is required or it downgrades torch's cuda-bindings pin. |
+| 4096 | 256 | 8 | 7168 | 2048 | torch.bfloat16 | 8.6845 | 332.3408 | 2.6099 | 22.0000 | 8.6490 | 8.7859 | cuda-events | cupti-python is unavailable. Install it with `pip install --no-deps cupti-python==12.8.0`; --no-deps is required or it downgrades torch's cuda-bindings pin. |

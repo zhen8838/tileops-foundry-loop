@@ -1,0 +1,1 @@
+tilefoundry check: error: --inputs random cannot make activations for 'GemmW4A16': it runs an orchestration method whose parameters have no declared shapes or dtypes. It takes 1 activation parameters in order: acts. Give one --input=PATH per parameter; each file holds one tensor or a nested tuple/list of tensors, for example torch.save((...), "mixer_args.pt")

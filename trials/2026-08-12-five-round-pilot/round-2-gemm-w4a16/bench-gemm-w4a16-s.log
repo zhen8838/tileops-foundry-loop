@@ -1,0 +1,32 @@
+GemmW4A16Kernel initialized with config: {'block_m': 64, 'block_n': 64, 'block_k': 64, 'num_stages': 2, 'threads': 128}
+  [correctness] tileops max_abs=0.0078125 max_rel=0.150520831
+.GemmW4A16Kernel initialized with config: {'block_m': 64, 'block_n': 64, 'block_k': 64, 'num_stages': 2, 'threads': 128}
+  [correctness] tileops max_abs=0.0078125 max_rel=1.86996496
+.GemmW4A16DecodeKernel initialized with config: {'block_n': 16, 'threads': 128}
+  [correctness] tileops max_abs=0.03125 max_rel=0.00623885915
+  [correctness] marlin-fp32 max_abs=0.0625 max_rel=0.771835983
+  [correctness] marlin-fp16 max_abs=0.0625 max_rel=1.40819967
+.GemmW4A16DecodeKernel initialized with config: {'block_n': 16, 'threads': 128}
+  [correctness] tileops max_abs=0.0625 max_rel=0.0698388368
+  [correctness] marlin-fp32 max_abs=0.0625 max_rel=7.82271671
+  [correctness] marlin-fp16 max_abs=0.0625 max_rel=9.61550236
+.GemmW4A16DecodeKernel initialized with config: {'block_n': 16, 'threads': 128}
+  [correctness] tileops max_abs=0.0625 max_rel=0.020855058
+  [correctness] marlin-fp32 max_abs=0.0625 max_rel=6.57364845
+  [correctness] marlin-fp16 max_abs=0.0625 max_rel=8.70167828
+.GemmW4A16DecodeKernel initialized with config: {'block_n': 16, 'threads': 128}
+  [correctness] tileops max_abs=0.125 max_rel=0.0661322623
+  [correctness] marlin-fp32 max_abs=0.25 max_rel=0.502423286
+  [correctness] marlin-fp16 max_abs=0.25 max_rel=0.807080925
+.Benchmark report saved to profile_run.log
+
+=============================== warnings summary ===============================
+benchmarks/ops/bench_gemm.py::test_gemm_w4a16_bench[compile-smoke-square-64x64x128-float16]
+  <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.cuda module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.driver module instead.
+
+benchmarks/ops/bench_gemm.py: 14 warnings
+  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:362: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+6 passed, 28 deselected, 15 warnings in 26.81s

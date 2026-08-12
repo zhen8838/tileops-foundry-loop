@@ -109,6 +109,19 @@ def _geomean(values: list[float]) -> float:
     return math.exp(sum(math.log(value) for value in values) / len(values))
 
 
+def _ratio_marker(ratio: float) -> str:
+    # GitHub strips arbitrary text colors. Numeric entities render as stable
+    # red/green markers in both light and dark themes.
+    return "&#x1F534;" if ratio > 1.0 else "&#x1F7E2;"
+
+
+def _performance_cell(latency: float, ratio: float, noise_pct: float | None = None) -> str:
+    latency_text = f"{latency:.6g}"
+    if noise_pct is not None:
+        latency_text += f" (+/-{noise_pct:.3g}%)"
+    return f"{latency_text}<br>{_ratio_marker(ratio)}&nbsp;{ratio:.4f}x"
+
+
 def load_data(path: Path) -> dict[str, Any]:
     try:
         value = json.loads(path.read_text(encoding="utf-8"))
@@ -289,14 +302,21 @@ def _performance_table(data: dict[str, Any]) -> str:
     comparators: list[dict[str, str]] = data["comparators"]
     workloads: list[dict[str, Any]] = data["workloads"]
     candidate = next(item for item in comparators if item["role"] == "candidate")
-    ratios = [item for item in comparators if item["role"] != "candidate"]
 
     headers = ["Workload", *dimensions, "Dtype"]
-    headers.extend(item["label"] + " (ms)" for item in comparators)
-    headers.extend(item["label"] + " / candidate" for item in ratios)
+    headers.extend(
+        item["label"] + " (ms)"
+        if item["role"] == "candidate"
+        else item["label"] + " (ms)<br>/ candidate"
+        for item in comparators
+    )
     lines = [
         "| " + " | ".join(headers) + " |",
-        "| " + " | ".join(["---", *["---:" for _ in dimensions], "---", *["---:" for _ in comparators], *["---:" for _ in ratios]]) + " |",
+        "| "
+        + " | ".join(
+            ["---", *["---:" for _ in dimensions], "---", *["---:" for _ in comparators]]
+        )
+        + " |",
     ]
 
     for workload in workloads:
@@ -307,13 +327,17 @@ def _performance_table(data: dict[str, Any]) -> str:
         row.append(workload["dtype"])
         for comparator in comparators:
             result = results[comparator["id"]]
-            cell = f"{float(result['median_ms']):.6g}"
-            if "noise_pct" in result:
-                cell += f" (+/-{float(result['noise_pct']):.3g}%)"
+            latency = float(result["median_ms"])
+            noise_pct = float(result["noise_pct"]) if "noise_pct" in result else None
+            if comparator["role"] == "candidate":
+                cell = f"{latency:.6g}"
+                if noise_pct is not None:
+                    cell += f" (+/-{noise_pct:.3g}%)"
+            else:
+                cell = _performance_cell(latency, latency / candidate_latency, noise_pct)
+            if comparator["role"] == "incumbent":
+                cell = f"**{cell}**"
             row.append(cell)
-        for comparator in ratios:
-            ratio = float(results[comparator["id"]]["median_ms"]) / candidate_latency
-            row.append(f"{ratio:.4f}x")
         lines.append("| " + " | ".join(_escape_cell(item) for item in row) + " |")
 
     geomeans = {
@@ -323,10 +347,15 @@ def _performance_table(data: dict[str, Any]) -> str:
         for comparator in comparators
     }
     row = ["geometric mean", *["" for _ in dimensions], ""]
-    row.extend(f"{geomeans[item['id']]:.6g}" for item in comparators)
-    row.extend(
-        f"{geomeans[item['id']] / geomeans[candidate['id']]:.4f}x" for item in ratios
-    )
+    for comparator in comparators:
+        latency = geomeans[comparator["id"]]
+        if comparator["role"] == "candidate":
+            cell = f"{latency:.6g}"
+        else:
+            cell = _performance_cell(latency, latency / geomeans[candidate["id"]])
+        if comparator["role"] == "incumbent":
+            cell = f"**{cell}**"
+        row.append(cell)
     lines.append("| " + " | ".join(_escape_cell(item) for item in row) + " |")
     return "\n".join(lines)
 
@@ -364,6 +393,9 @@ Operator: `{data['operator']}`
 {environment}
 
 Method: {data['method']}
+
+Ratio in comparator columns: implementation / candidate. &#x1F534; > 1 means the candidate is faster;
+&#x1F7E2; <= 1 means it is not.
 
 {_performance_table(data)}
 

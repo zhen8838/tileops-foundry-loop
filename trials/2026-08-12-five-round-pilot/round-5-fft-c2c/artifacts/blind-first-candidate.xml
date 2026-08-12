@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="fft_blind_candidate" tests="2" failures="0"><testcase name="small_multistage_direct_dft" /><testcase name="manifest_4096_b1_complex64" /></testsuite>

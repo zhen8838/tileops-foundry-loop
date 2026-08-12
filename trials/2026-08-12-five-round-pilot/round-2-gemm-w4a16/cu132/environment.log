@@ -1,0 +1,12 @@
+python 3.12.13
+torch 2.13.0+cu132
+cuda 13.2
+tilelang 0.1.11+cu132.gitafcebed1
+vllm 0.27.1
+cupti unknown
+gpu NVIDIA H200
+capability (9, 0)
+cupti-python 13.2.0
+cuda-bindings 13.3.1
+flashinfer-python 0.6.16.post3
+vllm 0.27.1

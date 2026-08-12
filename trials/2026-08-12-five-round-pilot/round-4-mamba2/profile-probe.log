@@ -1,0 +1,368 @@
+DaCumsumFwdKernel initialized with config: {'block_h': 4, 'threads': 1024}
+2026-08-11 20:41:09  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:117): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:41:09  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:121): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:41:09  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:128): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:41:09  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:131): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:41:09  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-2, -1]`
+2026-08-11 20:41:12  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+CBProducerKernel initialized with config: {'block_l': 64, 'block_s': 64, 'block_n': 64, 'threads': 128}
+2026-08-11 20:41:13  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-1]`
+[20:41:13] $TMP_PATH Warning: Data race detected: `cb(bb, bc, 0, l_abs, s_abs)`is written by multiple threads in loop (ll, ss), Example:
+  bb = 0
+  bc = 0
+  bcg_tmp = 0
+  bx = 0
+  by = 0
+  l0 = 0
+  l_abs = 0
+  ll = 1
+  ll_OTHER_ = 0
+  s0 = 0
+  s_abs = 0
+  ss = 0
+  ss_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:41:17  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+SSDChunkStateFwdKernel initialized with config: {'block_n': 128, 'block_p': 64, 'block_l': 32, 'threads': 128}
+2026-08-11 20:41:17  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-1]`
+[20:41:17] $TMP_PATH Warning: Data race detected: `out(bz, bc, bh, p_idx, n_idx)`is written by multiple threads in loop (pp, nn), Example:
+  bc = 0
+  bh = 0
+  bx = 0
+  bz = 0
+  n_idx = 0
+  nn = 1
+  nn_OTHER_ = 0
+  p_idx = 0
+  pp = 0
+  pp_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:41:21  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+SSDStatePassingFwdKernel initialized with config: {'block_d': 64, 'threads': 128, 'vectorize': False}
+2026-08-11 20:41:21  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-2, -1]`
+[20:41:21] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:41:21] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:41:25  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+SSDChunkScanFwdKernel initialized with config: {'block_l': 64, 'block_p': 64, 'block_n': 64, 'block_s': 64, 'threads': 128, 'num_stages': 3}
+2026-08-11 20:41:25  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:41:25  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-1]`
+[20:41:25] $TMP_PATH Warning: Data race detected: `out(bz, chunk_start + l_abs, bz, p_abs)`is written by multiple threads in loop (ll,), Example:
+  bl = 0
+  by = 0
+  bz = 0
+  bz$1 = 0
+  chunk_start = 0
+  l_abs = 0
+  ll = 1
+  ll_OTHER_ = 0
+  p_abs = 0
+  p_abs_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:41:33  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+/usr/local/lib/python3.12/dist-packages/torch/profiler/profiler.py:217: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.
+  _warn_once(
+DaCumsumFwdKernel initialized with config: {'block_h': 4, 'threads': 1024}
+2026-08-11 20:41:33  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:117): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:41:33  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:121): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:41:33  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:128): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:41:33  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:131): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:41:33  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-2, -1]`
+2026-08-11 20:41:37  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+CBProducerKernel initialized with config: {'block_l': 64, 'block_s': 64, 'block_n': 64, 'threads': 128}
+2026-08-11 20:41:37  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-1]`
+[20:41:37] $TMP_PATH Warning: Data race detected: `cb(bb, bc, 0, l_abs, s_abs)`is written by multiple threads in loop (ll, ss), Example:
+  bb = 0
+  bc = 0
+  bcg_tmp = 0
+  bx = 0
+  by = 0
+  l0 = 0
+  l_abs = 0
+  ll = 0
+  ll_OTHER_ = 1
+  s0 = 0
+  s_abs = 0
+  ss = 1
+  ss_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:41:41  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+SSDChunkStateFwdKernel initialized with config: {'block_n': 128, 'block_p': 64, 'block_l': 32, 'threads': 128}
+2026-08-11 20:41:42  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-1]`
+[20:41:42] $TMP_PATH Warning: Data race detected: `out(bz, bc, bh, p_idx, n_idx)`is written by multiple threads in loop (pp, nn), Example:
+  bc = 0
+  bh = 0
+  bx = 0
+  bz = 0
+  n_idx = 0
+  nn = 0
+  nn_OTHER_ = 1
+  p_idx = 0
+  pp = 0
+  pp_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:41:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+SSDStatePassingFwdKernel initialized with config: {'block_d': 64, 'threads': 128, 'vectorize': False}
+2026-08-11 20:41:46  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-2, -1]`
+[20:41:46] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:41:46] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:41:49  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+SSDChunkScanFwdKernel initialized with config: {'block_l': 64, 'block_p': 64, 'block_n': 64, 'block_s': 64, 'threads': 128, 'num_stages': 3}
+2026-08-11 20:41:50  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:41:50  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-1]`
+[20:41:50] $TMP_PATH Warning: Data race detected: `out(bz, chunk_start + l_abs, bz, p_abs)`is written by multiple threads in loop (ll,), Example:
+  bl = 0
+  by = 0
+  bz = 0
+  bz$1 = 0
+  chunk_start = 0
+  l_abs = 0
+  ll = 0
+  ll_OTHER_ = 1
+  p_abs = 0
+  p_abs_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:41:57  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+[
+  {
+    "label": "mamba2-2p7b-b1-s2k",
+    "outputs": [
+      {
+        "shape": [
+          1,
+          2048,
+          80,
+          64
+        ],
+        "dtype": "torch.float32"
+      },
+      {
+        "shape": [
+          1,
+          80,
+          64,
+          128
+        ],
+        "dtype": "torch.float32"
+      }
+    ],
+    "peak_allocated_delta_bytes": 88541696,
+    "configs": {
+      "da_cumsum": {
+        "block_h": 4,
+        "threads": 1024
+      },
+      "cb_producer": {
+        "block_l": 64,
+        "block_s": 64,
+        "block_n": 64,
+        "threads": 128
+      },
+      "chunk_state": {
+        "block_n": 128,
+        "block_p": 64,
+        "block_l": 32,
+        "threads": 128
+      },
+      "state_passing": {
+        "block_d": 64,
+        "threads": 128,
+        "vectorize": false
+      },
+      "chunk_scan": {
+        "block_l": 64,
+        "block_p": 64,
+        "block_n": 64,
+        "block_s": 64,
+        "threads": 128,
+        "num_stages": 3
+      }
+    },
+    "cuda_events": [
+      {
+        "key": "main_kernel",
+        "count": 5,
+        "self_device_time_us": 109.24999999999955,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::ssd_chunk_scan_fwd",
+        "count": 1,
+        "self_device_time_us": 64.25600000000031,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::ssd_chunk_state_fwd",
+        "count": 1,
+        "self_device_time_us": 24.99199999999928,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::ssd_state_passing_fwd",
+        "count": 1,
+        "self_device_time_us": 11.29699999999957,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::cb_producer",
+        "count": 1,
+        "self_device_time_us": 4.44800000000032,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::da_cumsum_fwd",
+        "count": 1,
+        "self_device_time_us": 4.257000000000062,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "Activity Buffer Request",
+        "count": 1,
+        "self_device_time_us": 4.257000000000062,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "aten::copy_",
+        "count": 1,
+        "self_device_time_us": 2.144000000000233,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1})",
+        "count": 1,
+        "self_device_time_us": 2.144000000000233,
+        "device_memory_bytes": 0
+      }
+    ],
+    "trace": "mamba2-profile-probe/mamba2-2p7b-b1-s2k-trace.json"
+  },
+  {
+    "label": "mamba2-1p3b-b1-s8k",
+    "outputs": [
+      {
+        "shape": [
+          1,
+          8192,
+          64,
+          64
+        ],
+        "dtype": "torch.float32"
+      },
+      {
+        "shape": [
+          1,
+          64,
+          64,
+          128
+        ],
+        "dtype": "torch.float32"
+      }
+    ],
+    "peak_allocated_delta_bytes": 277880832,
+    "configs": {
+      "da_cumsum": {
+        "block_h": 4,
+        "threads": 1024
+      },
+      "cb_producer": {
+        "block_l": 64,
+        "block_s": 64,
+        "block_n": 64,
+        "threads": 128
+      },
+      "chunk_state": {
+        "block_n": 128,
+        "block_p": 64,
+        "block_l": 32,
+        "threads": 128
+      },
+      "state_passing": {
+        "block_d": 64,
+        "threads": 128,
+        "vectorize": false
+      },
+      "chunk_scan": {
+        "block_l": 64,
+        "block_p": 64,
+        "block_n": 64,
+        "block_s": 64,
+        "threads": 128,
+        "num_stages": 3
+      }
+    },
+    "cuda_events": [
+      {
+        "key": "main_kernel",
+        "count": 3,
+        "self_device_time_us": 280.3849999999993,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::ssd_chunk_scan_fwd",
+        "count": 1,
+        "self_device_time_us": 179.39199999999983,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::ssd_chunk_state_fwd",
+        "count": 1,
+        "self_device_time_us": 63.68000000000029,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::ssd_state_passing_fwd",
+        "count": 1,
+        "self_device_time_us": 37.31299999999919,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "aten::copy_",
+        "count": 1,
+        "self_device_time_us": 2.495999999999185,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1})",
+        "count": 1,
+        "self_device_time_us": 2.495999999999185,
+        "device_memory_bytes": 0
+      }
+    ],
+    "trace": "mamba2-profile-probe/mamba2-1p3b-b1-s8k-trace.json"
+  }
+]

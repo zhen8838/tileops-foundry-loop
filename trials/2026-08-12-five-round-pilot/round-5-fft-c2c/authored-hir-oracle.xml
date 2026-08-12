@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="authored_hir" tests="4" failures="0"><testcase name="dft_real" /><testcase name="dft_imag" /><testcase name="butterfly_real" /><testcase name="butterfly_imag" /></testsuite>

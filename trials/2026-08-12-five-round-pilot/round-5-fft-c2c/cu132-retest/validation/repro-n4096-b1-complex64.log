@@ -1,0 +1,2 @@
+FFTC2CKernel initialized with config: {'block_size': 256, 'threads': 256}
+torch.Size([1, 4096]) torch.complex64 4.1085546399699524e-05

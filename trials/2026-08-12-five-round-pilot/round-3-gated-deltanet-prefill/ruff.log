@@ -1,0 +1,4 @@
+Would reformat: benchmarks/ops/bench_gated_deltanet_prefill.py
+Would reformat: src/tileops/kernels/gated_deltanet/gated_deltanet_prefill.py
+Would reformat: tests/ops/test_gated_deltanet_prefill.py
+3 files would be reformatted, 1 file already formatted

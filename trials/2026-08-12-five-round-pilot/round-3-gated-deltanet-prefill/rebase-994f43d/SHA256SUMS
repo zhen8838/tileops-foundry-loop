@@ -1,0 +1,8 @@
+c7733722f7972fde5f1aedc1eac79f542cef5b31b7d5a86b866b6128d57a0edc  $TRIAL_SOURCE/round-3-gated-deltanet-prefill/rebase-994f43d/artifacts/profile_run.log
+0e0622d053a7627687eba9d5fd17410466d4b4baa9ba65e407a51eed6647b176  $TRIAL_SOURCE/round-3-gated-deltanet-prefill/rebase-994f43d/logs/profile-full.log
+f67fe4c8470ce1646d70532ad3bc69db77d0027eb3b61fd9d1fdf4811884287c  $TRIAL_SOURCE/round-3-gated-deltanet-prefill/rebase-994f43d/logs/profile-smoke.log
+d9b371ea3dfa5584e97c3563f64efa0407f1c42045f7d95e41039d5a53690583  $TRIAL_SOURCE/round-3-gated-deltanet-prefill/rebase-994f43d/logs/retest-128k-h64-bf16.log
+8bc6e9a8cdca4345da7f411f7a4eb2dcf97f920380139bcb076766c7455608ed  $TRIAL_SOURCE/round-3-gated-deltanet-prefill/rebase-994f43d/logs/retest-128k-h64-fp16.log
+f2dd13b2dcd388e1f3523f6a43a5403964fd0d6fd9ca0e08506e1bf404463b2b  $TRIAL_SOURCE/round-3-gated-deltanet-prefill/rebase-994f43d/logs/test-gdn-benchmark.log
+45f0ded4c5b8fc3f71a282fad2291367daac46577d33cf23f8ba631c60fcebf2  $TRIAL_SOURCE/round-3-gated-deltanet-prefill/rebase-994f43d/logs/test-gdn-contract.log
+b45146eeac2738f1c79d90794d5e3a2a267db20d35fd1bc7e386222cb50b1055  $TRIAL_SOURCE/round-3-gated-deltanet-prefill/rebase-994f43d/logs/test-gdn-op.log

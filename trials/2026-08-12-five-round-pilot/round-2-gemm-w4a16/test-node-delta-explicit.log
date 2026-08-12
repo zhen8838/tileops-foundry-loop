@@ -1,0 +1,8 @@
+File                                          Base    HEAD    Delta
+-------------------------------------------------------------------
+benchmarks/tests/test_gemm_w4a16_marlin.py     new       2    (new)
+tests/ops/test_gemm.py                          38      39       +1
+-------------------------------------------------------------------
+TOTAL                                           38      41       +3
+
+Growth: +7.9%

@@ -1,0 +1,13 @@
+{
+  "python": "3.12.13",
+  "torch": "2.10.0+cu129",
+  "cuda": "12.9",
+  "tilelang": "0.1.11+cu129.gitafcebed1",
+  "mamba_ssm": "2.3.1",
+  "gpu": "NVIDIA H200",
+  "capability": [
+    9,
+    0
+  ],
+  "uuid": "a4b256c9-c56a-0ef5-19fa-482196cc3274"
+}

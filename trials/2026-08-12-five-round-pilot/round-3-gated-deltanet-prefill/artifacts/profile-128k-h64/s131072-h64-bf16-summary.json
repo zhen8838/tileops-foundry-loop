@@ -1,0 +1,93 @@
+{
+  "kernels": [
+    {
+      "duration_us": 11.10400000000027,
+      "name": "chunk_cumsum_bthd_kernel_kernel"
+    },
+    {
+      "duration_us": 6.2719999999999345,
+      "name": "void at::native::vectorized_elementwise_kernel<8, at::native::FillFunctor<c10::BFloat16>, std::array<char*, 1ul> >(int, at::native::FillFunctor<c10::BFloat16>, std::array<char*, 1ul>)"
+    },
+    {
+      "duration_us": 321.8250000000003,
+      "name": "void at::native::vectorized_elementwise_kernel<8, at::native::FillFunctor<c10::BFloat16>, std::array<char*, 1ul> >(int, at::native::FillFunctor<c10::BFloat16>, std::array<char*, 1ul>)"
+    },
+    {
+      "duration_us": 1131.3319999999999,
+      "name": "prefill_blocksolve_A_bthd_tl_kernel"
+    },
+    {
+      "duration_us": 0.7680000000000291,
+      "name": "Memcpy HtoD (Pageable -> Device)"
+    },
+    {
+      "duration_us": 0.8000000000001819,
+      "name": "Memcpy HtoD (Pageable -> Device)"
+    },
+    {
+      "duration_us": 0.7999999999997272,
+      "name": "Memcpy HtoD (Pageable -> Device)"
+    },
+    {
+      "duration_us": 0.7999999999997272,
+      "name": "Memcpy HtoD (Pageable -> Device)"
+    },
+    {
+      "duration_us": 36.00099999999975,
+      "name": "tilelang_get_warmup_chunks_kernel_kernel"
+    },
+    {
+      "duration_us": 1.344000000000051,
+      "name": "tilelang_prepare_chunk_offsets_kernel_kernel"
+    },
+    {
+      "duration_us": 3.0729999999994106,
+      "name": "Memcpy DtoH (Device -> Pinned)"
+    },
+    {
+      "duration_us": 39.68000000000029,
+      "name": "tilelang_prepare_h_kernel_kernel"
+    },
+    {
+      "duration_us": 2.2719999999999345,
+      "name": "tilelang_zero_initial_cp_h0_kernel_kernel"
+    },
+    {
+      "duration_us": 19.935999999999694,
+      "name": "tilelang_correct_h0_kernel_kernel"
+    },
+    {
+      "duration_us": 3446.8920000000007,
+      "name": "tilelang_fused_chunk_gdr_fwd_kernel_kernel"
+    },
+    {
+      "duration_us": 2.2399999999997817,
+      "name": "void at::native::vectorized_elementwise_kernel<8, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul> >(int, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda(float)#1}, std::array<char*, 2ul>)"
+    }
+  ],
+  "launch_count": 16,
+  "output_shapes": [
+    [
+      1,
+      131072,
+      64,
+      128
+    ],
+    [
+      1,
+      64,
+      128,
+      128
+    ]
+  ],
+  "peak_allocated_delta_bytes": 3294627328,
+  "shape": {
+    "batch": 1,
+    "chunk_size": 64,
+    "dim_k": 128,
+    "dim_v": 128,
+    "dtype": "bfloat16",
+    "heads": 64,
+    "seq_len": 131072
+  }
+}

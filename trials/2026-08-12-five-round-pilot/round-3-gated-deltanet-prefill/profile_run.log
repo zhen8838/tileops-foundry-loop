@@ -1,0 +1,74 @@
+# TileOPs Benchmark Report
+Generated: 2026-08-11 19:59:18
+
+## Environment
+
+- **Torch version**: 2.10.0+cu129
+- **CUDA version (torch)**: 12.9
+- **GPU model**: NVIDIA H200
+- **Driver version**: 595.71.05
+- **GPU clocks**: SM current 1500 MHz, memory current 3201 MHz, application SM [Requested functionality has been deprecated] MHz, application memory [Requested functionality has been deprecated] MHz
+
+## GatedDeltaNetPrefillFwdOp
+
+### tileops
+
+| batch | heads | seq_len | dim_k | dim_v | chunk_size | layout | dtype | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing | speedup_vs_fla | config |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 16 | 4096 | 128 | 128 | 64 | bthd | torch.float16 | 0.6353 | 13.5221 | 0.1333 | 200.0000 | 0.2735 | 0.8247 | cupti | 2.0211 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 16 | 4096 | 128 | 128 | 64 | bthd | torch.bfloat16 | 0.9390 | 9.1478 | 0.0902 | 200.0000 | 0.2740 | 1.1744 | cupti | 1.3748 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 16 | 32768 | 128 | 128 | 64 | bthd | torch.float16 | 1.5276 | 44.9846 | 0.4410 | 143.0000 | 1.4798 | 1.5708 | cupti | 2.8267 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 16 | 32768 | 128 | 128 | 64 | bthd | torch.bfloat16 | 1.5323 | 44.8484 | 0.4397 | 143.0000 | 1.4795 | 1.5728 | cupti | 2.8230 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 16 | 65536 | 128 | 128 | 64 | bthd | torch.float16 | 1.8590 | 73.9297 | 0.7245 | 99.0000 | 1.7232 | 1.8967 | cupti | 2.9477 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 16 | 65536 | 128 | 128 | 64 | bthd | torch.bfloat16 | 1.8550 | 74.0904 | 0.7261 | 99.0000 | 1.7170 | 1.8947 | cupti | 2.9474 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 16 | 131072 | 128 | 128 | 64 | bthd | torch.float16 | 2.4452 | 112.4170 | 1.1015 | 63.0000 | 2.1359 | 2.4901 | cupti | 2.9506 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 16 | 131072 | 128 | 128 | 64 | bthd | torch.bfloat16 | 2.3314 | 117.9031 | 1.1552 | 62.0000 | 2.1537 | 2.5031 | cupti | 3.0535 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 32 | 32768 | 128 | 128 | 64 | bthd | torch.float16 | 1.8304 | 75.0865 | 0.7361 | 98.0000 | 1.7121 | 1.9069 | cupti | 2.5048 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 32 | 32768 | 128 | 128 | 64 | bthd | torch.bfloat16 | 1.8581 | 73.9692 | 0.7252 | 97.0000 | 1.7117 | 1.8868 | cupti | 2.4555 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 32 | 65536 | 128 | 128 | 64 | bthd | torch.float16 | 2.4323 | 113.0130 | 1.1075 | 63.0000 | 2.1130 | 2.4649 | cupti | 2.3381 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 32 | 65536 | 128 | 128 | 64 | bthd | torch.bfloat16 | 2.4623 | 111.6324 | 1.0940 | 61.0000 | 2.1363 | 2.4834 | cupti | 2.3077 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 32 | 131072 | 128 | 128 | 64 | bthd | torch.float16 | 3.6606 | 150.1821 | 1.4715 | 35.0000 | 2.9845 | 3.6874 | cupti | 2.9639 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 32 | 131072 | 128 | 128 | 64 | bthd | torch.bfloat16 | 3.3697 | 163.1470 | 1.5985 | 34.0000 | 3.0156 | 3.7136 | cupti | 3.2105 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 48 | 32768 | 128 | 128 | 64 | bthd | torch.float16 | 2.1851 | 94.3460 | 0.9249 | 72.0000 | 1.9537 | 2.2194 | cupti | 2.4450 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 48 | 32768 | 128 | 128 | 64 | bthd | torch.bfloat16 | 2.2009 | 93.6684 | 0.9183 | 73.0000 | 1.9788 | 2.2369 | cupti | 2.3787 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 48 | 65536 | 128 | 128 | 64 | bthd | torch.float16 | 3.0702 | 134.2954 | 1.3161 | 45.0000 | 2.5664 | 3.1048 | cupti | 2.6032 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 48 | 65536 | 128 | 128 | 64 | bthd | torch.bfloat16 | 3.1190 | 132.1955 | 1.2955 | 43.0000 | 2.6081 | 3.1674 | cupti | 2.5640 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 48 | 131072 | 128 | 128 | 64 | bthd | torch.float16 | 4.5366 | 181.7716 | 1.7810 | 24.0000 | 4.1385 | 4.9582 | cupti | 3.5146 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 48 | 131072 | 128 | 128 | 64 | bthd | torch.bfloat16 | 4.9868 | 165.3640 | 1.6202 | 23.0000 | 4.2056 | 5.0248 | cupti | 3.2032 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 64 | 32768 | 128 | 128 | 64 | bthd | torch.float16 | 2.3354 | 117.7011 | 1.1539 | 62.0000 | 2.1195 | 2.4940 | cupti | 2.2147 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 256, 'h_block_v': 32, 'o_threads': 256} |
+| 1 | 64 | 32768 | 128 | 128 | 64 | bthd | torch.bfloat16 | 2.4567 | 111.8883 | 1.0969 | 61.0000 | 2.1357 | 2.4921 | cupti | 2.1789 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 256, 'h_block_v': 32, 'o_threads': 256} |
+| 1 | 64 | 65536 | 128 | 128 | 64 | bthd | torch.float16 | 3.6617 | 150.1374 | 1.4713 | 35.0000 | 2.9273 | 3.6854 | cupti | 2.6875 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 256, 'h_block_v': 32, 'o_threads': 256} |
+| 1 | 64 | 65536 | 128 | 128 | 64 | bthd | torch.bfloat16 | 3.6870 | 149.1080 | 1.4613 | 35.0000 | 2.9660 | 3.7256 | cupti | 2.6707 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 256, 'h_block_v': 32, 'o_threads': 256} |
+| 1 | 64 | 131072 | 128 | 128 | 64 | bthd | torch.float16 | 6.0391 | 182.0653 | 1.7839 | 19.0000 | 5.1767 | 6.1022 | cupti | 3.2545 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 256, 'h_block_v': 32, 'o_threads': 256} |
+| 1 | 64 | 131072 | 128 | 128 | 64 | bthd | torch.bfloat16 | 6.1566 | 178.5895 | 1.7498 | 19.0000 | 5.2518 | 8.1362 | cupti | 3.1984 | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 256, 'h_block_v': 32, 'o_threads': 256} |
+
+### fla
+
+| batch | heads | seq_len | dim_k | dim_v | chunk_size | layout | dtype | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing | speedup_vs_fla | config |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | 16 | 4096 | 128 | 128 | 64 | bthd | torch.float16 | 1.2839 | 6.6904 | 0.0659 | 186.0000 | 0.7052 | 1.3178 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 16 | 4096 | 128 | 128 | 64 | bthd | torch.bfloat16 | 1.2910 | 6.6538 | 0.0656 | 193.0000 | 0.7109 | 1.3307 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 16 | 32768 | 128 | 128 | 64 | bthd | torch.float16 | 4.3182 | 15.9139 | 0.1560 | 53.0000 | 1.8199 | 5.3265 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 16 | 32768 | 128 | 128 | 64 | bthd | torch.bfloat16 | 4.3256 | 15.8869 | 0.1558 | 54.0000 | 1.8009 | 5.1784 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 16 | 65536 | 128 | 128 | 64 | bthd | torch.float16 | 5.4800 | 25.0803 | 0.2458 | 28.0000 | 3.5314 | 6.8283 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 16 | 65536 | 128 | 128 | 64 | bthd | torch.bfloat16 | 5.4674 | 25.1379 | 0.2464 | 28.0000 | 3.5120 | 6.7797 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 16 | 131072 | 128 | 128 | 64 | bthd | torch.float16 | 7.2147 | 38.0998 | 0.3733 | 14.0000 | 6.9581 | 7.5556 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 16 | 131072 | 128 | 128 | 64 | bthd | torch.bfloat16 | 7.1188 | 38.6129 | 0.3783 | 14.0000 | 6.8973 | 7.6199 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 32 | 32768 | 128 | 128 | 64 | bthd | torch.float16 | 4.5849 | 29.9767 | 0.2939 | 35.0000 | 2.7601 | 6.1213 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 32 | 32768 | 128 | 128 | 64 | bthd | torch.bfloat16 | 4.5625 | 30.1235 | 0.2953 | 35.0000 | 2.7569 | 6.1307 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 32 | 65536 | 128 | 128 | 64 | bthd | torch.float16 | 5.6869 | 48.3355 | 0.4737 | 18.0000 | 5.4275 | 6.0076 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 32 | 65536 | 128 | 128 | 64 | bthd | torch.bfloat16 | 5.6823 | 48.3747 | 0.4741 | 18.0000 | 5.4294 | 6.0954 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 32 | 131072 | 128 | 128 | 64 | bthd | torch.float16 | 10.8496 | 50.6706 | 0.4965 | 10.0000 | 10.8342 | 10.8988 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 32 | 131072 | 128 | 128 | 64 | bthd | torch.bfloat16 | 10.8183 | 50.8172 | 0.4979 | 10.0000 | 10.8170 | 10.8819 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 48 | 32768 | 128 | 128 | 64 | bthd | torch.float16 | 5.3426 | 38.5878 | 0.3783 | 24.0000 | 4.0160 | 7.3048 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 48 | 32768 | 128 | 128 | 64 | bthd | torch.bfloat16 | 5.2354 | 39.3776 | 0.3860 | 24.0000 | 4.0221 | 7.3457 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 48 | 65536 | 128 | 128 | 64 | bthd | torch.float16 | 7.9923 | 51.5894 | 0.5056 | 12.0000 | 7.9753 | 8.3104 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 48 | 65536 | 128 | 128 | 64 | bthd | torch.bfloat16 | 7.9970 | 51.5586 | 0.5053 | 12.0000 | 7.9914 | 8.2886 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 48 | 131072 | 128 | 128 | 64 | bthd | torch.float16 | 15.9447 | 51.7183 | 0.5067 | 10.0000 | 15.9224 | 15.9653 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 48 | 131072 | 128 | 128 | 64 | bthd | torch.bfloat16 | 15.9736 | 51.6249 | 0.5058 | 10.0000 | 15.9575 | 15.9900 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 128, 'h_block_v': 16, 'o_threads': 256} |
+| 1 | 64 | 32768 | 128 | 128 | 64 | bthd | torch.float16 | 5.1721 | 53.1464 | 0.5210 | 20.0000 | 4.8954 | 6.1398 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 256, 'h_block_v': 32, 'o_threads': 256} |
+| 1 | 64 | 32768 | 128 | 128 | 64 | bthd | torch.bfloat16 | 5.3529 | 51.3516 | 0.5034 | 20.0000 | 4.9109 | 5.6455 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 256, 'h_block_v': 32, 'o_threads': 256} |
+| 1 | 64 | 65536 | 128 | 128 | 64 | bthd | torch.float16 | 9.8409 | 55.8646 | 0.5475 | 10.0000 | 9.8258 | 9.8799 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 256, 'h_block_v': 32, 'o_threads': 256} |
+| 1 | 64 | 65536 | 128 | 128 | 64 | bthd | torch.bfloat16 | 9.8469 | 55.8301 | 0.5471 | 10.0000 | 9.8307 | 9.8571 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 256, 'h_block_v': 32, 'o_threads': 256} |
+| 1 | 64 | 131072 | 128 | 128 | 64 | bthd | torch.float16 | 19.6542 | 55.9429 | 0.5481 | 10.0000 | 19.6251 | 19.6703 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 256, 'h_block_v': 32, 'o_threads': 256} |
+| 1 | 64 | 131072 | 128 | 128 | 64 | bthd | torch.bfloat16 | 19.6916 | 55.8366 | 0.5471 | 10.0000 | 19.6720 | 19.7168 | cupti | N/A | {'fused_num_stages': 2, 'fused_threads': 128, 'h_num_stages': 2, 'h_threads': 256, 'h_block_v': 32, 'o_threads': 256} |

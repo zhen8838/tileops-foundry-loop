@@ -1,0 +1,39 @@
+# TileOPs Benchmark Report
+Generated: 2026-08-12 00:57:06
+
+## Environment
+
+- **Torch version**: 2.13.0+cu132
+- **CUDA version (torch)**: 13.2
+- **GPU model**: NVIDIA H200
+- **Driver version**: 595.71.05
+- **GPU clocks**: SM current 1500 MHz, memory current 3201 MHz, application SM [Requested functionality has been deprecated] MHz, application memory [Requested functionality has been deprecated] MHz
+
+## FusedMoEExpertsNopadPersistent3WGFwdOp
+
+### tileops-fused-act
+
+| num_tokens | num_experts | top_k | hidden_size | ffn_size | dtype | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 512 | 128 | 8 | 7168 | 2048 | torch.bfloat16 | 3.0439 | 118.5242 | 3.7087 | 61.0000 | 3.0214 | 6.3864 | cupti |
+| 4096 | 128 | 8 | 7168 | 2048 | torch.bfloat16 | 6.0151 | 479.8268 | 1.8938 | 33.0000 | 5.6636 | 9.1768 | cupti |
+| 512 | 256 | 8 | 7168 | 2048 | torch.bfloat16 | 5.8042 | 62.1576 | 3.8874 | 32.0000 | 5.7704 | 9.0679 | cupti |
+| 4096 | 256 | 8 | 7168 | 2048 | torch.bfloat16 | 8.2100 | 351.5480 | 2.7608 | 23.0000 | 7.9039 | 11.4620 | cupti |
+
+### base-incumbent
+
+| num_tokens | num_experts | top_k | hidden_size | ffn_size | dtype | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 512 | 128 | 8 | 7168 | 2048 | torch.bfloat16 | 3.1617 | 114.1085 | 3.5705 | 56.0000 | 3.1569 | 3.1727 | cupti |
+| 4096 | 128 | 8 | 7168 | 2048 | torch.bfloat16 | 5.7425 | 502.6089 | 1.9838 | 32.0000 | 5.7262 | 5.7956 | cupti |
+| 512 | 256 | 8 | 7168 | 2048 | torch.bfloat16 | 6.1058 | 59.0873 | 3.6954 | 28.0000 | 6.0970 | 6.1191 | cupti |
+| 4096 | 256 | 8 | 7168 | 2048 | torch.bfloat16 | 8.1078 | 355.9803 | 2.7956 | 22.0000 | 8.0316 | 8.2031 | cupti |
+
+### vllm-triton
+
+| num_tokens | num_experts | top_k | hidden_size | ffn_size | dtype | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 512 | 128 | 8 | 7168 | 2048 | torch.bfloat16 | 2.9422 | 122.6229 | 3.8370 | 60.0000 | 2.9214 | 5.9032 | cupti |
+| 4096 | 128 | 8 | 7168 | 2048 | torch.bfloat16 | 6.7984 | 424.5467 | 1.6757 | 28.0000 | 6.7619 | 9.6832 | cupti |
+| 512 | 256 | 8 | 7168 | 2048 | torch.bfloat16 | 5.5988 | 64.4388 | 4.0300 | 32.0000 | 5.5811 | 9.0702 | cupti |
+| 4096 | 256 | 8 | 7168 | 2048 | torch.bfloat16 | 8.5403 | 337.9529 | 2.6540 | 22.0000 | 8.4882 | 12.1867 | cupti |

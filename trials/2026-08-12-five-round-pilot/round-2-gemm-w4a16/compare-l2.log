@@ -1,0 +1,6 @@
+GemmW4A16Kernel initialized with config: {'block_n': 8, 'threads': 128}
+GemmW4A16Kernel initialized with config: {'block_m': 64, 'block_n': 64, 'block_k': 64, 'num_stages': 2, 'threads': 128}
+candidate {'block_n': 8, 'threads': 128} {'timing': 'cupti'} median_ms 0.064896 min_ms 0.063584 max_ms 0.066368 max_abs 0.03125
+2026-08-11 18:06:02  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[-1]`
+2026-08-11 18:06:06  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+incumbent {'block_m': 64, 'block_n': 64, 'block_k': 64, 'num_stages': 2, 'threads': 128} {'timing': 'cupti'} median_ms 0.0980965 min_ms 0.09763200000000001 max_ms 0.098849 max_abs 0.0625

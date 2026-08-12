@@ -1,0 +1,5 @@
+
+no tests ran in 2.18s
+ERROR: Invalid explicit test tier assignments detected:
+tests/ops/test_fft.py::test_fft_c2c[1024-dtype7-False-batch_shape7]: each test must have at least one smoke case
+tests/ops/test_fft.py::test_fft_c2c[1024-dtype7-False-batch_shape7]: each dtype must have at least one smoke case; missing smoke for ['torch.complex64']

@@ -1,0 +1,165 @@
+{
+  "small_multi_chunk": {
+    "shape": {
+      "batch": 1,
+      "seqlen": 512,
+      "heads": 4,
+      "head_dim": 64,
+      "groups": 1,
+      "state_dim": 128
+    },
+    "dtype": "torch.float16",
+    "candidate": {
+      "class": "blind_serial_tilelang_runtime_twin",
+      "y_shape": [
+        1,
+        512,
+        4,
+        64
+      ],
+      "y_dtype": "torch.float32",
+      "state_shape": [
+        1,
+        4,
+        64,
+        128
+      ],
+      "state_dtype": "torch.float32",
+      "source": {
+        "object_type": "JITKernel",
+        "get_kernel_source": "#if defined(_MSC_VER) && !defined(__clang__) && _MSC_VER < 1940\n#define _tl_orig_alignas alignas\n#define alignas(N) _tl_orig_alignas((N) <= 64 ? (N) : 64)\n#include <cuda.h>\n#undef alignas\n#define alignas _tl_orig_alignas\n#endif\n#include <tl_templates/cuda/gemm.h>\n#include <tl_templates/cuda/copy.h>\n#include <tl_templates/cuda/reduce.h>\n#include <tl_templates/cuda/scan.h>\n#include <tl_templates/cuda/ldsm.h>\n#include <tl_templates/cuda/threadblock_swizzle.h>\n#include <tl_templates/cuda/debug.h>\n#ifdef ENABLE_BF16\n#include <tl_templates/cuda/cuda_bf16_fallbacks.cuh>\n#endif\n\nextern \"C\" __global__ void mamba2_serial_kernel(const float* __restrict__ A, const half_t* __restrict__ B, const half_t* __restrict__ C, const float* __restrict__ dt, float* __restrict__ final_state, const half_t* __restrict__ x, float* __restrict__ y);\nextern \"C\" __global__ void __launch_bounds__(128, 1) mamba2_serial_kernel(const float* __restrict__ A, const half_t* __restrict__ B, const half_t* __restrict__ C, const float* __restrict__ dt, float* __restrict__ final_state, const half_t* __restrict__ x, float* __restrict__ y) {\n  extern __shared__ __align__(1024) uchar buf_dyn_shmem[];\n  void* state = ((void*)((char*)buf_dyn_shmem + 0));\n  void* decay_shared = ((void*)((char*)buf_dyn_shmem + 32768));\n  void* delta_shared = ((void*)((char*)buf_dyn_shmem + 32784));\n  half_t x_local_cast_1[4];\n  half_t B_local_cast_2[4];\n  float state_local_cast[4];\n  float y_fragment[1];\n  #pragma unroll\n  for (int i = 0; i < 16; ++i) {\n    float broadcast_var = 0x0p+0f/*0.000000e+00*/;\n    *(float4*)(((float*)state) + ((i * 512) + (((int)threadIdx.x) * 4))) = make_float4(broadcast_var, broadcast_var, broadcast_var, broadcast_var);\n  }\n  __syncthreads();\n  for (int token = 0; token < 512; ++token) {\n    if (((int)threadIdx.x) == 0) {\n      float condval;\n      if ((0x1.4p+4f/*2.000000e+01*/ < dt[((token * 4) + ((int)blockIdx.y))])) {\n        condval = dt[((token * 4) + ((int)blockIdx.y))];\n      } else {\n        condval = logf((0x1p+0f/*1.000000e+00*/ + expf(dt[((token * 4) + ((int)blockIdx.y))])));\n      }\n      ((float*)delta_shared)[0] = max(condval, 0x0p+0f/*0.000000e+00*/);\n      ((float*)decay_shared)[0] = exp2f(((A[((int)blockIdx.y)] * ((float*)delta_shared)[0]) * 0x1.71547652b82fep+0f/*1.442695e+00*/));\n    }\n    __syncthreads();\n    #pragma unroll\n    for (int i_1 = 0; i_1 < 16; ++i_1) {\n      *(uint2*)(x_local_cast_1 + 0) = make_uint2(__pack_half2(x[((((token * 256) + (((int)blockIdx.y) * 64)) + (i_1 * 4)) + (((int)threadIdx.x) >> 5))], x[((((token * 256) + (((int)blockIdx.y) * 64)) + (i_1 * 4)) + (((int)threadIdx.x) >> 5))]), __pack_half2(x[((((token * 256) + (((int)blockIdx.y) * 64)) + (i_1 * 4)) + (((int)threadIdx.x) >> 5))], x[((((token * 256) + (((int)blockIdx.y) * 64)) + (i_1 * 4)) + (((int)threadIdx.x) >> 5))]));\n      *(uint2*)(B_local_cast_2 + 0) = *(uint2*)(B + ((token * 128) + ((((int)threadIdx.x) & 31) * 4)));\n      *(float4*)(state_local_cast + 0) = *(float4*)(((float*)state) + ((i_1 * 512) + (((int)threadIdx.x) * 4)));\n      float4 __1;\n        float4 __2;\n          float4 v_ = make_float4(((float*)decay_shared)[0], ((float*)decay_shared)[0], ((float*)decay_shared)[0], ((float*)decay_shared)[0]);\n          float4 v__1 = *(float4*)(state_local_cast + 0);\n          __2.x = (v_.x*v__1.x);\n          __2.y = (v_.y*v__1.y);\n          __2.z = (v_.z*v__1.z);\n          __2.w = (v_.w*v__1.w);\n        float4 __3;\n          float4 __4;\n            float4 v__2 = make_float4(((float*)delta_shared)[0], ((float*)delta_shared)[0], ((float*)delta_shared)[0], ((float*)delta_shared)[0]);\n            float4 __5;\n            uint2 v__3 = *(uint2*)(x_local_cast_1 + 0);\n            ((float2*)(&__5))[0] = __half22float2(((half2*)(&v__3))[0]);\n            ((float2*)(&__5))[1] = __half22float2(((half2*)(&v__3))[1]);\n            __4.x = (v__2.x*__5.x);\n            __4.y = (v__2.y*__5.y);\n            __4.z = (v__2.z*__5.z);\n            __4.w = (v__2.w*__5.w);\n          float4 __6;\n          uint2 v__4 = *(uint2*)(B_local_cast_2 + 0);\n          ((float2*)(&__6))[0] = __half22float2(((half2*)(&v__4))[0]);\n          ((float2*)(&__6))[1] = __half22float2(((half2*)(&v__4))[1]);\n          __3.x = (__4.x*__6.x);\n          __3.y = (__4.y*__6.y);\n          __3.z = (__4.z*__6.z);\n          __3.w = (__4.w*__6.w);\n        __1.x = (__2.x+__3.x);\n        __1.y = (__2.y+__3.y);\n        __1.z = (__2.z+__3.z);\n        __1.w = (__2.w+__3.w);\n      *(float4*)(state_local_cast + 0) = __1;\n      *(float4*)(((float*)state) + ((i_1 * 512) + (((int)threadIdx.x) * 4))) = *(float4*)(state_local_cast + 0);\n    }\n    __syncthreads();\n    y_fragment[0] = 0x0p+0f/*0.000000e+00*/;\n    for (int n = 0; n < 128; ++n) {\n      y_fragment[0] = (y_fragment[0] + (((float*)state)[(((((int)threadIdx.x) & 63) * 128) + n)] * ((float)C[((token * 128) + n)])));\n    }\n    if ((((int)threadIdx.x) >> 6) == 0) {\n      y[(((token * 256) + (((int)blockIdx.y) * 64)) + (((int)threadIdx.x) & 63))] = y_fragment[0];\n    }\n    __syncthreads();\n  }\n  #pragma unroll\n  for (int i_2 = 0; i_2 < 16; ++i_2) {\n    *(float4*)(final_state + (((((int)blockIdx.y) * 8192) + (i_2 * 512)) + (((int)threadIdx.x) * 4))) = *(float4*)(((float*)state) + ((i_2 * 512) + (((int)threadIdx.x) * 4)));\n  }\n}\n\n"
+      }
+    },
+    "vs_official": {
+      "y": {
+        "max_abs": 5.681067705154419e-05,
+        "mean_abs": 2.5342080789414467e-06,
+        "allclose": true
+      },
+      "state": {
+        "max_abs": 2.6673078536987305e-05,
+        "mean_abs": 1.833329065448197e-06,
+        "allclose": true
+      }
+    },
+    "vs_direct_oracle": {
+      "y": {
+        "max_abs": 4.470348358154297e-08,
+        "mean_abs": 2.2554949019593096e-09,
+        "allclose": true
+      },
+      "state": {
+        "max_abs": 2.2351741790771484e-08,
+        "mean_abs": 1.0226117730383066e-09,
+        "allclose": true
+      }
+    }
+  },
+  "production_bf16": {
+    "shape": {
+      "batch": 1,
+      "seqlen": 2048,
+      "heads": 80,
+      "head_dim": 64,
+      "groups": 1,
+      "state_dim": 128
+    },
+    "dtype": "torch.bfloat16",
+    "candidate": {
+      "class": "blind_serial_tilelang_runtime_twin",
+      "y_shape": [
+        1,
+        2048,
+        80,
+        64
+      ],
+      "y_dtype": "torch.float32",
+      "state_shape": [
+        1,
+        80,
+        64,
+        128
+      ],
+      "state_dtype": "torch.float32",
+      "source": {
+        "object_type": "JITKernel",
+        "get_kernel_source": "#if defined(_MSC_VER) && !defined(__clang__) && _MSC_VER < 1940\n#define _tl_orig_alignas alignas\n#define alignas(N) _tl_orig_alignas((N) <= 64 ? (N) : 64)\n#include <cuda.h>\n#undef alignas\n#define alignas _tl_orig_alignas\n#endif\n#include <tl_templates/cuda/gemm.h>\n#include <tl_templates/cuda/copy.h>\n#include <tl_templates/cuda/reduce.h>\n#include <tl_templates/cuda/scan.h>\n#include <tl_templates/cuda/ldsm.h>\n#include <tl_templates/cuda/threadblock_swizzle.h>\n#include <tl_templates/cuda/debug.h>\n#ifdef ENABLE_BF16\n#include <tl_templates/cuda/cuda_bf16_fallbacks.cuh>\n#endif\n\nextern \"C\" __global__ void mamba2_serial_kernel(const float* __restrict__ A, const bfloat16_t* __restrict__ B, const bfloat16_t* __restrict__ C, const float* __restrict__ dt, float* __restrict__ final_state, const bfloat16_t* __restrict__ x, float* __restrict__ y);\nextern \"C\" __global__ void __launch_bounds__(128, 1) mamba2_serial_kernel(const float* __restrict__ A, const bfloat16_t* __restrict__ B, const bfloat16_t* __restrict__ C, const float* __restrict__ dt, float* __restrict__ final_state, const bfloat16_t* __restrict__ x, float* __restrict__ y) {\n  extern __shared__ __align__(1024) uchar buf_dyn_shmem[];\n  void* state = ((void*)((char*)buf_dyn_shmem + 0));\n  void* decay_shared = ((void*)((char*)buf_dyn_shmem + 32768));\n  void* delta_shared = ((void*)((char*)buf_dyn_shmem + 32784));\n  bfloat16_t x_local_cast_1[4];\n  bfloat16_t B_local_cast_2[4];\n  float state_local_cast[4];\n  float y_fragment[1];\n  #pragma unroll\n  for (int i = 0; i < 16; ++i) {\n    float broadcast_var = 0x0p+0f/*0.000000e+00*/;\n    *(float4*)(((float*)state) + ((i * 512) + (((int)threadIdx.x) * 4))) = make_float4(broadcast_var, broadcast_var, broadcast_var, broadcast_var);\n  }\n  __syncthreads();\n  for (int token = 0; token < 2048; ++token) {\n    if (((int)threadIdx.x) == 0) {\n      float condval;\n      if ((0x1.4p+4f/*2.000000e+01*/ < dt[((token * 80) + ((int)blockIdx.y))])) {\n        condval = dt[((token * 80) + ((int)blockIdx.y))];\n      } else {\n        condval = logf((0x1p+0f/*1.000000e+00*/ + expf(dt[((token * 80) + ((int)blockIdx.y))])));\n      }\n      ((float*)delta_shared)[0] = max(condval, 0x0p+0f/*0.000000e+00*/);\n      ((float*)decay_shared)[0] = exp2f(((A[((int)blockIdx.y)] * ((float*)delta_shared)[0]) * 0x1.71547652b82fep+0f/*1.442695e+00*/));\n    }\n    __syncthreads();\n    #pragma unroll\n    for (int i_1 = 0; i_1 < 16; ++i_1) {\n      *(uint2*)(x_local_cast_1 + 0) = make_uint2(__pack_nv_bfloat162(x[((((token * 5120) + (((int)blockIdx.y) * 64)) + (i_1 * 4)) + (((int)threadIdx.x) >> 5))], x[((((token * 5120) + (((int)blockIdx.y) * 64)) + (i_1 * 4)) + (((int)threadIdx.x) >> 5))]), __pack_nv_bfloat162(x[((((token * 5120) + (((int)blockIdx.y) * 64)) + (i_1 * 4)) + (((int)threadIdx.x) >> 5))], x[((((token * 5120) + (((int)blockIdx.y) * 64)) + (i_1 * 4)) + (((int)threadIdx.x) >> 5))]));\n      *(uint2*)(B_local_cast_2 + 0) = *(uint2*)(B + ((token * 128) + ((((int)threadIdx.x) & 31) * 4)));\n      *(float4*)(state_local_cast + 0) = *(float4*)(((float*)state) + ((i_1 * 512) + (((int)threadIdx.x) * 4)));\n      float4 __1;\n        float4 __2;\n          float4 v_ = make_float4(((float*)decay_shared)[0], ((float*)decay_shared)[0], ((float*)decay_shared)[0], ((float*)decay_shared)[0]);\n          float4 v__1 = *(float4*)(state_local_cast + 0);\n          __2.x = (v_.x*v__1.x);\n          __2.y = (v_.y*v__1.y);\n          __2.z = (v_.z*v__1.z);\n          __2.w = (v_.w*v__1.w);\n        float4 __3;\n          float4 __4;\n            float4 v__2 = make_float4(((float*)delta_shared)[0], ((float*)delta_shared)[0], ((float*)delta_shared)[0], ((float*)delta_shared)[0]);\n            float4 __5;\n            uint2 v__3 = *(uint2*)(x_local_cast_1 + 0);\n            ((float2*)(&__5))[0] = __bfloat1622float2((reinterpret_cast<__nv_bfloat162*>(&v__3))[0]);\n            ((float2*)(&__5))[1] = __bfloat1622float2((reinterpret_cast<__nv_bfloat162*>(&v__3))[1]);\n            __4.x = (v__2.x*__5.x);\n            __4.y = (v__2.y*__5.y);\n            __4.z = (v__2.z*__5.z);\n            __4.w = (v__2.w*__5.w);\n          float4 __6;\n          uint2 v__4 = *(uint2*)(B_local_cast_2 + 0);\n          ((float2*)(&__6))[0] = __bfloat1622float2((reinterpret_cast<__nv_bfloat162*>(&v__4))[0]);\n          ((float2*)(&__6))[1] = __bfloat1622float2((reinterpret_cast<__nv_bfloat162*>(&v__4))[1]);\n          __3.x = (__4.x*__6.x);\n          __3.y = (__4.y*__6.y);\n          __3.z = (__4.z*__6.z);\n          __3.w = (__4.w*__6.w);\n        __1.x = (__2.x+__3.x);\n        __1.y = (__2.y+__3.y);\n        __1.z = (__2.z+__3.z);\n        __1.w = (__2.w+__3.w);\n      *(float4*)(state_local_cast + 0) = __1;\n      *(float4*)(((float*)state) + ((i_1 * 512) + (((int)threadIdx.x) * 4))) = *(float4*)(state_local_cast + 0);\n    }\n    __syncthreads();\n    y_fragment[0] = 0x0p+0f/*0.000000e+00*/;\n    for (int n = 0; n < 128; ++n) {\n      y_fragment[0] = (y_fragment[0] + (((float*)state)[(((((int)threadIdx.x) & 63) * 128) + n)] * ((float)C[((token * 128) + n)])));\n    }\n    if ((((int)threadIdx.x) >> 6) == 0) {\n      y[(((token * 5120) + (((int)blockIdx.y) * 64)) + (((int)threadIdx.x) & 63))] = y_fragment[0];\n    }\n    __syncthreads();\n  }\n  #pragma unroll\n  for (int i_2 = 0; i_2 < 16; ++i_2) {\n    *(float4*)(final_state + (((((int)blockIdx.y) * 8192) + (i_2 * 512)) + (((int)threadIdx.x) * 4))) = *(float4*)(((float*)state) + ((i_2 * 512) + (((int)threadIdx.x) * 4)));\n  }\n}\n\n"
+      },
+      "generated_source_path": "$CONTAINER_WORKSPACE/tileops/mamba2_blind_candidate.generated.cu"
+    },
+    "vs_official": {
+      "y": {
+        "max_abs": 0.001451045274734497,
+        "mean_abs": 2.6996120141120628e-05,
+        "allclose": true
+      },
+      "state": {
+        "max_abs": 0.0006172060966491699,
+        "mean_abs": 1.7168309568660334e-05,
+        "allclose": true
+      }
+    },
+    "latency_trials": [
+      {
+        "samples_ms": [
+          11.204467000000001,
+          11.201044,
+          11.180115,
+          11.195667,
+          11.202131,
+          11.189875,
+          11.193522999999999,
+          11.181107,
+          11.228627000000001,
+          11.190387000000001
+        ],
+        "median_ms": 11.194595,
+        "p10_ms": 11.181107,
+        "p90_ms": 11.204467000000001,
+        "metadata": {
+          "timing": "cupti"
+        }
+      },
+      {
+        "samples_ms": [
+          11.1981,
+          11.201107,
+          11.204339000000001,
+          11.180882,
+          11.192468000000002,
+          11.211731,
+          11.194995,
+          11.176212,
+          11.214995000000002,
+          11.197748
+        ],
+        "median_ms": 11.197924,
+        "p10_ms": 11.180882,
+        "p90_ms": 11.211731,
+        "metadata": {
+          "timing": "cupti"
+        }
+      },
+      {
+        "samples_ms": [
+          11.20978,
+          11.229939,
+          11.178739,
+          11.222100000000001,
+          11.198867,
+          11.209971,
+          11.174771000000002,
+          11.184787,
+          11.209203,
+          11.229139
+        ],
+        "median_ms": 11.2094915,
+        "p10_ms": 11.178739,
+        "p90_ms": 11.229139,
+        "metadata": {
+          "timing": "cupti"
+        }
+      }
+    ]
+  }
+}

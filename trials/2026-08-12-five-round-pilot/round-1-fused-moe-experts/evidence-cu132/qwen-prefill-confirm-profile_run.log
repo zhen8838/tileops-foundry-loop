@@ -1,0 +1,30 @@
+# TileOPs Benchmark Report
+Generated: 2026-08-12 00:57:54
+
+## Environment
+
+- **Torch version**: 2.13.0+cu132
+- **CUDA version (torch)**: 13.2
+- **GPU model**: NVIDIA H200
+- **Driver version**: 595.71.05
+- **GPU clocks**: SM current 1500 MHz, memory current 3201 MHz, application SM [Requested functionality has been deprecated] MHz, application memory [Requested functionality has been deprecated] MHz
+
+## FusedMoEExpertsNopadPersistent3WGFwdOp
+
+### tileops-fused-act
+
+| num_tokens | num_experts | top_k | hidden_size | ffn_size | dtype | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 4096 | 128 | 8 | 7168 | 2048 | torch.bfloat16 | 6.0258 | 478.9801 | 1.8905 | 33.0000 | 5.6500 | 8.8197 | cupti |
+
+### base-incumbent
+
+| num_tokens | num_experts | top_k | hidden_size | ffn_size | dtype | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 4096 | 128 | 8 | 7168 | 2048 | torch.bfloat16 | 5.7274 | 503.9324 | 1.9890 | 30.0000 | 5.7216 | 5.7359 | cupti |
+
+### vllm-triton
+
+| num_tokens | num_experts | top_k | hidden_size | ffn_size | dtype | latency_ms | tflops | bandwidth_tbs | n_samples | latency_p10_ms | latency_p90_ms | timing |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 4096 | 128 | 8 | 7168 | 2048 | torch.bfloat16 | 6.9887 | 412.9847 | 1.6300 | 28.0000 | 6.7690 | 9.8620 | cupti |

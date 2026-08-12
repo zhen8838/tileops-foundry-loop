@@ -1,0 +1,31 @@
+MoePermuteNopadKernel initialized with config: {'threads': 1024}
+MoeGroupedGemmPersistent3WGFusedActKernel initialized with config: {'block_m': 64, 'block_n': 128, 'block_k': 64, 'num_stages': 2, 'threads': 384, 'group_size_m': 1}
+GroupedGemmPersistent3WGKernel initialized with config: {'block_m': 128, 'block_n': 256, 'block_k': 64, 'num_stages': 3, 'threads': 384, 'group_size_m': 8}
+MoeUnpermuteKernel initialized with config: {}
+/usr/local/lib/python3.12/dist-packages/torch/profiler/profiler.py:217: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.
+  _warn_once(
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+                            tileops_fused_moe_candidate         0.00%       0.000us         0.00%       0.000us       0.000us       5.875ms       102.41%       5.875ms       5.875ms             1
+                                _gemm_main_fused_kernel         0.00%       0.000us         0.00%       0.000us       0.000us       3.725ms        64.94%       3.725ms       3.725ms             1
+                              _gemm_main_v2_coop_kernel         0.00%       0.000us         0.00%       0.000us       0.000us       1.961ms        34.18%       1.961ms       1.961ms             1
+                                    _gather_main_kernel         0.00%       0.000us         0.00%       0.000us       0.000us      20.128us         0.35%      20.128us      20.128us             1
+                                 _unpermute_main_kernel         0.00%       0.000us         0.00%       0.000us       0.000us      17.183us         0.30%      17.183us      17.183us             1
+                                      _scan_main_kernel         0.00%       0.000us         0.00%       0.000us       0.000us      12.480us         0.22%      12.480us      12.480us             1
+                                            aten::fill_         0.23%      18.110us        24.09%       1.907ms       1.907ms       0.864us         0.02%       1.728us       1.728us             1
+                                Activity Buffer Request        23.49%       1.859ms        23.49%       1.859ms       1.859ms       0.864us         0.02%       0.864us       0.864us             1
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us       0.864us         0.02%       0.864us       0.864us             1
+                            tileops_fused_moe_candidate         4.27%     338.095us        29.88%       2.364ms       2.364ms       0.000us         0.00%       1.728us       1.728us             1
+                                          aten::flatten         0.11%       8.837us         0.23%      18.259us      18.259us       0.000us         0.00%       0.000us       0.000us             1
+                                             aten::view         0.12%       9.422us         0.12%       9.422us       9.422us       0.000us         0.00%       0.000us       0.000us             1
+                                            aten::empty         0.69%      54.656us         0.69%      54.656us       6.073us       0.000us         0.00%       0.000us       0.000us             9
+                                            aten::zeros         0.13%       9.967us        24.37%       1.929ms       1.929ms       0.000us         0.00%       1.728us       1.728us             1
+                                            aten::zero_         0.13%       9.957us        24.22%       1.916ms       1.916ms       0.000us         0.00%       1.728us       1.728us             1
+                                       cudaLaunchKernel         0.37%      29.405us         0.37%      29.405us      29.405us       0.000us         0.00%       0.000us       0.000us             1
+                                         cuLaunchKernel         0.33%      26.267us         0.33%      26.267us       5.253us       0.000us         0.00%       0.000us       0.000us             5
+                                    cudaPeekAtLastError         0.01%       0.452us         0.01%       0.452us       0.090us       0.000us         0.00%       0.000us       0.000us             5
+                                  cudaDeviceSynchronize        70.12%       5.549ms        70.12%       5.549ms       2.775ms       0.000us         0.00%       0.000us       0.000us             2
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------
+Self CPU time total: 7.913ms
+Self CUDA time total: 5.737ms

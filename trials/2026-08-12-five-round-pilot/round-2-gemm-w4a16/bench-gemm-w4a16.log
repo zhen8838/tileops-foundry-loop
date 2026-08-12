@@ -1,0 +1,12 @@
+......                                                                   [100%]Benchmark report saved to profile_run.log
+
+=============================== warnings summary ===============================
+benchmarks/ops/bench_gemm.py::test_gemm_w4a16_bench[compile-smoke-square-64x64x128-float16]
+  <frozen importlib._bootstrap_external>:1301: FutureWarning: The cuda.cuda module is deprecated and will be removed in a future release, please switch to use the cuda.bindings.driver module instead.
+
+benchmarks/ops/bench_gemm.py: 14 warnings
+  /usr/local/lib/python3.12/dist-packages/torch/jit/_script.py:362: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+6 passed, 28 deselected, 15 warnings in 26.54s

@@ -1,0 +1,8 @@
+torch 2.13.0+cu132
+torch_cuda 13.2
+tilelang 0.1.11+cu132.gitafcebed1
+mamba_ssm 2.3.2.post1
+cupti-python 13.2.0
+cuda-bindings 13.3.1
+gpu NVIDIA H200
+capability (9, 0)

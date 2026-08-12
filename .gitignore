@@ -6,7 +6,7 @@ __pycache__/
 .ruff_cache/
 dist/
 build/
-artifacts/
+/artifacts/
 rounds/*/artifacts/
 rounds/*/pr-title.txt
 rounds/*/pr-body.md

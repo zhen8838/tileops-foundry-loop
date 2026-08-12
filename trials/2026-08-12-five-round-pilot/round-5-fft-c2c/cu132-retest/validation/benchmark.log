@@ -1,0 +1,683 @@
+Start autotuning FFTC2CKernel...
+2026-08-12 01:08:31,810 INFO:Auto-tuning with 0.9 CPU utilizations, 192 CPUs available, 172 CPUs will be used
+2026-08-12 01:08:31,930 WARNING:Benchmark timeout is enforced in benchmark workers by running each benchmark call in a daemon sub-thread and waiting up to the configured timeout.
+
+Compiling configurations:   0%|          | 0/8 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/8 [00:00<?, ?it/s][A
+Compiling configurations:  12%|█▎        | 1/8 [00:00<00:04,  1.52it/s]
+
+
+
+[A2026-08-12 01:08:34  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:01<00:04,  1.52it/s]
+
+Bench configurations:   0%|          | 0/8 [00:01<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:34  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:01<00:04,  1.52it/s]
+
+Bench configurations:   0%|          | 0/8 [00:01<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:34  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:01<00:04,  1.52it/s]
+
+Bench configurations:   0%|          | 0/8 [00:01<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:34  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:01<00:04,  1.52it/s]
+
+Bench configurations:   0%|          | 0/8 [00:01<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:34  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:01<00:04,  1.52it/s]
+
+Bench configurations:   0%|          | 0/8 [00:01<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:34  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:01<00:04,  1.52it/s]
+
+Bench configurations:   0%|          | 0/8 [00:01<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:34  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:01<00:04,  1.52it/s]
+
+Bench configurations:   0%|          | 0/8 [00:01<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:39  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:06<00:04,  1.52it/s]
+
+Bench configurations:   0%|          | 0/8 [00:06<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:39  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:07<00:04,  1.52it/s]
+
+Bench configurations:   0%|          | 0/8 [00:07<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:39  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:07<00:04,  1.52it/s]
+
+Bench configurations:   0%|          | 0/8 [00:07<?, ?it/s][A
+Compiling configurations:  25%|██▌       | 2/8 [00:07<00:24,  4.17s/it]
+
+
+
+[A2026-08-12 01:08:39  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  25%|██▌       | 2/8 [00:07<00:24,  4.17s/it]
+
+Bench configurations:   0%|          | 0/8 [00:07<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:39  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  25%|██▌       | 2/8 [00:07<00:24,  4.17s/it]
+
+Bench configurations:   0%|          | 0/8 [00:07<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:39  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  25%|██▌       | 2/8 [00:07<00:24,  4.17s/it]
+
+Bench configurations:   0%|          | 0/8 [00:07<?, ?it/s][A
+Compiling configurations:  38%|███▊      | 3/8 [00:07<00:11,  2.37s/it]
+
+
+
+[A2026-08-12 01:08:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  38%|███▊      | 3/8 [00:07<00:11,  2.37s/it]
+
+Bench configurations:   0%|          | 0/8 [00:07<?, ?it/s][A
+Compiling configurations:  50%|█████     | 4/8 [00:08<00:06,  1.68s/it]
+Compiling configurations:  75%|███████▌  | 6/8 [00:08<00:01,  1.17it/s]
+
+Bench configurations:  12%|█▎        | 1/8 [00:08<00:58,  8.39s/it][A
+
+Bench configurations:  12%|█▎        | 1/8 [00:08<00:58,  8.39s/it, best_latency=0.00951][A
+
+
+
+[ATuned Latency 0.009512319229543209 with config {'block_size': 256, 'threads': 256} at index 1
+
+Compiling configurations: 100%|██████████| 8/8 [00:08<00:00,  1.17it/s]
+
+Bench configurations:  12%|█▎        | 1/8 [00:08<00:58,  8.39s/it, best_latency=0.00951][A
+
+Bench configurations:  25%|██▌       | 2/8 [00:08<00:21,  3.58s/it, best_latency=0.00951][A
+
+Bench configurations:  25%|██▌       | 2/8 [00:08<00:21,  3.58s/it, best_latency=0.00951][A
+
+
+
+[ATuned Latency 0.015616641379892826 with config {'block_size': 1024, 'threads': 1024} at index 3
+
+Compiling configurations: 100%|██████████| 8/8 [00:08<00:00,  1.17it/s]
+
+Bench configurations:  25%|██▌       | 2/8 [00:08<00:21,  3.58s/it, best_latency=0.00951][A
+
+Bench configurations:  38%|███▊      | 3/8 [00:08<00:10,  2.04s/it, best_latency=0.00951][A
+
+Bench configurations:  38%|███▊      | 3/8 [00:08<00:10,  2.04s/it, best_latency=0.00951][A
+
+
+
+[ATuned Latency 0.01611328311264515 with config {'block_size': 2048, 'threads': 1024} at index 7
+
+Compiling configurations: 100%|██████████| 8/8 [00:08<00:00,  1.17it/s]
+
+Bench configurations:  38%|███▊      | 3/8 [00:08<00:10,  2.04s/it, best_latency=0.00951][A
+
+Bench configurations:  50%|█████     | 4/8 [00:09<00:05,  1.32s/it, best_latency=0.00951][A
+
+Bench configurations:  50%|█████     | 4/8 [00:09<00:05,  1.32s/it, best_latency=0.00951][A
+
+
+
+[ATuned Latency 0.010795519687235355 with config {'block_size': 2048, 'threads': 512} at index 6
+
+Compiling configurations: 100%|██████████| 8/8 [00:09<00:00,  1.17it/s]
+
+Bench configurations:  50%|█████     | 4/8 [00:09<00:05,  1.32s/it, best_latency=0.00951][A
+
+Bench configurations:  62%|██████▎   | 5/8 [00:09<00:02,  1.09it/s, best_latency=0.00951][A
+
+Bench configurations:  62%|██████▎   | 5/8 [00:09<00:02,  1.09it/s, best_latency=0.00951][A
+
+
+
+[ATuned Latency 0.010805120691657066 with config {'block_size': 1024, 'threads': 512} at index 5
+
+Compiling configurations: 100%|██████████| 8/8 [00:09<00:00,  1.17it/s]
+
+Bench configurations:  62%|██████▎   | 5/8 [00:09<00:02,  1.09it/s, best_latency=0.00951][A
+
+Bench configurations:  75%|███████▌  | 6/8 [00:09<00:01,  1.48it/s, best_latency=0.00951][A
+
+Bench configurations:  75%|███████▌  | 6/8 [00:09<00:01,  1.48it/s, best_latency=0.00951][A
+
+
+
+[ATuned Latency 0.010453118942677975 with config {'block_size': 512, 'threads': 512} at index 2
+
+Compiling configurations: 100%|██████████| 8/8 [00:09<00:00,  1.17it/s]
+
+Bench configurations:  75%|███████▌  | 6/8 [00:09<00:01,  1.48it/s, best_latency=0.00951][A
+
+Bench configurations:  88%|████████▊ | 7/8 [00:09<00:00,  1.90it/s, best_latency=0.00951][A
+
+Bench configurations:  88%|████████▊ | 7/8 [00:09<00:00,  1.90it/s, best_latency=0.00951][A
+
+
+
+[ATuned Latency 0.010860159061849117 with config {'block_size': 128, 'threads': 128} at index 0
+
+Compiling configurations: 100%|██████████| 8/8 [00:09<00:00,  1.17it/s]
+
+Bench configurations:  88%|████████▊ | 7/8 [00:09<00:00,  1.90it/s, best_latency=0.00951][A
+
+Bench configurations: 100%|██████████| 8/8 [00:09<00:00,  2.33it/s, best_latency=0.00951][A
+
+Bench configurations: 100%|██████████| 8/8 [00:09<00:00,  2.33it/s, best_latency=0.00951][A
+
+
+
+[ATuned Latency 0.00966976024210453 with config {'block_size': 1024, 'threads': 256} at index 4
+
+Compiling configurations: 100%|██████████| 8/8 [00:09<00:00,  1.17it/s]
+
+Bench configurations: 100%|██████████| 8/8 [00:09<00:00,  2.33it/s, best_latency=0.00951][A
+
+Bench configurations: 100%|██████████| 8/8 [00:09<00:00,  2.33it/s, best_latency=0.00951][A
+Compiling configurations: 100%|██████████| 8/8 [00:09<00:00,  1.23s/it]
+
+Bench configurations: 100%|██████████| 8/8 [00:09<00:00,  1.23s/it, best_latency=0.00951]
+Best config: {'block_size': 256, 'threads': 256}
+FFTC2CKernel initialized with config: {'block_size': 256, 'threads': 256}
+.Start autotuning FFTC2CKernel...
+2026-08-12 01:08:43,775 INFO:Auto-tuning with 0.9 CPU utilizations, 192 CPUs available, 172 CPUs will be used
+2026-08-12 01:08:43,996 WARNING:Benchmark timeout is enforced in benchmark workers by running each benchmark call in a daemon sub-thread and waiting up to the configured timeout.
+
+Compiling configurations:   0%|          | 0/8 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/8 [00:00<?, ?it/s][A
+Compiling configurations:  12%|█▎        | 1/8 [00:01<00:07,  1.08s/it]
+
+
+
+[A2026-08-12 01:08:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:01<00:07,  1.08s/it]
+
+Bench configurations:   0%|          | 0/8 [00:01<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:01<00:07,  1.08s/it]
+
+Bench configurations:   0%|          | 0/8 [00:01<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:01<00:07,  1.08s/it]
+
+Bench configurations:   0%|          | 0/8 [00:01<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:01<00:07,  1.08s/it]
+
+Bench configurations:   0%|          | 0/8 [00:01<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:01<00:07,  1.08s/it]
+
+Bench configurations:   0%|          | 0/8 [00:01<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:01<00:07,  1.08s/it]
+
+Bench configurations:   0%|          | 0/8 [00:01<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:01<00:07,  1.08s/it]
+
+Bench configurations:   0%|          | 0/8 [00:01<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:47  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:03<00:07,  1.08s/it]
+
+Bench configurations:   0%|          | 0/8 [00:03<?, ?it/s][A
+Compiling configurations:  25%|██▌       | 2/8 [00:03<00:11,  1.99s/it]
+
+
+
+[A2026-08-12 01:08:47  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  25%|██▌       | 2/8 [00:03<00:11,  1.99s/it]
+
+Bench configurations:   0%|          | 0/8 [00:03<?, ?it/s][A
+Compiling configurations:  38%|███▊      | 3/8 [00:03<00:05,  1.19s/it]
+
+
+
+[A2026-08-12 01:08:50  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  38%|███▊      | 3/8 [00:06<00:05,  1.19s/it]
+
+Bench configurations:   0%|          | 0/8 [00:06<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:50  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  38%|███▊      | 3/8 [00:06<00:05,  1.19s/it]
+
+Bench configurations:   0%|          | 0/8 [00:06<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:51  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  38%|███▊      | 3/8 [00:07<00:05,  1.19s/it]
+
+Bench configurations:   0%|          | 0/8 [00:07<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:51  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  38%|███▊      | 3/8 [00:07<00:05,  1.19s/it]
+
+Bench configurations:   0%|          | 0/8 [00:07<?, ?it/s][A
+Compiling configurations:  50%|█████     | 4/8 [00:07<00:08,  2.07s/it]
+
+
+
+[A2026-08-12 01:08:51  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  50%|█████     | 4/8 [00:07<00:08,  2.07s/it]
+
+Bench configurations:   0%|          | 0/8 [00:07<?, ?it/s][A
+Compiling configurations:  62%|██████▎   | 5/8 [00:07<00:04,  1.48s/it]
+Compiling configurations:  75%|███████▌  | 6/8 [00:08<00:02,  1.05s/it]
+
+Bench configurations:  12%|█▎        | 1/8 [00:08<00:56,  8.02s/it][A
+
+Bench configurations:  12%|█▎        | 1/8 [00:08<00:56,  8.02s/it, best_latency=0.0141][A
+
+
+
+[ATuned Latency 0.014143998734652996 with config {'block_size': 256, 'threads': 256} at index 1
+
+Compiling configurations: 100%|██████████| 8/8 [00:08<00:00,  1.05s/it]
+
+Bench configurations:  12%|█▎        | 1/8 [00:08<00:56,  8.02s/it, best_latency=0.0141][A
+
+Bench configurations:  25%|██▌       | 2/8 [00:08<00:20,  3.43s/it, best_latency=0.0141][A
+
+Bench configurations:  25%|██▌       | 2/8 [00:08<00:20,  3.43s/it, best_latency=0.0141][A
+
+
+
+[ATuned Latency 0.014714240096509457 with config {'block_size': 1024, 'threads': 512} at index 5
+
+Compiling configurations: 100%|██████████| 8/8 [00:08<00:00,  1.05s/it]
+
+Bench configurations:  25%|██▌       | 2/8 [00:08<00:20,  3.43s/it, best_latency=0.0141][A
+
+Bench configurations:  38%|███▊      | 3/8 [00:08<00:09,  1.96s/it, best_latency=0.0141][A
+
+Bench configurations:  38%|███▊      | 3/8 [00:08<00:09,  1.96s/it, best_latency=0.0141][A
+
+
+
+Tuned Latency 0.016711680218577385 with config {'block_size': 128, 'threads': 128} at index 0
+[A
+Compiling configurations: 100%|██████████| 8/8 [00:08<00:00,  1.05s/it]
+
+Bench configurations:  38%|███▊      | 3/8 [00:08<00:09,  1.96s/it, best_latency=0.0141][A
+
+Bench configurations:  50%|█████     | 4/8 [00:08<00:05,  1.27s/it, best_latency=0.0141][A
+
+Bench configurations:  50%|█████     | 4/8 [00:08<00:05,  1.27s/it, best_latency=0.0141][A
+
+
+
+[ATuned Latency 0.017665920779109 with config {'block_size': 1024, 'threads': 1024} at index 3
+
+Compiling configurations: 100%|██████████| 8/8 [00:08<00:00,  1.05s/it]
+
+Bench configurations:  50%|█████     | 4/8 [00:08<00:05,  1.27s/it, best_latency=0.0141][A
+
+Bench configurations:  62%|██████▎   | 5/8 [00:08<00:02,  1.13it/s, best_latency=0.0141][A
+
+Bench configurations:  62%|██████▎   | 5/8 [00:08<00:02,  1.13it/s, best_latency=0.0141][A
+
+
+
+[ATuned Latency 0.014439038932323456 with config {'block_size': 512, 'threads': 512} at index 2
+
+Compiling configurations: 100%|██████████| 8/8 [00:08<00:00,  1.05s/it]
+
+Bench configurations:  62%|██████▎   | 5/8 [00:08<00:02,  1.13it/s, best_latency=0.0141][A
+
+Bench configurations:  75%|███████▌  | 6/8 [00:09<00:01,  1.53it/s, best_latency=0.0141][A
+
+Bench configurations:  75%|███████▌  | 6/8 [00:09<00:01,  1.53it/s, best_latency=0.0141][A
+
+
+
+[ATuned Latency 0.014579840004444122 with config {'block_size': 2048, 'threads': 512} at index 6
+
+Compiling configurations: 100%|██████████| 8/8 [00:09<00:00,  1.05s/it]
+
+Bench configurations:  75%|███████▌  | 6/8 [00:09<00:01,  1.53it/s, best_latency=0.0141][A
+
+Bench configurations:  88%|████████▊ | 7/8 [00:09<00:00,  1.97it/s, best_latency=0.0141][A
+
+Bench configurations:  88%|████████▊ | 7/8 [00:09<00:00,  1.97it/s, best_latency=0.0141][A
+
+
+
+[ATuned Latency 0.017610881477594376 with config {'block_size': 2048, 'threads': 1024} at index 7
+
+Compiling configurations: 100%|██████████| 8/8 [00:09<00:00,  1.05s/it]
+
+Bench configurations:  88%|████████▊ | 7/8 [00:09<00:00,  1.97it/s, best_latency=0.0141][A
+
+Bench configurations: 100%|██████████| 8/8 [00:09<00:00,  2.39it/s, best_latency=0.0141][A
+
+Bench configurations: 100%|██████████| 8/8 [00:09<00:00,  2.39it/s, best_latency=0.0141][A
+
+
+
+[ATuned Latency 0.014395519159734249 with config {'block_size': 1024, 'threads': 256} at index 4
+
+Compiling configurations: 100%|██████████| 8/8 [00:09<00:00,  1.05s/it]
+
+Bench configurations: 100%|██████████| 8/8 [00:09<00:00,  2.39it/s, best_latency=0.0141][A
+
+Bench configurations: 100%|██████████| 8/8 [00:09<00:00,  2.39it/s, best_latency=0.0141][A
+Compiling configurations: 100%|██████████| 8/8 [00:09<00:00,  1.19s/it]
+
+Bench configurations: 100%|██████████| 8/8 [00:09<00:00,  1.19s/it, best_latency=0.0141]
+Best config: {'block_size': 256, 'threads': 256}
+FFTC2CKernel initialized with config: {'block_size': 256, 'threads': 256}
+.Start autotuning FFTC2CKernel...
+2026-08-12 01:08:54,112 INFO:Auto-tuning with 0.9 CPU utilizations, 192 CPUs available, 172 CPUs will be used
+2026-08-12 01:08:54,206 WARNING:Benchmark timeout is enforced in benchmark workers by running each benchmark call in a daemon sub-thread and waiting up to the configured timeout.
+
+Compiling configurations:   0%|          | 0/8 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/8 [00:00<?, ?it/s][A
+Compiling configurations:  12%|█▎        | 1/8 [00:01<00:11,  1.60s/it]
+
+
+
+[A2026-08-12 01:08:56  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:02<00:11,  1.60s/it]
+
+Bench configurations:   0%|          | 0/8 [00:02<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:56  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:02<00:11,  1.60s/it]
+
+Bench configurations:   0%|          | 0/8 [00:02<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:56  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:02<00:11,  1.60s/it]
+
+Bench configurations:   0%|          | 0/8 [00:02<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:56  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:02<00:11,  1.60s/it]
+
+Bench configurations:   0%|          | 0/8 [00:02<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:56  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:02<00:11,  1.60s/it]
+
+Bench configurations:   0%|          | 0/8 [00:02<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:56  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:02<00:11,  1.60s/it]
+
+Bench configurations:   0%|          | 0/8 [00:02<?, ?it/s][A
+
+
+
+[A2026-08-12 01:08:56  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[3, 4, 5]`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:02<00:11,  1.60s/it]
+
+Bench configurations:   0%|          | 0/8 [00:02<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:  12%|█▎        | 1/8 [00:07<00:11,  1.60s/it]
+2026-08-12 01:09:01  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Bench configurations:   0%|          | 0/8 [00:07<?, ?it/s][A
+
+
+
+[A2026-08-12 01:09:01  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:07<00:11,  1.60s/it]
+
+Bench configurations:   0%|          | 0/8 [00:07<?, ?it/s][A
+
+
+
+[A2026-08-12 01:09:01  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:07<00:11,  1.60s/it]
+
+Bench configurations:   0%|          | 0/8 [00:07<?, ?it/s][A2026-08-12 01:09:02  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+
+
+
+[A
+Compiling configurations:  12%|█▎        | 1/8 [00:07<00:11,  1.60s/it]
+
+Bench configurations:   0%|          | 0/8 [00:07<?, ?it/s][A
+
+
+
+[A2026-08-12 01:09:02  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:07<00:11,  1.60s/it]
+
+Bench configurations:   0%|          | 0/8 [00:07<?, ?it/s][A
+
+
+
+[A2026-08-12 01:09:02  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:07<00:11,  1.60s/it]
+
+Bench configurations:   0%|          | 0/8 [00:07<?, ?it/s][A
+
+
+
+[A2026-08-12 01:09:02  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+
+Compiling configurations:  12%|█▎        | 1/8 [00:08<00:11,  1.60s/it]
+
+Bench configurations:   0%|          | 0/8 [00:08<?, ?it/s][A
+Compiling configurations:  25%|██▌       | 2/8 [00:08<00:29,  4.87s/it]
+Compiling configurations:  38%|███▊      | 3/8 [00:09<00:14,  2.85s/it]
+
+Bench configurations:  12%|█▎        | 1/8 [00:09<01:04,  9.22s/it][A
+
+Bench configurations:  12%|█▎        | 1/8 [00:09<01:04,  9.22s/it, best_latency=0.0172][A
+
+
+
+[ATuned Latency 0.01719552092254162 with config {'block_size': 256, 'threads': 256} at index 1
+
+Compiling configurations: 100%|██████████| 8/8 [00:09<00:00,  2.85s/it]
+
+Bench configurations:  12%|█▎        | 1/8 [00:09<01:04,  9.22s/it, best_latency=0.0172][A
+
+Bench configurations:  25%|██▌       | 2/8 [00:09<00:23,  3.92s/it, best_latency=0.0172][A
+
+Bench configurations:  25%|██▌       | 2/8 [00:09<00:23,  3.92s/it, best_latency=0.0172][A
+
+
+
+[ATuned Latency 0.018000001087784767 with config {'block_size': 2048, 'threads': 512} at index 6
+
+Compiling configurations: 100%|██████████| 8/8 [00:09<00:00,  2.85s/it]
+
+Bench configurations:  25%|██▌       | 2/8 [00:09<00:23,  3.92s/it, best_latency=0.0172][A
+
+Bench configurations:  38%|███▊      | 3/8 [00:09<00:11,  2.23s/it, best_latency=0.0172][A
+
+Bench configurations:  38%|███▊      | 3/8 [00:09<00:11,  2.23s/it, best_latency=0.0172][A
+
+
+
+[ATuned Latency 0.017571838572621346 with config {'block_size': 512, 'threads': 512} at index 2
+
+Compiling configurations: 100%|██████████| 8/8 [00:09<00:00,  2.85s/it]
+
+Bench configurations:  38%|███▊      | 3/8 [00:09<00:11,  2.23s/it, best_latency=0.0172][A
+
+Bench configurations:  50%|█████     | 4/8 [00:09<00:05,  1.43s/it, best_latency=0.0172][A
+
+Bench configurations:  50%|█████     | 4/8 [00:09<00:05,  1.43s/it, best_latency=0.0172][A
+
+
+
+[ATuned Latency 0.021109119057655334 with config {'block_size': 2048, 'threads': 1024} at index 7
+
+Compiling configurations: 100%|██████████| 8/8 [00:09<00:00,  2.85s/it]
+
+Bench configurations:  50%|█████     | 4/8 [00:09<00:05,  1.43s/it, best_latency=0.0172][A
+
+Bench configurations:  62%|██████▎   | 5/8 [00:10<00:02,  1.01it/s, best_latency=0.0172][A
+
+Bench configurations:  62%|██████▎   | 5/8 [00:10<00:02,  1.01it/s, best_latency=0.0172][A
+
+
+
+[ATuned Latency 0.018050558865070343 with config {'block_size': 1024, 'threads': 512} at index 5
+
+Compiling configurations: 100%|██████████| 8/8 [00:10<00:00,  2.85s/it]
+
+Bench configurations:  62%|██████▎   | 5/8 [00:10<00:02,  1.01it/s, best_latency=0.0172][A
+
+Bench configurations:  75%|███████▌  | 6/8 [00:10<00:01,  1.38it/s, best_latency=0.0172][A
+
+Bench configurations:  75%|███████▌  | 6/8 [00:10<00:01,  1.38it/s, best_latency=0.0172][A
+
+
+
+[ATuned Latency 0.020665600895881653 with config {'block_size': 1024, 'threads': 1024} at index 3
+
+Compiling configurations: 100%|██████████| 8/8 [00:10<00:00,  2.85s/it]
+
+Bench configurations:  75%|███████▌  | 6/8 [00:10<00:01,  1.38it/s, best_latency=0.0172][A
+
+Bench configurations:  88%|████████▊ | 7/8 [00:10<00:00,  1.78it/s, best_latency=0.0172][A
+
+Bench configurations:  88%|████████▊ | 7/8 [00:10<00:00,  1.78it/s, best_latency=0.0172][A
+
+
+
+[ATuned Latency 0.020619520917534828 with config {'block_size': 128, 'threads': 128} at index 0
+
+Compiling configurations: 100%|██████████| 8/8 [00:10<00:00,  2.85s/it]
+
+Bench configurations:  88%|████████▊ | 7/8 [00:10<00:00,  1.78it/s, best_latency=0.0172][A
+
+Bench configurations: 100%|██████████| 8/8 [00:10<00:00,  2.20it/s, best_latency=0.0172][A
+
+Bench configurations: 100%|██████████| 8/8 [00:10<00:00,  2.20it/s, best_latency=0.0172][A
+
+
+
+[ATuned Latency 0.017776640132069588 with config {'block_size': 1024, 'threads': 256} at index 4
+
+Compiling configurations: 100%|██████████| 8/8 [00:10<00:00,  2.85s/it]
+
+Bench configurations: 100%|██████████| 8/8 [00:10<00:00,  2.20it/s, best_latency=0.0172][A
+
+Bench configurations: 100%|██████████| 8/8 [00:10<00:00,  2.20it/s, best_latency=0.0172][A
+Compiling configurations: 100%|██████████| 8/8 [00:10<00:00,  1.34s/it]
+
+Bench configurations: 100%|██████████| 8/8 [00:10<00:00,  1.34s/it, best_latency=0.0172]
+Best config: {'block_size': 256, 'threads': 256}
+FFTC2CKernel initialized with config: {'block_size': 256, 'threads': 256}
+.Benchmark report saved to profile_run.log
+
+3 passed in 36.06s

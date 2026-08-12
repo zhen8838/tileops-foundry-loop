@@ -1,0 +1,15 @@
+1. validate_authored_hir.py first run
+   RuntimeError: Expected all tensors to be on the same device, but found at
+   least two devices, cuda:0 and cpu. The H200-target Module returned evaluator
+   values on CUDA while the independently computed oracle remained on CPU.
+   The comparison now moves only the oracle to actual.device; no math changed.
+
+2. fft_blind_candidate.py first launch
+   ModuleNotFoundError: No module named 'benchmarks'. Running a file under
+   scripts/ placed scripts/ rather than the repository root on sys.path. The
+   successful command explicitly sets PYTHONPATH=$CONTAINER_WORKSPACE/tileops.
+
+3. TileLang small-N compile warning
+   ThreadSync hoisted a sync from an unsafe conditional (tx < 4). The generated
+   N=4096 source was inspected and correctness passed; the warning did not alter
+   the public output. It is not classified as a TileFoundry gap.

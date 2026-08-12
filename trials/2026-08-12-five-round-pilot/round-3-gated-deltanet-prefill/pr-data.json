@@ -1,0 +1,656 @@
+{
+  "subject": "Optimize Gated DeltaNet prefill selection on H200",
+  "type": "Perf",
+  "scope": "LinearAttention",
+  "operator": "GatedDeltaNetPrefillFwdOp",
+  "classification": "measured SOTA",
+  "summary": [
+    "Avoid context-partition setup below 32K tokens while preserving the explicit force override.",
+    "Select 64 local chunks for the 32K-token, 16-head partition specialization on H200.",
+    "Compare the candidate, exact TileOps incumbent route replay, and contract-equivalent FLA on every primary manifest workload."
+  ],
+  "environment": {
+    "image": "ghcr.io/tile-ai/tileops-runner:cu132-torch2.13-tl-afcebed1-dev",
+    "digest": "sha256:2590888968a870216e1ea076829b909e62e9053608f6a65d5ab5ecd7eb5561f7",
+    "gpu": "NVIDIA H200",
+    "driver": "595.71.05",
+    "cuda": "13.2",
+    "torch": "2.13.0+cu132",
+    "tilelang": "0.1.11+cu132.gitafcebed1",
+    "fla": "0.5.2",
+    "timer": "native CUPTI"
+  },
+  "method": "Candidate, exact incumbent route replay, and FLA ran in one process on common inputs with the same precision and output/final-state contract, L2 reset, adaptive repeats, forward/reverse interleaving, and fail-closed native-CUPTI activity-window attribution; compilation was excluded. Values are medians of three interleaved trial medians except two shared-path bimodal rows, which use independent fresh-process medians of five trials.",
+  "dimensions": [
+    "B",
+    "S",
+    "H",
+    "DK",
+    "DV",
+    "Chunk"
+  ],
+  "comparators": [
+    {
+      "id": "candidate",
+      "label": "TileFoundry candidate",
+      "role": "candidate"
+    },
+    {
+      "id": "incumbent",
+      "label": "TileOps incumbent",
+      "role": "incumbent"
+    },
+    {
+      "id": "fla",
+      "label": "FLA 0.5.2",
+      "role": "external"
+    }
+  ],
+  "workloads": [
+    {
+      "label": "s4096-h16-fp16",
+      "dimensions": {
+        "B": 1,
+        "S": 4096,
+        "H": 16,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "float16",
+      "results": {
+        "candidate": {
+          "median_ms": 0.6169275000000001
+        },
+        "incumbent": {
+          "median_ms": 0.816527
+        },
+        "fla": {
+          "median_ms": 0.8288630000000001
+        }
+      }
+    },
+    {
+      "label": "s4096-h16-bf16",
+      "dimensions": {
+        "B": 1,
+        "S": 4096,
+        "H": 16,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "bfloat16",
+      "results": {
+        "candidate": {
+          "median_ms": 0.6436949999999999
+        },
+        "incumbent": {
+          "median_ms": 0.863247
+        },
+        "fla": {
+          "median_ms": 0.8384015
+        }
+      }
+    },
+    {
+      "label": "s32768-h16-fp16",
+      "dimensions": {
+        "B": 1,
+        "S": 32768,
+        "H": 16,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "float16",
+      "results": {
+        "candidate": {
+          "median_ms": 1.041378
+        },
+        "incumbent": {
+          "median_ms": 0.991553
+        },
+        "fla": {
+          "median_ms": 1.7210595
+        }
+      }
+    },
+    {
+      "label": "s32768-h16-bf16",
+      "dimensions": {
+        "B": 1,
+        "S": 32768,
+        "H": 16,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "bfloat16",
+      "results": {
+        "candidate": {
+          "median_ms": 1.053266
+        },
+        "incumbent": {
+          "median_ms": 1.062402
+        },
+        "fla": {
+          "median_ms": 1.723123
+        }
+      }
+    },
+    {
+      "label": "s65536-h16-fp16",
+      "dimensions": {
+        "B": 1,
+        "S": 65536,
+        "H": 16,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "float16",
+      "results": {
+        "candidate": {
+          "median_ms": 1.3061470000000002
+        },
+        "incumbent": {
+          "median_ms": 1.253347
+        },
+        "fla": {
+          "median_ms": 2.6260535000000003
+        }
+      }
+    },
+    {
+      "label": "s65536-h16-bf16",
+      "dimensions": {
+        "B": 1,
+        "S": 65536,
+        "H": 16,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "bfloat16",
+      "results": {
+        "candidate": {
+          "median_ms": 1.2690905000000001
+        },
+        "incumbent": {
+          "median_ms": 1.297923
+        },
+        "fla": {
+          "median_ms": 2.6102455
+        }
+      }
+    },
+    {
+      "label": "s131072-h16-fp16",
+      "dimensions": {
+        "B": 1,
+        "S": 131072,
+        "H": 16,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "float16",
+      "results": {
+        "candidate": {
+          "median_ms": 1.8489000000000002
+        },
+        "incumbent": {
+          "median_ms": 1.83786
+        },
+        "fla": {
+          "median_ms": 5.0140910000000005
+        }
+      }
+    },
+    {
+      "label": "s131072-h16-bf16",
+      "dimensions": {
+        "B": 1,
+        "S": 131072,
+        "H": 16,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "bfloat16",
+      "results": {
+        "candidate": {
+          "median_ms": 1.7655880000000002
+        },
+        "incumbent": {
+          "median_ms": 1.7924200000000001
+        },
+        "fla": {
+          "median_ms": 4.9988275
+        }
+      }
+    },
+    {
+      "label": "s32768-h32-fp16",
+      "dimensions": {
+        "B": 1,
+        "S": 32768,
+        "H": 32,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "float16",
+      "results": {
+        "candidate": {
+          "median_ms": 1.331523
+        },
+        "incumbent": {
+          "median_ms": 1.261875
+        },
+        "fla": {
+          "median_ms": 2.2028855
+        }
+      }
+    },
+    {
+      "label": "s32768-h32-bf16",
+      "dimensions": {
+        "B": 1,
+        "S": 32768,
+        "H": 32,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "bfloat16",
+      "results": {
+        "candidate": {
+          "median_ms": 1.327395
+        },
+        "incumbent": {
+          "median_ms": 1.329539
+        },
+        "fla": {
+          "median_ms": 2.210422
+        }
+      }
+    },
+    {
+      "label": "s65536-h32-fp16",
+      "dimensions": {
+        "B": 1,
+        "S": 65536,
+        "H": 32,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "float16",
+      "results": {
+        "candidate": {
+          "median_ms": 1.7277485000000001
+        },
+        "incumbent": {
+          "median_ms": 1.7671405000000002
+        },
+        "fla": {
+          "median_ms": 3.9003135
+        }
+      }
+    },
+    {
+      "label": "s65536-h32-bf16",
+      "dimensions": {
+        "B": 1,
+        "S": 65536,
+        "H": 32,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "bfloat16",
+      "results": {
+        "candidate": {
+          "median_ms": 1.774469
+        },
+        "incumbent": {
+          "median_ms": 1.7451570000000003
+        },
+        "fla": {
+          "median_ms": 3.91097
+        }
+      }
+    },
+    {
+      "label": "s131072-h32-fp16",
+      "dimensions": {
+        "B": 1,
+        "S": 131072,
+        "H": 32,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "float16",
+      "results": {
+        "candidate": {
+          "median_ms": 2.9081680000000003
+        },
+        "incumbent": {
+          "median_ms": 2.9286164999999995
+        },
+        "fla": {
+          "median_ms": 7.838358
+        }
+      }
+    },
+    {
+      "label": "s131072-h32-bf16",
+      "dimensions": {
+        "B": 1,
+        "S": 131072,
+        "H": 32,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "bfloat16",
+      "results": {
+        "candidate": {
+          "median_ms": 2.9279764999999998
+        },
+        "incumbent": {
+          "median_ms": 2.921576
+        },
+        "fla": {
+          "median_ms": 7.837174
+        }
+      }
+    },
+    {
+      "label": "s32768-h48-fp16",
+      "dimensions": {
+        "B": 1,
+        "S": 32768,
+        "H": 48,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "float16",
+      "results": {
+        "candidate": {
+          "median_ms": 1.604037
+        },
+        "incumbent": {
+          "median_ms": 1.608917
+        },
+        "fla": {
+          "median_ms": 2.8673045000000004
+        }
+      }
+    },
+    {
+      "label": "s32768-h48-bf16",
+      "dimensions": {
+        "B": 1,
+        "S": 32768,
+        "H": 48,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "bfloat16",
+      "results": {
+        "candidate": {
+          "median_ms": 1.577413
+        },
+        "incumbent": {
+          "median_ms": 1.6097489999999999
+        },
+        "fla": {
+          "median_ms": 2.859577
+        }
+      }
+    },
+    {
+      "label": "s65536-h48-fp16",
+      "dimensions": {
+        "B": 1,
+        "S": 65536,
+        "H": 48,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "float16",
+      "results": {
+        "candidate": {
+          "median_ms": 2.385352
+        },
+        "incumbent": {
+          "median_ms": 2.375112
+        },
+        "fla": {
+          "median_ms": 5.6200975
+        }
+      }
+    },
+    {
+      "label": "s65536-h48-bf16",
+      "dimensions": {
+        "B": 1,
+        "S": 65536,
+        "H": 48,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "bfloat16",
+      "results": {
+        "candidate": {
+          "median_ms": 2.3923595
+        },
+        "incumbent": {
+          "median_ms": 2.38164
+        },
+        "fla": {
+          "median_ms": 5.600530000000001
+        }
+      }
+    },
+    {
+      "label": "s131072-h48-fp16",
+      "dimensions": {
+        "B": 1,
+        "S": 131072,
+        "H": 48,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "float16",
+      "results": {
+        "candidate": {
+          "median_ms": 4.008701
+        },
+        "incumbent": {
+          "median_ms": 4.0204455
+        },
+        "fla": {
+          "median_ms": 11.223702
+        }
+      }
+    },
+    {
+      "label": "s131072-h48-bf16",
+      "dimensions": {
+        "B": 1,
+        "S": 131072,
+        "H": 48,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "bfloat16",
+      "results": {
+        "candidate": {
+          "median_ms": 4.056286
+        },
+        "incumbent": {
+          "median_ms": 4.057566
+        },
+        "fla": {
+          "median_ms": 11.2042785
+        }
+      }
+    },
+    {
+      "label": "s32768-h64-fp16",
+      "dimensions": {
+        "B": 1,
+        "S": 32768,
+        "H": 64,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "float16",
+      "results": {
+        "candidate": {
+          "median_ms": 1.821815
+        },
+        "incumbent": {
+          "median_ms": 1.7306945
+        },
+        "fla": {
+          "median_ms": 3.5405565
+        }
+      }
+    },
+    {
+      "label": "s32768-h64-bf16",
+      "dimensions": {
+        "B": 1,
+        "S": 32768,
+        "H": 64,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "bfloat16",
+      "results": {
+        "candidate": {
+          "median_ms": 1.6924535
+        },
+        "incumbent": {
+          "median_ms": 1.752294
+        },
+        "fla": {
+          "median_ms": 3.5271645
+        }
+      }
+    },
+    {
+      "label": "s65536-h64-fp16",
+      "dimensions": {
+        "B": 1,
+        "S": 65536,
+        "H": 64,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "float16",
+      "results": {
+        "candidate": {
+          "median_ms": 2.889194
+        },
+        "incumbent": {
+          "median_ms": 2.8949705
+        },
+        "fla": {
+          "median_ms": 7.114538
+        }
+      }
+    },
+    {
+      "label": "s65536-h64-bf16",
+      "dimensions": {
+        "B": 1,
+        "S": 65536,
+        "H": 64,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "bfloat16",
+      "results": {
+        "candidate": {
+          "median_ms": 2.919339
+        },
+        "incumbent": {
+          "median_ms": 2.914923
+        },
+        "fla": {
+          "median_ms": 7.0742970000000005
+        }
+      }
+    },
+    {
+      "label": "s131072-h64-fp16",
+      "dimensions": {
+        "B": 1,
+        "S": 131072,
+        "H": 64,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "float16",
+      "results": {
+        "candidate": {
+          "median_ms": 4.9308245
+        },
+        "incumbent": {
+          "median_ms": 4.912328500000001
+        },
+        "fla": {
+          "median_ms": 14.303144500000002
+        }
+      }
+    },
+    {
+      "label": "s131072-h64-bf16",
+      "dimensions": {
+        "B": 1,
+        "S": 131072,
+        "H": 64,
+        "DK": 128,
+        "DV": 128,
+        "Chunk": 64
+      },
+      "dtype": "bfloat16",
+      "results": {
+        "candidate": {
+          "median_ms": 4.905357500000001
+        },
+        "incumbent": {
+          "median_ms": 4.940269499999999
+        },
+        "fla": {
+          "median_ms": 14.3233525
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Classification is measured SOTA against contract-equivalent FLA 0.5.2: the candidate is faster on every primary workload and its 1.892977 ms geometric mean is lower than FLA's 4.062778 ms.",
+    "The candidate geometric mean is 1.0189x faster than the incumbent, but it is slower on 11 of 26 individual incumbent comparisons; the durable gain is concentrated in the two 4K rows, while long-context candidate/incumbent differences mostly measure noise on the same runtime route.",
+    "The 131072-token/64-head FP16 and BF16 rows entered shared candidate/incumbent/FLA bimodal slow states in the full run; their published values are independent fresh-process five-trial medians, while the original observations remain part of the internal evidence.",
+    "The displayed TileFoundry module is the exact authored one-step semantic description. A dynamic scan-output insertion lowering gap prevented direct generation of the shipped prefill kernel, so the delivered optimization changes selection around the existing TileOps pipeline and is not represented as generated from this module.",
+    "The local-chunk specialization is measured on H200; other supported architectures retain the existing correctness and fallback surface but may not share the same tuning optimum."
+  ]
+}

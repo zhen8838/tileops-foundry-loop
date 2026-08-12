@@ -1,0 +1,6 @@
+GemmW4A16Kernel initialized with config: {'block_n': 16, 'threads': 128}
+GemmW4A16Kernel initialized with config: {'block_m': 64, 'block_n': 64, 'block_k': 64, 'num_stages': 2, 'threads': 128}
+candidate {'timing': 'cupti'} median_ms 0.061296500000000004 p10_ms 0.060672 p90_ms 0.061953 max_abs 0.03125
+incumbent {'timing': 'cupti'} median_ms 0.0982565 p10_ms 0.09776000000000001 p90_ms 0.098688 max_abs 0.0625
+marlin-fp16 {'timing': 'cupti'} median_ms 0.021952000000000003 p10_ms 0.021664000000000003 p90_ms 0.022559000000000003 max_abs 0.0625
+marlin-fp32 {'timing': 'cupti'} median_ms 0.021792000000000002 p10_ms 0.021504000000000002 p90_ms 0.022432 max_abs 0.0625

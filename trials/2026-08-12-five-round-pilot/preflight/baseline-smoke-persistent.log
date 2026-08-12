@@ -1,0 +1,38 @@
+WARNING 08-11 16:01:56 [fused_moe.py:1090] Using default MoE config. Performance might be sub-optimal! Config file not found at /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/fused_moe/configs/E=8,N=256,device_name=NVIDIA_H200.json
+FFTC2CKernel initialized with config: {'block_size': 1024, 'threads': 512}
+2026-08-11 16:03:17  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[4, 5, 6]`
+2026-08-11 16:03:23  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+{
+  "capability": [
+    9,
+    0
+  ],
+  "cases": {
+    "fla-chunk-gated-delta-rule": {
+      "status": "ok"
+    },
+    "mamba-ssm-chunk-scan": {
+      "status": "ok"
+    },
+    "tilelang-fft": {
+      "status": "ok"
+    },
+    "torch-cufft": {
+      "status": "ok"
+    },
+    "vllm-marlin-w4a16": {
+      "status": "ok"
+    },
+    "vllm-triton-fused-experts": {
+      "status": "ok"
+    }
+  },
+  "flash_linear_attention": "0.4.2",
+  "flashinfer": "0.6.11.post2",
+  "gpu": "NVIDIA H200",
+  "mamba_ssm": "2.3.1",
+  "tilelang": "0.1.11+cu129.gitafcebed1",
+  "torch": "2.10.0+cu129",
+  "torch_cuda": "12.9",
+  "vllm": "0.19.1"
+}

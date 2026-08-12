@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="1.456" timestamp="2026-08-12T01:14:23.609620+00:00" hostname="3211f6d63303"><testcase classname="benchmarks.tests.test_run_benchmarks" name="test_failure_report_survives_the_child_stdout_buffer" time="1.442" /></testsuite></testsuites>

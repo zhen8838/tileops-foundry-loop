@@ -1,0 +1,15 @@
+FFTC2CKernel initialized with config: {'block_size': 1024, 'threads': 512}
+FFTC2CKernel initialized with config: {'block_size': 256, 'threads': 256}
+2026-08-12 01:09:26  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[4, 5, 6]`
+2026-08-12 01:09:31  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+fft-4k-c64-unbatched {'candidate': [0.00688, 0.0067515000000000006, 0.006815000000000001], 'base-incumbent': [0.105104, 0.104064, 0.103568], 'torch-cufft': [0.004608, 0.004592000000000001, 0.004608]}
+FFTC2CKernel initialized with config: {'block_size': 1024, 'threads': 512}
+FFTC2CKernel initialized with config: {'block_size': 256, 'threads': 256}
+2026-08-12 01:09:33  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[4, 5, 6]`
+2026-08-12 01:09:38  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+fft-4k-c64-b64 {'candidate': [0.010832000000000001, 0.009824, 0.009792], 'base-incumbent': [0.12503999999999998, 0.115792, 0.11494400000000002], 'torch-cufft': [0.004832, 0.004864, 0.0048325]}
+FFTC2CKernel initialized with config: {'block_size': 1024, 'threads': 512}
+FFTC2CKernel initialized with config: {'block_size': 256, 'threads': 256}
+2026-08-12 01:09:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_fft_lut_main` with `out_idx=[4, 5, 6]`
+2026-08-12 01:09:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_fft_lut_main`
+fft-4k-c128-b64 {'candidate': [0.01312, 0.01312, 0.013087999999999999], 'base-incumbent': [0.1325925, 0.1343365, 0.12872], 'torch-cufft': [0.007392, 0.007392, 0.007392]}

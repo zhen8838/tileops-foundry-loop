@@ -1,0 +1,246 @@
+DaCumsumFwdKernel initialized with config: {'block_h': 4, 'threads': 1024}
+2026-08-11 21:08:57  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:121): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 21:08:57  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:128): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 21:08:57  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:131): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+CBProducerKernel initialized with config: {'block_l': 64, 'block_s': 64, 'block_n': 64, 'threads': 128}
+SSDChunkStateFwdKernel initialized with config: {'block_n': 128, 'block_p': 64, 'block_l': 32, 'threads': 128}
+SSDStatePassingFwdKernel initialized with config: {'block_d': 64, 'threads': 128, 'vectorize': False}
+SSDChunkScanFwdKernel initialized with config: {'block_l': 64, 'block_p': 64, 'block_n': 64, 'block_s': 64, 'threads': 128, 'num_stages': 3}
+2026-08-11 21:08:57  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+/usr/local/lib/python3.12/dist-packages/torch/profiler/profiler.py:217: UserWarning: Warning: Profiler clears events at the end of each cycle.Only events from the current cycle will be reported.To keep events across cycles, set acc_events=True.
+  _warn_once(
+DaCumsumFwdKernel initialized with config: {'block_h': 4, 'threads': 1024}
+2026-08-11 21:08:57  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:121): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 21:08:57  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:128): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 21:08:57  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:131): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+CBProducerKernel initialized with config: {'block_l': 64, 'block_s': 64, 'block_n': 64, 'threads': 128}
+SSDChunkStateFwdKernel initialized with config: {'block_n': 128, 'block_p': 64, 'block_l': 32, 'threads': 128}
+SSDStatePassingFwdKernel initialized with config: {'block_d': 64, 'threads': 128, 'vectorize': False}
+SSDChunkScanFwdKernel initialized with config: {'block_l': 64, 'block_p': 64, 'block_n': 64, 'block_s': 64, 'threads': 128, 'num_stages': 3}
+2026-08-11 21:08:58  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+[
+  {
+    "label": "mamba2-2p7b-b1-s2k",
+    "outputs": [
+      {
+        "shape": [
+          1,
+          2048,
+          80,
+          64
+        ],
+        "dtype": "torch.float32"
+      },
+      {
+        "shape": [
+          1,
+          80,
+          64,
+          128
+        ],
+        "dtype": "torch.float32"
+      }
+    ],
+    "peak_allocated_delta_bytes": 88541696,
+    "configs": {
+      "da_cumsum": {
+        "block_h": 4,
+        "threads": 1024
+      },
+      "cb_producer": {
+        "block_l": 64,
+        "block_s": 64,
+        "block_n": 64,
+        "threads": 128
+      },
+      "chunk_state": {
+        "block_n": 128,
+        "block_p": 64,
+        "block_l": 32,
+        "threads": 128
+      },
+      "state_passing": {
+        "block_d": 64,
+        "threads": 128,
+        "vectorize": false
+      },
+      "chunk_scan": {
+        "block_l": 64,
+        "block_p": 64,
+        "block_n": 64,
+        "block_s": 64,
+        "threads": 128,
+        "num_stages": 3
+      }
+    },
+    "cuda_events": [
+      {
+        "key": "main_kernel",
+        "count": 5,
+        "self_device_time_us": 109.85599999999931,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::ssd_chunk_scan_fwd",
+        "count": 1,
+        "self_device_time_us": 64.79999999999973,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::ssd_chunk_state_fwd",
+        "count": 1,
+        "self_device_time_us": 24.991999999999734,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::ssd_state_passing_fwd",
+        "count": 1,
+        "self_device_time_us": 11.231999999999971,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::cb_producer",
+        "count": 1,
+        "self_device_time_us": 4.704000000000178,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::da_cumsum_fwd",
+        "count": 1,
+        "self_device_time_us": 4.127999999999702,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "Activity Buffer Request",
+        "count": 1,
+        "self_device_time_us": 4.127999999999702,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "aten::copy_",
+        "count": 1,
+        "self_device_time_us": 2.175999999999931,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1})",
+        "count": 1,
+        "self_device_time_us": 2.175999999999931,
+        "device_memory_bytes": 0
+      }
+    ],
+    "trace": "mamba2-profile-probe/mamba2-2p7b-b1-s2k-trace.json"
+  },
+  {
+    "label": "mamba2-1p3b-b1-s8k",
+    "outputs": [
+      {
+        "shape": [
+          1,
+          8192,
+          64,
+          64
+        ],
+        "dtype": "torch.float32"
+      },
+      {
+        "shape": [
+          1,
+          64,
+          64,
+          128
+        ],
+        "dtype": "torch.float32"
+      }
+    ],
+    "peak_allocated_delta_bytes": 277880832,
+    "configs": {
+      "da_cumsum": {
+        "block_h": 4,
+        "threads": 1024
+      },
+      "cb_producer": {
+        "block_l": 64,
+        "block_s": 64,
+        "block_n": 64,
+        "threads": 128
+      },
+      "chunk_state": {
+        "block_n": 128,
+        "block_p": 64,
+        "block_l": 32,
+        "threads": 128
+      },
+      "state_passing": {
+        "block_d": 64,
+        "threads": 128,
+        "vectorize": false
+      },
+      "chunk_scan": {
+        "block_l": 64,
+        "block_p": 64,
+        "block_n": 64,
+        "block_s": 64,
+        "threads": 128,
+        "num_stages": 3
+      }
+    },
+    "cuda_events": [
+      {
+        "key": "main_kernel",
+        "count": 5,
+        "self_device_time_us": 297.22000000000025,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::ssd_chunk_scan_fwd",
+        "count": 1,
+        "self_device_time_us": 177.442,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::ssd_chunk_state_fwd",
+        "count": 1,
+        "self_device_time_us": 62.593000000000075,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::ssd_state_passing_fwd",
+        "count": 1,
+        "self_device_time_us": 38.08100000000013,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::cb_producer",
+        "count": 1,
+        "self_device_time_us": 11.231999999999971,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "top::da_cumsum_fwd",
+        "count": 1,
+        "self_device_time_us": 7.872000000000071,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "Activity Buffer Request",
+        "count": 1,
+        "self_device_time_us": 7.872000000000071,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "aten::copy_",
+        "count": 1,
+        "self_device_time_us": 2.5599999999999454,
+        "device_memory_bytes": 0
+      },
+      {
+        "key": "void at::native::elementwise_kernel<128, 2, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1}>(int, at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1}>(at::TensorIteratorBase&, at::native::direct_copy_kernel_cuda(at::TensorIteratorBase&)::{lambda()#3}::operator()() const::{lambda()#7}::operator()() const::{lambda(float)#1} const&)::{lambda(int)#1})",
+        "count": 1,
+        "self_device_time_us": 2.5599999999999454,
+        "device_memory_bytes": 0
+      }
+    ],
+    "trace": "mamba2-profile-probe/mamba2-1p3b-b1-s8k-trace.json"
+  }
+]

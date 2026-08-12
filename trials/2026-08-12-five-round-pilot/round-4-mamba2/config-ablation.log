@@ -1,0 +1,2042 @@
+DaCumsumFwdKernel initialized with config: {'block_h': 4, 'threads': 1024}
+2026-08-11 20:45:30  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:117): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:45:30  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:121): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:45:30  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:128): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:45:30  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:131): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+CBProducerKernel initialized with config: {'block_l': 64, 'block_s': 64, 'block_n': 64, 'threads': 128}
+SSDChunkStateFwdKernel initialized with config: {'block_n': 128, 'block_p': 64, 'block_l': 32, 'threads': 128}
+SSDStatePassingFwdKernel initialized with config: {'block_d': 64, 'threads': 128, 'vectorize': False}
+SSDChunkScanFwdKernel initialized with config: {'block_l': 64, 'block_p': 64, 'block_n': 64, 'block_s': 64, 'threads': 128, 'num_stages': 3}
+2026-08-11 20:45:30  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:45:30  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[3, 4]`
+[20:45:30] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:45:30] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:45:34  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:45:34  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[3, 4]`
+[20:45:34] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di_lo)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di_lo = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:45:34] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di_hi)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di_hi = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:45:34] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di_lo)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di_lo = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:45:34] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di_hi)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di_hi = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:45:38  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:45:38  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[3, 4]`
+[20:45:38] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di_lo)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di_lo = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:45:38] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di_hi)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di_hi = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:45:38] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di_lo)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di_lo = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:45:38] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di_hi)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di_hi = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:45:41  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:45:42  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[3, 4]`
+[20:45:42] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di_lo)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di_lo = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:45:42] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di_hi)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di_hi = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:45:42] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di_lo)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di_lo = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:45:42] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di_hi)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di_hi = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:45:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:45:46  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:45:46  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[6]`
+[20:45:46] $TMP_PATH Warning: Data race detected: `out(bz, chunk_start + l_abs, bz, p_abs)`is written by multiple threads in loop (ll,), Example:
+  bl = 0
+  by = 0
+  bz = 0
+  bz$1 = 0
+  chunk_start = 0
+  l_abs = 0
+  ll = 0
+  ll_OTHER_ = 1
+  p_abs = 0
+  p_abs_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:45:53  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:45:53  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:45:53  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[6]`
+[20:45:53] $TMP_PATH Warning: Data race detected: `out(bz, chunk_start + l_abs, bz, p_abs)`is written by multiple threads in loop (ll,), Example:
+  bl = 0
+  by = 0
+  bz = 0
+  bz$1 = 0
+  chunk_start = 0
+  l_abs = 0
+  ll = 0
+  ll_OTHER_ = 1
+  p_abs = 0
+  p_abs_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:46:02  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:46:04  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:46:04  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[6]`
+[20:46:04] $TMP_PATH Warning: Data race detected: `out(bz, chunk_start + l_abs, bz, p_abs)`is written by multiple threads in loop (ll,), Example:
+  bl = 0
+  by = 0
+  bz = 0
+  bz$1 = 0
+  chunk_start = 0
+  l_abs = 0
+  ll = 0
+  ll_OTHER_ = 1
+  p_abs = 0
+  p_abs_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:46:12  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:46:13  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[6]`
+[20:46:14] $TMP_PATH Warning: Data race detected: `out(bz, chunk_start + l_abs, bz, p_abs)`is written by multiple threads in loop (ll,), Example:
+  bl = 0
+  by = 0
+  bz = 0
+  bz$1 = 0
+  chunk_start = 0
+  l_abs = 0
+  ll = 1
+  ll_OTHER_ = 0
+  p_abs = 0
+  p_abs_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:46:20  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:46:21  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[6]`
+[20:46:21] $TMP_PATH Warning: Data race detected: `out(bz, chunk_start + l_abs, bz, p_abs)`is written by multiple threads in loop (ll,), Example:
+  bl = 0
+  by = 0
+  bz = 0
+  bz$1 = 0
+  chunk_start = 0
+  l_abs = 0
+  ll = 1
+  ll_OTHER_ = 0
+  p_abs = 0
+  p_abs_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:46:27  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:46:28  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[5]`
+[20:46:28] $TMP_PATH Warning: Data race detected: `out(bz, bc, bh, p_idx, n_idx)`is written by multiple threads in loop (pp, nn), Example:
+  bc = 0
+  bh = 0
+  bx = 0
+  bz = 0
+  n_idx = 0
+  nn = 0
+  nn_OTHER_ = 1
+  p_idx = 0
+  pp = 1
+  pp_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:46:31  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:46:32  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[5]`
+[20:46:32] $TMP_PATH Warning: Data race detected: `out(bz, bc, bh, p_idx, n_idx)`is written by multiple threads in loop (pp, nn), Example:
+  bc = 0
+  bh = 0
+  bx = 0
+  bz = 0
+  n_idx = 0
+  nn = 0
+  nn_OTHER_ = 1
+  p_idx = 0
+  pp = 1
+  pp_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:46:36  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:46:36  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[5]`
+[20:46:36] $TMP_PATH Warning: Data race detected: `out(bz, bc, bh, p_idx, n_idx)`is written by multiple threads in loop (pp, nn), Example:
+  bc = 0
+  bh = 0
+  bx = 0
+  bz = 0
+  n_idx = 0
+  nn = 1
+  nn_OTHER_ = 0
+  p_idx = 0
+  pp = 0
+  pp_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:46:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+DaCumsumFwdKernel initialized with config: {'block_h': 4, 'threads': 1024}
+2026-08-11 20:46:40  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:117): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:46:40  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:121): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:46:40  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:128): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:46:40  [TileLang:tilelang.language.eager.builder:WARNING] (da_cumsum.py:131): Immutable value `val` is re-bound; use T.alloc_var to create a mutable variable.
+CBProducerKernel initialized with config: {'block_l': 64, 'block_s': 64, 'block_n': 64, 'threads': 128}
+SSDChunkStateFwdKernel initialized with config: {'block_n': 128, 'block_p': 64, 'block_l': 32, 'threads': 128}
+SSDStatePassingFwdKernel initialized with config: {'block_d': 64, 'threads': 128, 'vectorize': False}
+SSDChunkScanFwdKernel initialized with config: {'block_l': 64, 'block_p': 64, 'block_n': 64, 'block_s': 64, 'threads': 128, 'num_stages': 3}
+2026-08-11 20:46:41  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:46:41  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[3, 4]`
+[20:46:41] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:46:41] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:46:44  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:46:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[3, 4]`
+[20:46:45] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di_lo)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di_lo = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:46:45] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di_hi)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di_hi = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:46:45] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di_lo)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di_lo = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:46:45] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di_hi)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di_hi = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:46:48  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:46:48  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[3, 4]`
+[20:46:48] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di_lo)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di_lo = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:46:48] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di_hi)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di_hi = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:46:48] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di_lo)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di_lo = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:46:48] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di_hi)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di_hi = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:46:52  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:46:52  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[3, 4]`
+[20:46:52] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di_lo)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di_lo = 0
+  i = 1
+  i_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:46:52] $TMP_PATH Warning: Data race detected: `out(by, c, bz, di_hi)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  c = 0
+  di_hi = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:46:52] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di_lo)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di_lo = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+[20:46:52] $TMP_PATH Warning: Data race detected: `final_states(by, bz, di_hi)`is written by multiple threads in loop (i,), Example:
+  bx = 0
+  bz = 0
+  di_hi = 0
+  i = 0
+  i_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:46:56  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:46:56  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:46:56  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[6]`
+[20:46:56] $TMP_PATH Warning: Data race detected: `out(bz, chunk_start + l_abs, bz, p_abs)`is written by multiple threads in loop (ll,), Example:
+  bl = 0
+  by = 0
+  bz = 0
+  bz$1 = 0
+  chunk_start = 0
+  l_abs = 0
+  ll = 1
+  ll_OTHER_ = 0
+  p_abs = 0
+  p_abs_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:47:03  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:47:04  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:47:04  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[6]`
+[20:47:04] $TMP_PATH Warning: Data race detected: `out(bz, chunk_start + l_abs, bz, p_abs)`is written by multiple threads in loop (ll,), Example:
+  bl = 0
+  by = 0
+  bz = 0
+  bz$1 = 0
+  chunk_start = 0
+  l_abs = 0
+  ll = 1
+  ll_OTHER_ = 0
+  p_abs = 0
+  p_abs_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:47:13  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:47:14  [TileLang:tilelang.language.eager.builder:WARNING] (ssd_chunk_scan.py:361): Immutable value `anchor` is re-bound; use T.alloc_var to create a mutable variable.
+2026-08-11 20:47:14  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[6]`
+[20:47:14] $TMP_PATH Warning: Data race detected: `out(bz, chunk_start + l_abs, bz, p_abs)`is written by multiple threads in loop (ll,), Example:
+  bl = 0
+  by = 0
+  bz = 0
+  bz$1 = 0
+  chunk_start = 0
+  l_abs = 0
+  ll = 0
+  ll_OTHER_ = 1
+  p_abs = 0
+  p_abs_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:47:22  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:47:24  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[6]`
+[20:47:24] $TMP_PATH Warning: Data race detected: `out(bz, chunk_start + l_abs, bz, p_abs)`is written by multiple threads in loop (ll,), Example:
+  bl = 0
+  by = 0
+  bz = 0
+  bz$1 = 0
+  chunk_start = 0
+  l_abs = 0
+  ll = 1
+  ll_OTHER_ = 0
+  p_abs = 0
+  p_abs_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:47:30  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:47:31  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[6]`
+[20:47:31] $TMP_PATH Warning: Data race detected: `out(bz, chunk_start + l_abs, bz, p_abs)`is written by multiple threads in loop (ll,), Example:
+  bl = 0
+  by = 0
+  bz = 0
+  bz$1 = 0
+  chunk_start = 0
+  l_abs = 0
+  ll = 0
+  ll_OTHER_ = 1
+  p_abs = 0
+  p_abs_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:47:37  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:47:38  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[5]`
+[20:47:38] $TMP_PATH Warning: Data race detected: `out(bz, bc, bh, p_idx, n_idx)`is written by multiple threads in loop (pp, nn), Example:
+  bc = 0
+  bh = 0
+  bx = 0
+  bz = 0
+  n_idx = 0
+  nn = 0
+  nn_OTHER_ = 1
+  p_idx = 0
+  pp = 1
+  pp_OTHER_ = 0
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:47:41  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:47:42  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[5]`
+[20:47:42] $TMP_PATH Warning: Data race detected: `out(bz, bc, bh, p_idx, n_idx)`is written by multiple threads in loop (pp, nn), Example:
+  bc = 0
+  bh = 0
+  bx = 0
+  bz = 0
+  n_idx = 0
+  nn = 0
+  nn_OTHER_ = 1
+  p_idx = 0
+  pp = 0
+  pp_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:47:46  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+2026-08-11 20:47:46  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `main` with `out_idx=[5]`
+[20:47:46] $TMP_PATH Warning: Data race detected: `out(bz, bc, bh, p_idx, n_idx)`is written by multiple threads in loop (pp, nn), Example:
+  bc = 0
+  bh = 0
+  bx = 0
+  bz = 0
+  n_idx = 0
+  nn = 0
+  nn_OTHER_ = 1
+  p_idx = 0
+  pp = 0
+  pp_OTHER_ = 1
+  tx = 0
+If you believe this is a false positive, pass `PassKey.TL_DISABLE_DATA_RACE_CHECK` to pass key to disable this check.
+2026-08-11 20:47:50  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `main`
+[
+  {
+    "label": "mamba2-2p7b-b1-s2k",
+    "records": [
+      {
+        "name": "default",
+        "samples_ms": [
+          0.30057600140571594,
+          0.2845120131969452,
+          0.2711679935455322,
+          0.2629759907722473,
+          0.2640959918498993,
+          0.2563520073890686,
+          0.25305598974227905,
+          0.25276800990104675,
+          0.2621760070323944,
+          0.2565760016441345,
+          0.24889600276947021,
+          0.25071999430656433,
+          0.24582399427890778,
+          0.24463999271392822,
+          0.24726399779319763,
+          0.24473600089550018,
+          0.24489599466323853,
+          0.24985599517822266,
+          0.2632960081100464,
+          0.24393600225448608
+        ],
+        "median_ms": 0.2529119998216629,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "state-default",
+        "config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "samples_ms": [
+          0.2740800082683563,
+          0.27030399441719055,
+          0.25513601303100586,
+          0.2518399953842163,
+          0.2553279995918274,
+          0.25145599246025085,
+          0.2500799894332886,
+          0.25097599625587463,
+          0.24719999730587006,
+          0.2497600018978119,
+          0.25305598974227905,
+          0.2526719868183136,
+          0.24719999730587006,
+          0.24748800694942474,
+          0.24588799476623535,
+          0.24480000138282776,
+          0.24140800535678864,
+          0.24646399915218353,
+          0.24854399263858795,
+          0.24185599386692047
+        ],
+        "median_ms": 0.24991999566555023,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "state-nv128",
+        "config": {
+          "block_d": 128,
+          "threads": 128,
+          "vectorize": false
+        },
+        "samples_ms": [
+          0.7310400009155273,
+          0.7131839990615845,
+          0.6501759886741638,
+          0.6370880007743835,
+          0.6322559714317322,
+          0.6291199922561646,
+          0.6111040115356445,
+          0.6270400285720825,
+          0.6880639791488647,
+          0.6510080099105835,
+          0.6218879818916321,
+          0.6720319986343384,
+          0.6191359758377075,
+          0.6033920049667358,
+          0.639743983745575,
+          0.6258559823036194,
+          0.5996159911155701,
+          0.6147519946098328,
+          0.6064640283584595,
+          0.609279990196228
+        ],
+        "median_ms": 0.6280800104141235,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "state-v64",
+        "config": {
+          "block_d": 64,
+          "threads": 32,
+          "vectorize": true
+        },
+        "samples_ms": [
+          0.9812800288200378,
+          0.8671680092811584,
+          0.8358079791069031,
+          0.8019840121269226,
+          0.784928023815155,
+          0.7967680096626282,
+          0.7757120132446289,
+          0.7531200051307678,
+          0.84198397397995,
+          0.7971519827842712,
+          0.7889279723167419,
+          0.7715520262718201,
+          0.7716159820556641,
+          0.769216001033783,
+          0.7714239954948425,
+          0.8362240195274353,
+          0.7741760015487671,
+          0.7881280183792114,
+          0.7660800218582153,
+          0.7702400088310242
+        ],
+        "median_ms": 0.7865280210971832,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "state-v128",
+        "config": {
+          "block_d": 128,
+          "threads": 64,
+          "vectorize": true
+        },
+        "samples_ms": [
+          0.9900479912757874,
+          0.8948479890823364,
+          0.8490239977836609,
+          0.8160319924354553,
+          0.8149120211601257,
+          0.9140480160713196,
+          0.8608319759368896,
+          0.8121600151062012,
+          0.8226879835128784,
+          0.805791974067688,
+          0.8100159764289856,
+          0.8082879781723022,
+          0.7980160117149353,
+          0.7736319899559021,
+          0.8055679798126221,
+          0.7960320115089417,
+          0.7735040187835693,
+          0.7852159738540649,
+          0.7742080092430115,
+          0.7867199778556824
+        ],
+        "median_ms": 0.8091519773006439,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "state-v256",
+        "config": {
+          "block_d": 256,
+          "threads": 128,
+          "vectorize": true
+        },
+        "samples_ms": [
+          0.9815359711647034,
+          0.8850240111351013,
+          0.8855680227279663,
+          0.83651202917099,
+          0.8050879836082458,
+          0.801472008228302,
+          0.788096010684967,
+          0.7976319789886475,
+          0.7901440262794495,
+          0.8432000279426575,
+          0.8013439774513245,
+          0.7905600070953369,
+          0.7906559705734253,
+          0.7765759825706482,
+          0.7648640275001526,
+          0.764352023601532,
+          0.7735040187835693,
+          0.7754560112953186,
+          0.7886719703674316,
+          0.7885760068893433
+        ],
+        "median_ms": 0.7906079888343811,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "scan-default",
+        "config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 64,
+          "block_s": 64,
+          "threads": 128,
+          "num_stages": 3
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "samples_ms": [
+          0.7507200241088867,
+          0.758400022983551,
+          0.7462720274925232,
+          0.8469759821891785,
+          0.8098559975624084,
+          0.7871040105819702,
+          0.7769920229911804,
+          0.7487040162086487,
+          0.7455999851226807,
+          0.8051519989967346,
+          0.7589439749717712,
+          0.7558720111846924,
+          0.6929919719696045,
+          0.6728000044822693,
+          0.6738240122795105,
+          0.6668480038642883,
+          0.6571840047836304,
+          0.652895987033844,
+          0.6175360083580017,
+          0.6015999913215637
+        ],
+        "median_ms": 0.7474880218505859,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "scan-n128-t128-s64",
+        "config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 128,
+          "block_s": 64,
+          "threads": 128,
+          "num_stages": 3
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "samples_ms": [
+          0.726751983165741,
+          0.643455982208252,
+          0.6104000210762024,
+          0.5959360003471375,
+          0.5940160155296326,
+          0.5935360193252563,
+          0.6009600162506104,
+          0.5803200006484985,
+          0.5802239775657654,
+          0.7034559845924377,
+          0.6255999803543091,
+          0.5971840023994446,
+          0.5933120250701904,
+          0.5731199979782104,
+          0.578432023525238,
+          0.579200029373169,
+          0.5723839998245239,
+          0.5865920186042786,
+          0.5842239856719971,
+          0.5629119873046875
+        ],
+        "median_ms": 0.5934240221977234,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "scan-n64-t64-s64",
+        "config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 64,
+          "block_s": 64,
+          "threads": 64,
+          "num_stages": 3
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "samples_ms": [
+          0.44416001439094543,
+          0.41177600622177124,
+          0.39660799503326416,
+          0.3991680145263672,
+          0.3874239921569824,
+          0.40092799067497253,
+          0.39417600631713867,
+          0.39321601390838623,
+          0.38444799184799194,
+          0.39161598682403564,
+          0.3898879885673523,
+          0.3822399973869324,
+          0.3964479863643646,
+          0.38329601287841797,
+          0.38499200344085693,
+          0.381087988615036,
+          0.38259199261665344,
+          0.38492798805236816,
+          0.3837119936943054,
+          0.39417600631713867
+        ],
+        "median_ms": 0.39075198769569397,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "scan-n128-t64-s64",
+        "config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 128,
+          "block_s": 64,
+          "threads": 64,
+          "num_stages": 3
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "samples_ms": [
+          0.5009920001029968,
+          0.4702399969100952,
+          0.46323201060295105,
+          0.47411200404167175,
+          0.4551680088043213,
+          0.44944000244140625,
+          0.4447680115699768,
+          0.4402880072593689,
+          0.43375998735427856,
+          0.44444799423217773,
+          0.45983999967575073,
+          0.4429759979248047,
+          0.45097601413726807,
+          0.4349119961261749,
+          0.4454079866409302,
+          0.43487998843193054,
+          0.4397760033607483,
+          0.4366079866886139,
+          0.4950079917907715,
+          0.4546560049057007
+        ],
+        "median_ms": 0.4474239945411682,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "scan-n64-t128-s128",
+        "config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 64,
+          "block_s": 128,
+          "threads": 128,
+          "num_stages": 3
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "samples_ms": [
+          0.35343998670578003,
+          0.3574720025062561,
+          0.3341119885444641,
+          0.32416000962257385,
+          0.32095998525619507,
+          0.3128960132598877,
+          0.3081279993057251,
+          0.31484800577163696,
+          0.3078399896621704,
+          0.3104960024356842,
+          0.3200640082359314,
+          0.30748799443244934,
+          0.3060159981250763,
+          0.3091840147972107,
+          0.324864000082016,
+          0.305184006690979,
+          0.30928000807762146,
+          0.2996479868888855,
+          0.30432000756263733,
+          0.3049600124359131
+        ],
+        "median_ms": 0.30988800525665283,
+        "errors": [
+          {
+            "max_abs": 0.0001220703125,
+            "mean_abs": 5.592027396694732e-10
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "scan-n128-t128-s128",
+        "config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 128,
+          "block_s": 128,
+          "threads": 128,
+          "num_stages": 3
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "samples_ms": [
+          0.6230080127716064,
+          0.5952960252761841,
+          0.5866559743881226,
+          0.5746880173683167,
+          0.5475199818611145,
+          0.5442559719085693,
+          0.5438719987869263,
+          0.5340160131454468,
+          0.5569599866867065,
+          0.5398399829864502,
+          0.5359359979629517,
+          0.5637440085411072,
+          0.5391359925270081,
+          0.5384640097618103,
+          0.5273600220680237,
+          0.5294399857521057,
+          0.5263040065765381,
+          0.5238720178604126,
+          0.5268160104751587,
+          0.5175039768218994
+        ],
+        "median_ms": 0.5394879877567291,
+        "errors": [
+          {
+            "max_abs": 0.0001220703125,
+            "mean_abs": 5.592027396694732e-10
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "chunk-default",
+        "config": {
+          "block_n": 128,
+          "block_p": 64,
+          "block_l": 32,
+          "threads": 128
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "scan_config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 64,
+          "block_s": 128,
+          "threads": 128,
+          "num_stages": 3
+        },
+        "samples_ms": [
+          0.5608959794044495,
+          0.5526080131530762,
+          0.5392640233039856,
+          0.5531200170516968,
+          0.5348479747772217,
+          0.5560960173606873,
+          0.5569279789924622,
+          0.540768027305603,
+          0.5516160130500793,
+          0.5407360196113586,
+          0.5440319776535034,
+          0.5642240047454834,
+          0.5374720096588135,
+          0.5488640069961548,
+          0.5357120037078857,
+          0.5496640205383301,
+          0.5352640151977539,
+          0.525439977645874,
+          0.5321919918060303,
+          0.5348799824714661
+        ],
+        "median_ms": 0.5424000024795532,
+        "errors": [
+          {
+            "max_abs": 0.0001220703125,
+            "mean_abs": 5.592027396694732e-10
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "chunk-l64-t128",
+        "config": {
+          "block_n": 128,
+          "block_p": 64,
+          "block_l": 64,
+          "threads": 128
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "scan_config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 64,
+          "block_s": 128,
+          "threads": 128,
+          "num_stages": 3
+        },
+        "samples_ms": [
+          0.8485119938850403,
+          0.8767679929733276,
+          0.8113920092582703,
+          0.8236479759216309,
+          0.7693439722061157,
+          0.7563199996948242,
+          0.7630400061607361,
+          0.7767040133476257,
+          0.7554240226745605,
+          0.772704005241394,
+          0.7553920149803162,
+          0.7540159821510315,
+          0.7485120296478271,
+          0.7542399764060974,
+          0.7511039972305298,
+          0.7472000122070312,
+          0.7416319847106934,
+          0.7457280158996582,
+          0.7603520154953003,
+          0.7680000066757202
+        ],
+        "median_ms": 0.7583360075950623,
+        "errors": [
+          {
+            "max_abs": 0.0001220703125,
+            "mean_abs": 5.592027396694732e-10
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "chunk-l128-t128",
+        "config": {
+          "block_n": 128,
+          "block_p": 64,
+          "block_l": 128,
+          "threads": 128
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "scan_config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 64,
+          "block_s": 128,
+          "threads": 128,
+          "num_stages": 3
+        },
+        "samples_ms": [
+          0.9442239999771118,
+          0.9070079922676086,
+          0.8817600011825562,
+          0.8552640080451965,
+          0.8653759956359863,
+          0.8464639782905579,
+          0.8510720133781433,
+          0.8380799889564514,
+          0.8589439988136292,
+          0.8584960103034973,
+          0.8346239924430847,
+          0.8206400275230408,
+          0.8366079926490784,
+          0.8353919982910156,
+          0.8254079818725586,
+          0.8107200264930725,
+          0.8192319869995117,
+          0.8268799781799316,
+          0.843999981880188,
+          0.8306879997253418
+        ],
+        "median_ms": 0.8410399854183197,
+        "errors": [
+          {
+            "max_abs": 0.0001220703125,
+            "mean_abs": 5.592027396694732e-10
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "chunk-l64-t256",
+        "config": {
+          "block_n": 128,
+          "block_p": 64,
+          "block_l": 64,
+          "threads": 256
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "scan_config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 64,
+          "block_s": 128,
+          "threads": 128,
+          "num_stages": 3
+        },
+        "samples_ms": [
+          0.33900800347328186,
+          0.328031986951828,
+          0.3283199965953827,
+          0.3147520124912262,
+          0.3155840039253235,
+          0.3182719945907593,
+          0.31004801392555237,
+          0.3176000118255615,
+          0.3118399977684021,
+          0.31219199299812317,
+          0.3118720054626465,
+          0.3086079955101013,
+          0.3107199966907501,
+          0.34377598762512207,
+          0.31887999176979065,
+          0.3110400140285492,
+          0.3103039860725403,
+          0.3062080144882202,
+          0.3071039915084839,
+          0.30537599325180054
+        ],
+        "median_ms": 0.3120319992303848,
+        "errors": [
+          {
+            "max_abs": 0.0001220703125,
+            "mean_abs": 5.592027396694732e-10
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "label": "mamba2-1p3b-b1-s8k",
+    "records": [
+      {
+        "name": "default",
+        "samples_ms": [
+          0.4193919897079468,
+          0.39852800965309143,
+          0.3930560052394867,
+          0.38684800267219543,
+          0.39075198769569397,
+          0.38524800539016724,
+          0.38252800703048706,
+          0.38284799456596375,
+          0.38128000497817993,
+          0.38288000226020813,
+          0.38284799456596375,
+          0.384223997592926,
+          0.3855679929256439,
+          0.38304001092910767,
+          0.38361600041389465,
+          0.3839679956436157,
+          0.3831680119037628,
+          0.3839679956436157,
+          0.3819519877433777,
+          0.38630399107933044
+        ],
+        "median_ms": 0.3839679956436157,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "state-default",
+        "config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "samples_ms": [
+          0.39420801401138306,
+          0.38576000928878784,
+          0.389055997133255,
+          0.3851200044155121,
+          0.3845120072364807,
+          0.3840959966182709,
+          0.3821440041065216,
+          0.38678398728370667,
+          0.38329601287841797,
+          0.3826879858970642,
+          0.38044801354408264,
+          0.38288000226020813,
+          0.3824320137500763,
+          0.385919988155365,
+          0.38633599877357483,
+          0.3877120018005371,
+          0.3807680010795593,
+          0.38252800703048706,
+          0.3843519985675812,
+          0.38495999574661255
+        ],
+        "median_ms": 0.38443200290203094,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "state-nv128",
+        "config": {
+          "block_d": 128,
+          "threads": 128,
+          "vectorize": false
+        },
+        "samples_ms": [
+          0.9517120122909546,
+          0.9080640077590942,
+          0.8863999843597412,
+          0.8731520175933838,
+          0.8717120289802551,
+          0.8685439825057983,
+          0.8778560161590576,
+          0.869920015335083,
+          0.8644800186157227,
+          0.8732479810714722,
+          0.8688639998435974,
+          0.8695679903030396,
+          0.8776959776878357,
+          0.8629440069198608,
+          0.8480640053749084,
+          0.856544017791748,
+          0.8500159978866577,
+          0.8490560054779053,
+          0.8730239868164062,
+          0.8601920008659363
+        ],
+        "median_ms": 0.8697440028190613,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "state-v64",
+        "config": {
+          "block_d": 64,
+          "threads": 32,
+          "vectorize": true
+        },
+        "samples_ms": [
+          1.0387840270996094,
+          0.9523199796676636,
+          0.9073920249938965,
+          0.8859840035438538,
+          0.8818560242652893,
+          0.8784319758415222,
+          0.8777920007705688,
+          0.897055983543396,
+          0.8855680227279663,
+          0.9319360256195068,
+          0.8708159923553467,
+          0.8714879751205444,
+          0.875328004360199,
+          0.8643519878387451,
+          0.8632320165634155,
+          0.870464026927948,
+          0.8633279800415039,
+          0.8648639917373657,
+          0.8777599930763245,
+          0.8541759848594666
+        ],
+        "median_ms": 0.8777759969234467,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "state-v128",
+        "config": {
+          "block_d": 128,
+          "threads": 64,
+          "vectorize": true
+        },
+        "samples_ms": [
+          0.9546880125999451,
+          0.9323199987411499,
+          0.9062399864196777,
+          0.8989440202713013,
+          0.9246399998664856,
+          0.8928319811820984,
+          0.9042879939079285,
+          0.883903980255127,
+          0.8784319758415222,
+          0.9666879773139954,
+          0.9010239839553833,
+          0.8854079842567444,
+          0.8723520040512085,
+          0.8734719753265381,
+          0.8765760064125061,
+          0.8733119964599609,
+          0.8787840008735657,
+          0.8700159788131714,
+          0.877344012260437,
+          0.8729919791221619
+        ],
+        "median_ms": 0.8846559822559357,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "state-v256",
+        "config": {
+          "block_d": 256,
+          "threads": 128,
+          "vectorize": true
+        },
+        "samples_ms": [
+          0.9817280173301697,
+          0.9377279877662659,
+          0.9609280228614807,
+          0.9152640104293823,
+          0.9316480159759521,
+          0.8939200043678284,
+          0.8914880156517029,
+          0.8714240193367004,
+          0.8693119883537292,
+          0.8703359961509705,
+          0.866752028465271,
+          0.8617600202560425,
+          0.8704959750175476,
+          0.8812800049781799,
+          0.871616005897522,
+          0.8592640161514282,
+          0.929535984992981,
+          0.9108480215072632,
+          0.8598080277442932,
+          0.8629119992256165
+        ],
+        "median_ms": 0.876448005437851,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "scan-default",
+        "config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 64,
+          "block_s": 64,
+          "threads": 128,
+          "num_stages": 3
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "samples_ms": [
+          0.8868160247802734,
+          0.8744000196456909,
+          0.8585600256919861,
+          0.8373759984970093,
+          0.8608959913253784,
+          0.8479999899864197,
+          0.8560960292816162,
+          0.8685439825057983,
+          0.860319972038269,
+          0.7685120105743408,
+          0.753600001335144,
+          0.7489920258522034,
+          0.7597439885139465,
+          0.7872959971427917,
+          0.7125440239906311,
+          0.6983360052108765,
+          0.7089599967002869,
+          0.7097920179367065,
+          0.7133119702339172,
+          0.6585919857025146
+        ],
+        "median_ms": 0.7779040038585663,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "scan-n128-t128-s64",
+        "config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 128,
+          "block_s": 64,
+          "threads": 128,
+          "num_stages": 3
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "samples_ms": [
+          0.8557440042495728,
+          0.8132479786872864,
+          0.7978240251541138,
+          0.7846720218658447,
+          0.7663360238075256,
+          0.769216001033783,
+          0.776416003704071,
+          0.7741439938545227,
+          0.7751039862632751,
+          0.7926080226898193,
+          0.7681919932365417,
+          0.7469120025634766,
+          0.7599679827690125,
+          0.7761920094490051,
+          0.7601600289344788,
+          0.7608320116996765,
+          0.7494080066680908,
+          0.7472959756851196,
+          0.7495359778404236,
+          0.7603840231895447
+        ],
+        "median_ms": 0.7687039971351624,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "scan-n64-t64-s64",
+        "config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 64,
+          "block_s": 64,
+          "threads": 64,
+          "num_stages": 3
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "samples_ms": [
+          0.6375359892845154,
+          0.6233279705047607,
+          0.601855993270874,
+          0.593824028968811,
+          0.582751989364624,
+          0.6062080264091492,
+          0.5899839997291565,
+          0.5903679728507996,
+          0.5946879982948303,
+          0.582207977771759,
+          0.5759999752044678,
+          0.5844799876213074,
+          0.5771200060844421,
+          0.613215982913971,
+          0.5816320180892944,
+          0.5884799957275391,
+          0.5781760215759277,
+          0.5848960280418396,
+          0.5848640203475952,
+          0.5989760160446167
+        ],
+        "median_ms": 0.5892319977283478,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "scan-n128-t64-s64",
+        "config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 128,
+          "block_s": 64,
+          "threads": 64,
+          "num_stages": 3
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "samples_ms": [
+          0.8271999955177307,
+          0.7348799705505371,
+          0.7021759748458862,
+          0.7082880139350891,
+          0.7351679801940918,
+          0.7160959839820862,
+          0.6995199918746948,
+          0.6946880221366882,
+          0.7008000016212463,
+          0.6997759938240051,
+          0.6890239715576172,
+          0.6930879950523376,
+          0.6950399875640869,
+          0.692575991153717,
+          0.693343997001648,
+          0.6907200217247009,
+          0.6979519724845886,
+          0.6947199702262878,
+          0.6973440051078796,
+          0.6936960220336914
+        ],
+        "median_ms": 0.6976479887962341,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "scan-n64-t128-s128",
+        "config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 64,
+          "block_s": 128,
+          "threads": 128,
+          "num_stages": 3
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "samples_ms": [
+          0.8549439907073975,
+          0.803551971912384,
+          0.7825599908828735,
+          0.7761600017547607,
+          0.779744029045105,
+          0.8142719864845276,
+          0.7902719974517822,
+          0.7845119833946228,
+          0.7744320034980774,
+          0.7873920202255249,
+          0.7723199725151062,
+          0.7801920175552368,
+          0.7767999768257141,
+          0.7691839933395386,
+          0.7718719840049744,
+          0.7748479843139648,
+          0.8079360127449036,
+          0.7741439938545227,
+          0.7762240171432495,
+          0.7722560167312622
+        ],
+        "median_ms": 0.7782720029354095,
+        "errors": [
+          {
+            "max_abs": 3.287196159362793e-05,
+            "mean_abs": 5.545090497882654e-10
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "scan-n128-t128-s128",
+        "config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 128,
+          "block_s": 128,
+          "threads": 128,
+          "num_stages": 3
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "samples_ms": [
+          0.8559679985046387,
+          0.8770239949226379,
+          0.8266879916191101,
+          0.8303040266036987,
+          0.7958400249481201,
+          0.7957760095596313,
+          0.7917439937591553,
+          0.7890239953994751,
+          0.7785279750823975,
+          0.788640022277832,
+          0.7982400059700012,
+          0.798911988735199,
+          0.7799040079116821,
+          0.774399995803833,
+          0.7816960215568542,
+          0.7842559814453125,
+          0.7919359803199768,
+          0.7747840285301208,
+          0.7735040187835693,
+          0.7697280049324036
+        ],
+        "median_ms": 0.7903839945793152,
+        "errors": [
+          {
+            "max_abs": 3.287196159362793e-05,
+            "mean_abs": 5.545090497882654e-10
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "chunk-default",
+        "config": {
+          "block_n": 128,
+          "block_p": 64,
+          "block_l": 32,
+          "threads": 128
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "scan_config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 64,
+          "block_s": 64,
+          "threads": 64,
+          "num_stages": 3
+        },
+        "samples_ms": [
+          0.7659839987754822,
+          0.7428799867630005,
+          0.747327983379364,
+          0.750495970249176,
+          0.7464640140533447,
+          0.7538880109786987,
+          0.7502080202102661,
+          0.7478079795837402,
+          0.7441279888153076,
+          0.7471039891242981,
+          0.7445440292358398,
+          0.7384639978408813,
+          0.7426559925079346,
+          0.7428159713745117,
+          0.7505279779434204,
+          0.7355200052261353,
+          0.7354559898376465,
+          0.7328640222549438,
+          0.7176640033721924,
+          0.7124159932136536
+        ],
+        "median_ms": 0.7443360090255737,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "chunk-l64-t128",
+        "config": {
+          "block_n": 128,
+          "block_p": 64,
+          "block_l": 64,
+          "threads": 128
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "scan_config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 64,
+          "block_s": 64,
+          "threads": 64,
+          "num_stages": 3
+        },
+        "samples_ms": [
+          1.0723520517349243,
+          1.0384000539779663,
+          1.0093120336532593,
+          1.0557760000228882,
+          1.0370880365371704,
+          1.053887963294983,
+          1.0145920515060425,
+          1.0109119415283203,
+          0.9855359792709351,
+          0.980351984500885,
+          0.9881280064582825,
+          1.0042879581451416,
+          0.9965760111808777,
+          0.9990079998970032,
+          0.9779840111732483,
+          0.978655993938446,
+          0.9805439710617065,
+          0.9895679950714111,
+          0.9905920028686523,
+          1.012992024421692
+        ],
+        "median_ms": 1.0016479790210724,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "chunk-l128-t128",
+        "config": {
+          "block_n": 128,
+          "block_p": 64,
+          "block_l": 128,
+          "threads": 128
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "scan_config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 64,
+          "block_s": 64,
+          "threads": 64,
+          "num_stages": 3
+        },
+        "samples_ms": [
+          1.0817279815673828,
+          1.1413120031356812,
+          1.059872031211853,
+          1.0189759731292725,
+          1.0036159753799438,
+          1.0234240293502808,
+          1.0210880041122437,
+          1.0084799528121948,
+          1.0724159479141235,
+          1.011680006980896,
+          1.007040023803711,
+          0.97980797290802,
+          0.9975360035896301,
+          1.0181759595870972,
+          0.9944959878921509,
+          0.9882559776306152,
+          1.013375997543335,
+          1.0019840002059937,
+          1.0005120038986206,
+          0.9927679896354675
+        ],
+        "median_ms": 1.0100799798965454,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      },
+      {
+        "name": "chunk-l64-t256",
+        "config": {
+          "block_n": 128,
+          "block_p": 64,
+          "block_l": 64,
+          "threads": 256
+        },
+        "state_config": {
+          "block_d": 64,
+          "threads": 128,
+          "vectorize": false
+        },
+        "scan_config": {
+          "block_l": 64,
+          "block_p": 64,
+          "block_n": 64,
+          "block_s": 64,
+          "threads": 64,
+          "num_stages": 3
+        },
+        "samples_ms": [
+          1.0776640176773071,
+          1.0500160455703735,
+          1.037600040435791,
+          1.0465919971466064,
+          1.0236480236053467,
+          1.0201599597930908,
+          0.9987840056419373,
+          1.0054399967193604,
+          1.0452799797058105,
+          1.038432002067566,
+          1.020576000213623,
+          1.0040639638900757,
+          0.9918400049209595,
+          1.0152959823608398,
+          1.0187840461730957,
+          0.9919040203094482,
+          1.031615972518921,
+          1.0041600465774536,
+          0.9969919919967651,
+          1.0054080486297607
+        ],
+        "median_ms": 1.0194720029830933,
+        "errors": [
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          },
+          {
+            "max_abs": 0.0,
+            "mean_abs": 0.0
+          }
+        ]
+      }
+    ]
+  }
+]

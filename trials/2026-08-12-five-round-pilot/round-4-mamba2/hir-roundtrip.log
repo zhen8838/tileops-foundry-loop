@@ -1,0 +1,52 @@
+Traceback (most recent call last):
+  File "$TRIAL_SOURCE/round-4-mamba2/hir_roundtrip.py", line 23, in <module>
+    roundtrip_spec.loader.exec_module(roundtrip_mod)
+  File "<frozen importlib._bootstrap_external>", line 999, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "$TRIAL_SOURCE/round-4-mamba2/authored_hir_roundtrip.py", line 14, in <module>
+    class Mamba2StepRoundTrip:
+  File "$TRIAL_SOURCE/round-4-mamba2/authored_hir_roundtrip.py", line 15, in Mamba2StepRoundTrip
+    @func
+     ^^^^
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/script.py", line 127, in func
+    return _wrap(fn)
+           ^^^^^^^^^
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/script.py", line 110, in _wrap
+    ir = _parse_func(
+         ^^^^^^^^^^^^
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/parser/hir_parser.py", line 87, in _parse_func
+    return _parse_func_node(
+           ^^^^^^^^^^^^^^^^^
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/parser/hir_parser.py", line 128, in _parse_func_node
+    body_expr = visitor.visit_body(node.body)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/parser/hir_parser.py", line 322, in visit_body
+    return self._visit_chain(stmts, 0)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/parser/hir_parser.py", line 367, in _visit_chain
+    return self._visit_chain(stmts, idx + 1, require_return)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/parser/hir_parser.py", line 360, in _visit_chain
+    rhs = self.expr_with_binding(node.value, tgt)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/parser/base.py", line 359, in expr_with_binding
+    return self.expr(node)
+           ^^^^^^^^^^^^^^^
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/parser/base.py", line 350, in expr
+    return method(node)
+           ^^^^^^^^^^^^
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/parser/base.py", line 739, in visit_Call
+    return self.call_to_op_call(node)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/parser/base.py", line 1036, in call_to_op_call
+    attr_kwargs[k.arg] = self._eval_static_or_sugar(k.arg, k.value, schema=schema)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/parser/base.py", line 1161, in _eval_static_or_sugar
+    value = self._eval_static(node)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/parser/base.py", line 1237, in _eval_static
+    return eval_static(
+           ^^^^^^^^^^^^
+  File "$HOST_HOME/TileFoundry/src/tilefoundry/parser/static_eval.py", line 115, in eval_static
+    raise VerifyError(f"undefined name {name!r}")
+tilefoundry.ir.core.errors.VerifyError: undefined name 'inf'

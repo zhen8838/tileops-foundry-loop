@@ -65,13 +65,16 @@ Operator: `FusedMoEExpertsNopadPersistent3WGFwdOp`
 
 Method: Candidate, incumbent, and vLLM ran in one process on common inputs with identical BF16 work, L2 reset/input rotation, adaptive repeats, and forward/reverse drift balancing. Compilation was excluded and CUPTI failure was fail-closed.
 
-| Workload | T | E | K | H | F | Dtype | TileFoundry candidate (ms) | TileOPs incumbent (ms) | vLLM Triton (ms) | TileOPs incumbent / candidate | vLLM Triton / candidate |
-| --- | ---: | ---: | ---: | ---: | ---: | --- | ---: | ---: | ---: | ---: | ---: |
-| qwen3-235b-decode | 512 | 128 | 8 | 7168 | 2048 | bfloat16 | 3.0439 | 3.1617 | 2.9422 | 1.0387x | 0.9666x |
-| qwen3-235b-prefill | 4096 | 128 | 8 | 7168 | 2048 | bfloat16 | 6.0151 | 5.7425 | 6.7984 | 0.9547x | 1.1302x |
-| deepseek-v3-decode | 512 | 256 | 8 | 7168 | 2048 | bfloat16 | 5.8042 | 6.1058 | 5.5988 | 1.0520x | 0.9646x |
-| deepseek-v3-prefill | 4096 | 256 | 8 | 7168 | 2048 | bfloat16 | 8.21 | 8.1078 | 8.5403 | 0.9876x | 1.0402x |
-| geometric mean |  |  |  |  |  |  | 5.43488 | 5.47541 | 5.56111 | 1.0075x | 1.0232x |
+Ratio in comparator columns: implementation / candidate. &#x1F534; > 1 means the candidate is faster;
+&#x1F7E2; <= 1 means it is not.
+
+| Workload | T | E | K | H | F | Dtype | TileFoundry candidate (ms) | TileOPs incumbent (ms)<br>/ candidate | vLLM Triton (ms)<br>/ candidate |
+| --- | ---: | ---: | ---: | ---: | ---: | --- | ---: | ---: | ---: |
+| qwen3-235b-decode | 512 | 128 | 8 | 7168 | 2048 | bfloat16 | 3.0439 | **3.1617<br>&#x1F534;&nbsp;1.0387x** | 2.9422<br>&#x1F7E2;&nbsp;0.9666x |
+| qwen3-235b-prefill | 4096 | 128 | 8 | 7168 | 2048 | bfloat16 | 6.0151 | **5.7425<br>&#x1F7E2;&nbsp;0.9547x** | 6.7984<br>&#x1F534;&nbsp;1.1302x |
+| deepseek-v3-decode | 512 | 256 | 8 | 7168 | 2048 | bfloat16 | 5.8042 | **6.1058<br>&#x1F534;&nbsp;1.0520x** | 5.5988<br>&#x1F7E2;&nbsp;0.9646x |
+| deepseek-v3-prefill | 4096 | 256 | 8 | 7168 | 2048 | bfloat16 | 8.21 | **8.1078<br>&#x1F7E2;&nbsp;0.9876x** | 8.5403<br>&#x1F534;&nbsp;1.0402x |
+| geometric mean |  |  |  |  |  |  | 5.43488 | **5.47541<br>&#x1F534;&nbsp;1.0075x** | 5.56111<br>&#x1F534;&nbsp;1.0232x |
 
 ## Result And Limitations
 

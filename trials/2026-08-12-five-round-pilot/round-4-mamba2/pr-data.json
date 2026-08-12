@@ -1,0 +1,59 @@
+{
+  "subject": "Align Mamba2 primary contract evidence",
+  "type": "Fix",
+  "scope": "Mamba",
+  "operator": "Mamba2FwdOp",
+  "classification": "measured SOTA",
+  "summary": [
+    "Route an absent dt_bias through the existing unbiased dA-cumsum specialization and cache biased and unbiased variants independently.",
+    "Make the shared workload and benchmark own the exact no-bias, two-output primary Mamba2 contract.",
+    "Keep the change classified as a contract fix; it does not deliver a new performance kernel or a measurable improvement over the TileOPs incumbent."
+  ],
+  "environment": {
+    "image": "ghcr.io/tile-ai/tileops-runner:cu132-torch2.13-tl-afcebed1-dev",
+    "digest": "sha256:2590888968a870216e1ea076829b909e62e9053608f6a65d5ab5ecd7eb5561f7",
+    "gpu": "NVIDIA H200",
+    "driver": "595.71.05",
+    "cuda": "13.2",
+    "torch": "2.13.0+cu132",
+    "tilelang": "0.1.11+cu132.gitafcebed1",
+    "mamba_ssm": "2.3.2.post1",
+    "timer": "native CUPTI"
+  },
+  "method": "Candidate, reconstructed incumbent, and mamba_ssm ran in one process on the same GPU and inputs with identical precision and two-output work, rotated implementation order, L2 reset/input shifting, and three repeated trials. Compilation was excluded, output casts required by the contract remained inside timing, and CUPTI failure was fail-closed.",
+  "dimensions": ["B", "S", "H", "P", "N", "G", "Q"],
+  "comparators": [
+    {"id": "candidate", "label": "TileFoundry candidate", "role": "candidate"},
+    {"id": "incumbent", "label": "TileOPs incumbent", "role": "incumbent"},
+    {"id": "mamba_ssm", "label": "mamba_ssm 2.3.2.post1", "role": "external"}
+  ],
+  "workloads": [
+    {
+      "label": "mamba2-2p7b-b1-s2k",
+      "dimensions": {"B": 1, "S": 2048, "H": 80, "P": 64, "N": 128, "G": 1, "Q": 256},
+      "dtype": "bfloat16",
+      "results": {
+        "candidate": {"median_ms": 0.723347},
+        "incumbent": {"median_ms": 0.7060025},
+        "mamba_ssm": {"median_ms": 0.782755}
+      }
+    },
+    {
+      "label": "mamba2-1p3b-b1-s8k",
+      "dimensions": {"B": 1, "S": 8192, "H": 64, "P": 64, "N": 128, "G": 1, "Q": 256},
+      "dtype": "float16",
+      "results": {
+        "candidate": {"median_ms": 0.820499},
+        "incumbent": {"median_ms": 0.824755},
+        "mamba_ssm": {"median_ms": 0.924323}
+      }
+    }
+  ],
+  "limitations": [
+    "Classification is measured SOTA only against the runnable same-contract external baseline: the candidate is faster than mamba_ssm on both primary workloads and by 1.1041x in geometric mean.",
+    "The candidate is 2.46% slower than the TileOPs incumbent on the 2K row, 0.52% faster on the 8K row, and 0.96% slower in geometric mean; this is not an incumbent improvement.",
+    "Across the three trial medians, candidate ranges were 0.78% and 4.15%, incumbent ranges were 26.63% and 3.11%, and mamba_ssm ranges were 2.33% and 5.36% for the 2K and 8K rows respectively; the highly variable 2K incumbent prevents a stable per-row regression claim.",
+    "The TileFoundry module captures one recurrence step because dynamic loop-token indexing and output insertion cannot yet express the full ordered scan; the shipped fix reuses existing TileOps kernels rather than claiming that module as a new performance kernel.",
+    "The measured-SOTA classification is specific to this CUDA 13.2 stack and mamba_ssm 2.3.2.post1."
+  ]
+}

@@ -1,0 +1,576 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.13, pytest-9.0.2, pluggy-1.6.0 -- /usr/bin/python
+cachedir: .pytest_cache
+rootdir: $CONTAINER_WORKSPACE/tileops
+configfile: pyproject.toml
+plugins: anyio-4.14.2, xdist-3.8.0, timeout-2.3.1
+collecting ... collected 15 items
+
+tests/ops/test_gemm.py::test_gemm[smoke-fp16-square] PASSED              [  6%]
+tests/ops/test_gemm.py::test_gemm[smoke-bf16-square] PASSED              [ 13%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-trans-b-small-m] PASSED      [ 20%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-nt-dense-ws] PASSED          [ 26%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-tuned-wide] FAILED           [ 33%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-tuned-wide-alt] PASSED       [ 40%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-thin-n] PASSED               [ 46%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-tuned-thin-n] FAILED         [ 53%]
+tests/ops/test_gemm.py::test_gemm[full-fp16-tuned-thin-n-alt] PASSED     [ 60%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-trans-b-small-m] PASSED      [ 66%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-tuned-wide] PASSED           [ 73%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-tuned-wide-alt] PASSED       [ 80%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-thin-n] PASSED               [ 86%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-tuned-thin-n] PASSED         [ 93%]
+tests/ops/test_gemm.py::test_gemm[full-bf16-tuned-thin-n-alt] PASSED     [100%]
+
+=================================== FAILURES ===================================
+_______________________ test_gemm[full-fp16-tuned-wide] ________________________
+
+m = 1, n = 7168, k = 16384, dtype = torch.float16, trans_a = False
+trans_b = True, tune = True
+
+    @GemmFixture
+    def test_gemm(m: int, n: int, k: int, dtype: torch.dtype, trans_a: bool, trans_b: bool,
+                  tune: bool) -> None:
+        test = GemmTest(m, n, k, dtype, trans_a, trans_b)
+        op = GemmOp(trans_a=trans_a, trans_b=trans_b, tune=tune)
+        if dtype == torch.float16:
+            tolerances = {"atol": 1e-3, "rtol": 1e-3}
+        else:
+            tolerances = {"atol": 1.6e-2, "rtol": 1.6e-2}
+>       test.check(op, *test.gen_inputs(), **tolerances)
+
+tests/ops/test_gemm.py:191:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_base.py:136: in check
+    cmp(output, output_ref)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+output = tensor([[-241.3750,  130.5000,  134.3750,  ..., -151.8750,  -99.0000,
+          -56.0625]], device='cuda:0', dtype=torch.float16)
+output_ref = tensor([[-241.3750,  130.5000,  134.3750,  ..., -151.8750,  -99.0000,
+          -56.0625]], device='cuda:0', dtype=torch.float16)
+atol = 0.001, rtol = 0.001
+
+    def allclose_compare(output: torch.Tensor, output_ref: torch.Tensor, atol: float = 1e-8, rtol: float = 1e-5) -> None:
+        """Default comparison using torch.allclose."""
+        output, output_ref = torch.broadcast_tensors(output, output_ref)
+>       torch.testing.assert_close(
+            output,
+            output_ref,
+            atol=atol,
+            rtol=rtol,
+            equal_nan=True,
+        )
+E       AssertionError: Tensor-likes are not close!
+E
+E       Mismatched elements: 11 / 7168 (0.2%)
+E       Greatest absolute difference: 0.00390625 at index (0, 3966) (up to 0.001 allowed)
+E       Greatest relative difference: 0.01556396484375 at index (0, 6334) (up to 0.001 allowed)
+
+tests/test_base.py:42: AssertionError
+----------------------------- Captured stdout call -----------------------------
+Start autotuning GemvKernel...
+2026-08-12 01:22:40,502 INFO:Auto-tuning with 0.9 CPU utilizations, 192 CPUs available, 172 CPUs will be used
+2026-08-12 01:22:40,648 WARNING:Benchmark timeout is enforced in benchmark workers by running each benchmark call in a daemon sub-thread and waiting up to the configured timeout.
+2026-08-12 01:22:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemv_main` with `out_idx=[-1]`
+2026-08-12 01:22:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemv_main` with `out_idx=[-1]`
+2026-08-12 01:22:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemv_main` with `out_idx=[-1]`
+2026-08-12 01:22:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemv_main` with `out_idx=[-1]`
+2026-08-12 01:22:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemv_main` with `out_idx=[-1]`
+2026-08-12 01:22:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemv_main` with `out_idx=[-1]`
+2026-08-12 01:22:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemv_main` with `out_idx=[-1]`
+2026-08-12 01:22:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemv_main` with `out_idx=[-1]`
+2026-08-12 01:22:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemv_main` with `out_idx=[-1]`
+2026-08-12 01:22:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemv_main` with `out_idx=[-1]`
+2026-08-12 01:22:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemv_main` with `out_idx=[-1]`
+2026-08-12 01:22:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemv_main` with `out_idx=[-1]`
+2026-08-12 01:22:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemv_main` with `out_idx=[-1]`
+2026-08-12 01:22:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemv_main` with `out_idx=[-1]`
+2026-08-12 01:22:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `_gemv_main` with `out_idx=[-1]`
+2026-08-12 01:22:44  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemv_main`
+2026-08-12 01:22:44  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemv_main`
+2026-08-12 01:22:44  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemv_main`
+2026-08-12 01:22:44  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemv_main`
+2026-08-12 01:22:44  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemv_main`
+2026-08-12 01:22:44  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemv_main`
+2026-08-12 01:22:44  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemv_main`
+2026-08-12 01:22:44  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemv_main`
+2026-08-12 01:22:44  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemv_main`
+2026-08-12 01:22:44  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemv_main`
+2026-08-12 01:22:44  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemv_main`
+2026-08-12 01:22:44  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemv_main`
+2026-08-12 01:22:44  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemv_main`
+2026-08-12 01:22:44  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemv_main`
+2026-08-12 01:22:44  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `_gemv_main`
+Tuned Latency 0.11420287191867828 with config {'block_n': 8, 'reduce_threads': 32, 'num_stages': 1} at index 9
+Tuned Latency 0.08252096176147461 with config {'block_n': 1, 'reduce_threads': 32, 'num_stages': 1} at index 0
+Tuned Latency 0.0765555202960968 with config {'block_n': 2, 'reduce_threads': 32, 'num_stages': 2} at index 4
+Tuned Latency 0.07978943735361099 with config {'block_n': 4, 'reduce_threads': 32, 'num_stages': 3} at index 8
+Tuned Latency 0.10472959280014038 with config {'block_n': 8, 'reduce_threads': 32, 'num_stages': 2} at index 10
+Tuned Latency 0.09219584614038467 with config {'block_n': 2, 'reduce_threads': 32, 'num_stages': 1} at index 3
+Tuned Latency 0.09878464788198471 with config {'block_n': 4, 'reduce_threads': 32, 'num_stages': 1} at index 6
+Tuned Latency 0.09602880477905273 with config {'block_n': 1, 'reduce_threads': 32, 'num_stages': 3} at index 2
+Tuned Latency 0.08395840972661972 with config {'block_n': 4, 'reduce_threads': 32, 'num_stages': 2} at index 7
+Tuned Latency 0.0702911913394928 with config {'block_n': 1, 'reduce_threads': 32, 'num_stages': 2} at index 1
+Tuned Latency 0.14847297966480255 with config {'block_n': 16, 'reduce_threads': 32, 'num_stages': 1} at index 12
+Tuned Latency 0.161889910697937 with config {'block_n': 16, 'reduce_threads': 32, 'num_stages': 3} at index 14
+Tuned Latency 0.07652992010116577 with config {'block_n': 2, 'reduce_threads': 32, 'num_stages': 3} at index 5
+Tuned Latency 0.09749119728803635 with config {'block_n': 8, 'reduce_threads': 32, 'num_stages': 3} at index 11
+Tuned Latency 0.13124673068523407 with config {'block_n': 16, 'reduce_threads': 32, 'num_stages': 2} at index 13
+Best config: {'block_n': 1, 'reduce_threads': 32, 'num_stages': 2}
+GemvKernel initialized with config: {'block_n': 1, 'reduce_threads': 32, 'num_stages': 2}
+----------------------------- Captured stderr call -----------------------------
+
+Compiling configurations:   0%|          | 0/15 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:00<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:00<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:00<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:00<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:00<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:00<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:00<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:00<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:00<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:00<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:00<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:00<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:00<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:00<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:00<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:00<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:03<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:03<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:04<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:04<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:04<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:04<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:04<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:04<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:04<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:04<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:04<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:04<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:04<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:04<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:04<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:04<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:04<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:04<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:04<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:04<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:04<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:04<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:04<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:04<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:04<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:04<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:04<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:04<?, ?it/s][A
+
+
+
+[A
+Compiling configurations:   0%|          | 0/15 [00:04<?, ?it/s]
+
+Bench configurations:   0%|          | 0/15 [00:04<?, ?it/s][A
+Compiling configurations:   7%|▋         | 1/15 [00:04<01:03,  4.53s/it]
+Compiling configurations:  13%|█▎        | 2/15 [00:05<00:31,  2.40s/it]
+Compiling configurations:  20%|██        | 3/15 [00:05<00:17,  1.47s/it]
+Compiling configurations:  27%|██▋       | 4/15 [00:05<00:10,  1.04it/s]
+Compiling configurations:  33%|███▎      | 5/15 [00:06<00:06,  1.47it/s]
+Compiling configurations:  40%|████      | 6/15 [00:06<00:04,  1.95it/s]
+Compiling configurations:  80%|████████  | 12/15 [00:06<00:00,  5.62it/s]
+
+Bench configurations:   7%|▋         | 1/15 [00:06<01:37,  6.94s/it][A
+
+Bench configurations:   7%|▋         | 1/15 [00:06<01:37,  6.94s/it, best_latency=0.114][A
+
+
+
+[A
+Compiling configurations: 100%|██████████| 15/15 [00:06<00:00,  5.62it/s]
+
+Bench configurations:   7%|▋         | 1/15 [00:06<01:37,  6.94s/it, best_latency=0.114][A
+
+Bench configurations:  13%|█▎        | 2/15 [00:07<00:38,  2.97s/it, best_latency=0.114][A
+
+Bench configurations:  13%|█▎        | 2/15 [00:07<00:38,  2.97s/it, best_latency=0.0825][A
+
+
+
+[A
+Compiling configurations: 100%|██████████| 15/15 [00:07<00:00,  5.62it/s]
+
+Bench configurations:  13%|█▎        | 2/15 [00:07<00:38,  2.97s/it, best_latency=0.0825][A
+
+Bench configurations:  20%|██        | 3/15 [00:07<00:20,  1.70s/it, best_latency=0.0825][A
+
+Bench configurations:  20%|██        | 3/15 [00:07<00:20,  1.70s/it, best_latency=0.0766][A
+
+
+
+[A
+Compiling configurations: 100%|██████████| 15/15 [00:07<00:00,  5.62it/s]
+
+Bench configurations:  20%|██        | 3/15 [00:07<00:20,  1.70s/it, best_latency=0.0766][A
+
+Bench configurations:  27%|██▋       | 4/15 [00:07<00:12,  1.10s/it, best_latency=0.0766][A
+
+Bench configurations:  27%|██▋       | 4/15 [00:07<00:12,  1.10s/it, best_latency=0.0766][A
+
+
+
+[A
+Compiling configurations: 100%|██████████| 15/15 [00:07<00:00,  5.62it/s]
+
+Bench configurations:  27%|██▋       | 4/15 [00:07<00:12,  1.10s/it, best_latency=0.0766][A
+
+Bench configurations:  33%|███▎      | 5/15 [00:07<00:07,  1.29it/s, best_latency=0.0766][A
+
+Bench configurations:  33%|███▎      | 5/15 [00:07<00:07,  1.29it/s, best_latency=0.0766][A
+
+
+
+[A
+Compiling configurations: 100%|██████████| 15/15 [00:07<00:00,  5.62it/s]
+
+Bench configurations:  33%|███▎      | 5/15 [00:07<00:07,  1.29it/s, best_latency=0.0766][A
+
+Bench configurations:  40%|████      | 6/15 [00:07<00:05,  1.75it/s, best_latency=0.0766][A
+
+Bench configurations:  40%|████      | 6/15 [00:07<00:05,  1.75it/s, best_latency=0.0766][A
+
+
+
+[A
+Compiling configurations: 100%|██████████| 15/15 [00:07<00:00,  5.62it/s]
+
+Bench configurations:  40%|████      | 6/15 [00:07<00:05,  1.75it/s, best_latency=0.0766][A
+
+Bench configurations:  47%|████▋     | 7/15 [00:08<00:03,  2.26it/s, best_latency=0.0766][A
+
+Bench configurations:  47%|████▋     | 7/15 [00:08<00:03,  2.26it/s, best_latency=0.0766][A
+
+
+
+[A
+Compiling configurations: 100%|██████████| 15/15 [00:08<00:00,  5.62it/s]
+
+Bench configurations:  47%|████▋     | 7/15 [00:08<00:03,  2.26it/s, best_latency=0.0766][A
+
+Bench configurations:  53%|█████▎    | 8/15 [00:08<00:02,  2.76it/s, best_latency=0.0766][A
+
+Bench configurations:  53%|█████▎    | 8/15 [00:08<00:02,  2.76it/s, best_latency=0.0766][A
+
+
+
+[A
+Compiling configurations: 100%|██████████| 15/15 [00:08<00:00,  5.62it/s]
+
+Bench configurations:  53%|█████▎    | 8/15 [00:08<00:02,  2.76it/s, best_latency=0.0766][A
+
+Bench configurations:  60%|██████    | 9/15 [00:08<00:01,  3.26it/s, best_latency=0.0766][A
+
+Bench configurations:  60%|██████    | 9/15 [00:08<00:01,  3.26it/s, best_latency=0.0766][A
+
+
+
+[A
+Compiling configurations: 100%|██████████| 15/15 [00:08<00:00,  5.62it/s]
+
+Bench configurations:  60%|██████    | 9/15 [00:08<00:01,  3.26it/s, best_latency=0.0766][A
+
+Bench configurations:  67%|██████▋   | 10/15 [00:08<00:01,  3.77it/s, best_latency=0.0766][A
+
+Bench configurations:  67%|██████▋   | 10/15 [00:08<00:01,  3.77it/s, best_latency=0.0703][A
+
+
+
+[A
+Compiling configurations: 100%|██████████| 15/15 [00:08<00:00,  5.62it/s]
+
+Bench configurations:  67%|██████▋   | 10/15 [00:08<00:01,  3.77it/s, best_latency=0.0703][A
+
+Bench configurations:  73%|███████▎  | 11/15 [00:08<00:00,  4.16it/s, best_latency=0.0703][A
+
+Bench configurations:  73%|███████▎  | 11/15 [00:08<00:00,  4.16it/s, best_latency=0.0703][A
+
+
+
+[A
+Compiling configurations: 100%|██████████| 15/15 [00:08<00:00,  5.62it/s]
+
+Bench configurations:  73%|███████▎  | 11/15 [00:08<00:00,  4.16it/s, best_latency=0.0703][A
+
+Bench configurations:  80%|████████  | 12/15 [00:08<00:00,  4.36it/s, best_latency=0.0703][A
+
+Bench configurations:  80%|████████  | 12/15 [00:08<00:00,  4.36it/s, best_latency=0.0703][A
+
+
+
+[A
+Compiling configurations: 100%|██████████| 15/15 [00:08<00:00,  5.62it/s]
+
+Bench configurations:  80%|████████  | 12/15 [00:08<00:00,  4.36it/s, best_latency=0.0703][A
+
+Bench configurations:  87%|████████▋ | 13/15 [00:09<00:00,  4.63it/s, best_latency=0.0703][A
+
+Bench configurations:  87%|████████▋ | 13/15 [00:09<00:00,  4.63it/s, best_latency=0.0703][A
+
+
+
+[A
+Compiling configurations: 100%|██████████| 15/15 [00:09<00:00,  5.62it/s]
+
+Bench configurations:  87%|████████▋ | 13/15 [00:09<00:00,  4.63it/s, best_latency=0.0703][A
+
+Bench configurations:  93%|█████████▎| 14/15 [00:09<00:00,  4.80it/s, best_latency=0.0703][A
+
+Bench configurations:  93%|█████████▎| 14/15 [00:09<00:00,  4.80it/s, best_latency=0.0703][A
+
+
+
+[A
+Compiling configurations: 100%|██████████| 15/15 [00:09<00:00,  5.62it/s]
+
+Bench configurations:  93%|█████████▎| 14/15 [00:09<00:00,  4.80it/s, best_latency=0.0703][A
+
+Bench configurations: 100%|██████████| 15/15 [00:09<00:00,  4.90it/s, best_latency=0.0703][A
+
+Bench configurations: 100%|██████████| 15/15 [00:09<00:00,  4.90it/s, best_latency=0.0703][A
+
+
+
+[A
+Compiling configurations: 100%|██████████| 15/15 [00:09<00:00,  5.62it/s]
+
+Bench configurations: 100%|██████████| 15/15 [00:09<00:00,  4.90it/s, best_latency=0.0703][A
+
+Bench configurations: 100%|██████████| 15/15 [00:09<00:00,  4.90it/s, best_latency=0.0703][A
+Compiling configurations: 100%|██████████| 15/15 [00:09<00:00,  1.57it/s]
+
+Bench configurations: 100%|██████████| 15/15 [00:09<00:00,  1.57it/s, best_latency=0.0703]
+______________________ test_gemm[full-fp16-tuned-thin-n] _______________________
+
+m = 7168, n = 1, k = 16384, dtype = torch.float16, trans_a = False
+trans_b = False, tune = False
+
+    @GemmFixture
+    def test_gemm(m: int, n: int, k: int, dtype: torch.dtype, trans_a: bool, trans_b: bool,
+                  tune: bool) -> None:
+        test = GemmTest(m, n, k, dtype, trans_a, trans_b)
+        op = GemmOp(trans_a=trans_a, trans_b=trans_b, tune=tune)
+        if dtype == torch.float16:
+            tolerances = {"atol": 1e-3, "rtol": 1e-3}
+        else:
+            tolerances = {"atol": 1.6e-2, "rtol": 1.6e-2}
+>       test.check(op, *test.gen_inputs(), **tolerances)
+
+tests/ops/test_gemm.py:191:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests/test_base.py:136: in check
+    cmp(output, output_ref)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+output = tensor([[  -5.4180],
+        [ 177.7500],
+        [ 130.1250],
+        ...,
+        [ -34.2500],
+        [ -43.6250],
+        [-218.3750]], device='cuda:0', dtype=torch.float16)
+output_ref = tensor([[  -5.4180],
+        [ 177.7500],
+        [ 130.1250],
+        ...,
+        [ -34.2500],
+        [ -43.6250],
+        [-218.3750]], device='cuda:0', dtype=torch.float16)
+atol = 0.001, rtol = 0.001
+
+    def allclose_compare(output: torch.Tensor, output_ref: torch.Tensor, atol: float = 1e-8, rtol: float = 1e-5) -> None:
+        """Default comparison using torch.allclose."""
+        output, output_ref = torch.broadcast_tensors(output, output_ref)
+>       torch.testing.assert_close(
+            output,
+            output_ref,
+            atol=atol,
+            rtol=rtol,
+            equal_nan=True,
+        )
+E       AssertionError: Tensor-likes are not close!
+E
+E       Mismatched elements: 15 / 7168 (0.2%)
+E       Greatest absolute difference: 0.00390625 at index (1401, 0) (up to 0.001 allowed)
+E       Greatest relative difference: 0.200927734375 at index (712, 0) (up to 0.001 allowed)
+
+tests/test_base.py:42: AssertionError
+----------------------------- Captured stdout call -----------------------------
+GemvKernel initialized with config: {'block_n': 8, 'reduce_threads': 32, 'num_stages': 2}
+- generated xml file: $CONTAINER_WORKSPACE/tileops/.artifacts/cu132/test-gemm-generic.xml -
+=========================== short test summary info ============================
+FAILED tests/ops/test_gemm.py::test_gemm[full-fp16-tuned-wide] - AssertionError: Tensor-likes are not close!
+
+Mismatched elements: 11 / 7168 (0.2%)
+Greatest absolute difference: 0.00390625 at index (0, 3966) (up to 0.001 allowed)
+Greatest relative difference: 0.01556396484375 at index (0, 6334) (up to 0.001 allowed)
+FAILED tests/ops/test_gemm.py::test_gemm[full-fp16-tuned-thin-n] - AssertionError: Tensor-likes are not close!
+
+Mismatched elements: 15 / 7168 (0.2%)
+Greatest absolute difference: 0.00390625 at index (1401, 0) (up to 0.001 allowed)
+Greatest relative difference: 0.200927734375 at index (712, 0) (up to 0.001 allowed)
+======================== 2 failed, 13 passed in 46.19s =========================
