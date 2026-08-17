@@ -9,9 +9,9 @@ so treat them as one-compile hypotheses and report the verdict when you check on
 
 | fact | what to do | build |
 |---|---|---|
-| Two sequential `T.ws` regions deadlock: `ThreadSync` emits a `__syncthreads()` the producer can never reach | nest both `T.ws` in the two arms of one `T.If`; the pass then summarises them as one statement. Written that way from the start on 0.1.11, one `__syncthreads()` (the barrier-init fence) is emitted and it works; the sequential form was not re-provoked there | [0.1.12] |
-| `threads=384` hangs — two consumer warp groups make `T.gemm` need a block-wide sync inside a thread-dependent branch | one producer + one consumer, 256 threads; that shape confirmed working | [0.1.12], 256 confirmed [0.1.11] |
-| **Register budget inside `T.ws` is honoured.** The generated CUDA carries `tl::warpgroup_reg_dealloc<24>()` and `tl::warpgroup_reg_alloc<240>()` | grep the wrappers, not the literal `setmaxnreg` -- a kernel whose budget *is* set contains no such string, which is probably what the earlier "silently dropped" reading was | corrected [0.1.11] |
+| Two sequential `T.ws` regions deadlock: `ThreadSync` emits a `__syncthreads()` the producer can never reach | nest both in the two arms of one `T.If`, which the pass summarises as one statement. That form works on 0.1.11; the sequential one was not re-provoked | [0.1.12] |
+| `threads=384` hangs — two consumer warp groups make `T.gemm` need a block-wide sync inside a thread-dependent branch | one producer + one consumer, 256 threads, confirmed working | [0.1.12] / 256 ok [0.1.11] |
+| Register budget inside `T.ws` **is** honoured: the CUDA carries `tl::warpgroup_reg_dealloc<24>()` / `reg_alloc<240>()` | grep those wrappers, not `setmaxnreg` — no kernel contains that string, which is what the earlier "silently dropped" reading was | corrected [0.1.11] |
 | `T.Parallel` binds to the kernel's thread extent, not the enclosing guard: `T.If(tx >= 128)` masks half and leaves half uncomputed, symptom `'!!!!!!'` in the generated text, no error | scope with `T.ws(i)`, not with a thread guard | [0.1.12] |
 | Allocations inside a guarded stage are invisible outside it | declare every ring and barrier set at kernel-body level, up front | [0.1.12] |
 | Wrong barrier arrive counts hang the kernel and kill the CUDA context; the error surfaces at the *next* allocation | a hang whose traceback points at an unrelated `torch.empty` is this | [0.1.12] |
@@ -25,13 +25,10 @@ producer waits: empty[k % stages].wait(((k % (2*stages)) / stages) ^ 1)
 consumer waits: full[k % stages].wait((k % (2*stages)) / stages)
 ```
 
-Confirmed on 0.1.11, with one degree of freedom: `T.alloc_barrier([N] * stages)`
-emits `bar[i].init(N)` verbatim and `N` must equal the number of threads that
-call `T.mbarrier_arrive` on it -- `init(1)` when TileLang elects one thread for
-the TMA (`tl_shuffle_elect<128>()` plus `expect_transaction(bytes)`), `init(128)`
-when every thread in the guarded region arrives. Writing the phase as
-`(t // stages) % 2` for the consumer and `^ 1` for the producer generates the
-form above; equal expressions, checked as `bar[(t&1)].wait((t&3)>>1)`.
+Confirmed [0.1.11] with one degree of freedom: `T.alloc_barrier([N] * stages)`
+emits `init(N)` verbatim, and `N` must equal the number of threads that arrive on
+it — 1 when TileLang elects one for the TMA, 128 when the whole guarded region
+arrives. `(t // stages) % 2` (consumer, `^ 1` producer) generates the same phase.
 
 ## Shared memory
 

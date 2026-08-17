@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Create a round directory from the reusable templates."""
+"""Create a round directory holding its brief, and nothing else.
+
+A round used to start from filled-in copies of an authored HIR, a runtime twin,
+a report and three JSON records. Every one of them was a graph or a shape to
+copy, which is the opposite of what the loop asks for -- the worker authors the
+description, and `scripts/check_round.py` states the contract by refusing what is
+missing. So the scaffold is gone: what a round gets is a brief and the commands.
+"""
 
 from __future__ import annotations
 
@@ -35,7 +42,6 @@ def main() -> int:
     if destination.exists():
         parser.error(f"round already exists: {destination}")
     destination.mkdir(parents=True)
-    (destination / "artifacts").mkdir()
 
     replacements = {
         "{{SLUG}}": args.slug,
@@ -46,22 +52,10 @@ def main() -> int:
         "{{TILEFOUNDRY_COMMIT}}": git_commit(args.tilefoundry_repo.resolve()),
         "{{ROUND_DIR}}": str(destination),
     }
-    for source_name, target_name in (
-        ("round-brief.md", "brief.md"),
-        ("report.md", "report.md"),
-        ("authored_hir.py", "authored_hir.py"),
-        ("runtime_twin.py", "runtime_twin.py"),
-        ("provenance.json", "provenance.json"),
-        ("findings.json", "findings.json"),
-    ):
-        text = (repo / "templates" / source_name).read_text(encoding="utf-8")
-        for before, after in replacements.items():
-            text = text.replace(before, after)
-        (destination / target_name).write_text(text, encoding="utf-8")
-    pr_data = (repo / "templates" / "pr-data.json").read_text(encoding="utf-8")
+    brief = (repo / "templates" / "round-brief.md").read_text(encoding="utf-8")
     for before, after in replacements.items():
-        pr_data = pr_data.replace(before, after)
-    (destination / "pr-data.json").write_text(pr_data, encoding="utf-8")
+        brief = brief.replace(before, after)
+    (destination / "brief.md").write_text(brief, encoding="utf-8")
     print(destination)
     return 0
 

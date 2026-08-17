@@ -39,21 +39,18 @@ worker may inspect or modify.
 1. `scripts/build_tilefoundry_wheel.sh` builds a wheel from the exact admitted
    TileFoundry Git commit, outside the checkout, and records the commit and
    SHA-256. Dirty checkout contents cannot enter the wheel.
-2. Two environments serve a round, both built from that one wheel, so the same
-   command means the same thing on either side and neither exposes a TileFoundry
-   source tree. `scripts/build_round_venv.sh` installs the wheel into a host venv
-   outside the worktree; it answers `tilefoundry` for `tutorial`, `spec`,
-   `models`, `analyze`, and `schedule`, which is graph and solver work with no
-   GPU in it. Each persistent TileOPs container installs the same wheel and the
-   versioned, wheel-only runtime delta in
-   `config/tilefoundry-runtime-requirements.txt`, both with `--no-deps`; it
-   answers everything that executes the production TileLang path, including
-   `tilefoundry check` on the runtime twin. This fills packages absent from the
-   official runner without replacing its CUDA, Torch, TileLang, or baseline
-   stack. A declared requirement the wheel never imports, and that the official
-   image cannot satisfy, is dropped from the container's installed metadata by
-   `scripts/drop_wheel_requirement.py` rather than honoured by replacing an
-   admitted package; every preflight artifact records which line went.
+2. Two environments serve a round, both built from that one wheel, and neither
+   exposes a TileFoundry source tree. The host venv from
+   `scripts/build_round_venv.sh` answers `tilefoundry tutorial`, `spec`, `models`,
+   `analyze` and `schedule` — no GPU in any of it. The persistent container
+   installs the same wheel plus the versioned, wheel-only runtime delta in
+   `config/tilefoundry-runtime-requirements.txt`, both `--no-deps`, and answers
+   everything that executes the production TileLang path, `tilefoundry check`
+   included. This fills what the official runner lacks without replacing its CUDA,
+   Torch, TileLang, or baseline stack: a requirement the wheel never imports and
+   the image cannot satisfy is dropped from the container's installed metadata by
+   `scripts/drop_wheel_requirement.py`, recorded in the preflight artifact, rather
+   than honoured by replacing an admitted package.
 3. `scripts/preflight.sh` admits the official runner image, wheel, GPU stack,
    native CUPTI path, and baseline imports before dispatch. Do not install or
    upgrade round dependencies afterward.
@@ -97,14 +94,18 @@ evidence-bound blocker:
    warp collectives, MMA/WGMMA, or atomics. The bottleneck decides which
    primitive is relevant; no primitive is mandatory for every operator. While
    the candidate trails the external baseline, at least one profiler-motivated
-   lower-level experiment is mandatory. Read `knowledge/tilelang.md` before
-   authoring: it holds what earlier work measured about this surface, and what
-   you establish about it goes back there through the report's `TileLang Notes`.
+   lower-level experiment is mandatory. Read `knowledge/tilelang.md` first; what
+   you establish goes back there through the report's `TileLang Notes`.
 6. Preserve every TileFoundry limitation as a structured finding with a minimal
    reproducer. Do not edit TileFoundry, open a TileFoundry branch, or propose a
-   repair from this round.
+   repair from this round. `knowledge/tilefoundry.md` lists the limits already
+   reproduced: cite the id rather than rediscovering it.
 
 ## Foundry Provenance Gate
+
+A round directory starts with its brief and nothing else: a copied `@module` is a
+graph the worker did not author, which step 2 forbids. `scripts/check_round.py`
+is the contract — it names everything it refuses.
 
 A TileOPs PR may use the `foundry` origin only when all of these are present and
 `scripts/check_round.py` passes:
@@ -201,6 +202,11 @@ internal report. `pr-data.json` is the sole structured PR input and
 `scripts/render_pr.py`; do not hand-edit its table.
 
 ## Archive
+
+Tear a finished round down with `scripts/finish_round.sh TASK ROUND_DIR`: it
+copies the session transcript into the round first, because that is the one
+artifact teardown can lose, then removes container, worktree, pane, admission and
+round venv.
 
 Use `scripts/archive_trial.py` only after human adjudication. It redacts machine
 paths and personal addresses, rejects credential-like content, and omits binary
