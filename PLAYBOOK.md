@@ -39,20 +39,29 @@ worker may inspect or modify.
 1. `scripts/build_tilefoundry_wheel.sh` builds a wheel from the exact admitted
    TileFoundry Git commit, outside the checkout, and records the commit and
    SHA-256. Dirty checkout contents cannot enter the wheel.
-2. Each persistent TileOPs container installs that wheel and the versioned,
-   wheel-only runtime delta in `config/tilefoundry-runtime-requirements.txt`,
-   both with `--no-deps`. This fills packages absent from the official runner
-   without replacing its CUDA, Torch, TileLang, or baseline stack. The
-   TileFoundry checkout is not mounted. The worker uses the installed
-   `tilefoundry` command, including `tutorial`, `spec`, `models`, `check`,
-   `analyze`, and `schedule`.
+2. Two environments serve a round, both built from that one wheel, so the same
+   command means the same thing on either side and neither exposes a TileFoundry
+   source tree. `scripts/build_round_venv.sh` installs the wheel into a host venv
+   outside the worktree; it answers `tilefoundry` for `tutorial`, `spec`,
+   `models`, `analyze`, and `schedule`, which is graph and solver work with no
+   GPU in it. Each persistent TileOPs container installs the same wheel and the
+   versioned, wheel-only runtime delta in
+   `config/tilefoundry-runtime-requirements.txt`, both with `--no-deps`; it
+   answers everything that executes the production TileLang path, including
+   `tilefoundry check` on the runtime twin. This fills packages absent from the
+   official runner without replacing its CUDA, Torch, TileLang, or baseline
+   stack. A declared requirement the wheel never imports, and that the official
+   image cannot satisfy, is dropped from the container's installed metadata by
+   `scripts/drop_wheel_requirement.py` rather than honoured by replacing an
+   admitted package; every preflight artifact records which line went.
 3. `scripts/preflight.sh` admits the official runner image, wheel, GPU stack,
    native CUPTI path, and baseline imports before dispatch. Do not install or
    upgrade round dependencies afterward.
-4. Foreman's post-worktree hook starts one image-pinned container per worktree.
-   Before starting or restarting the Agent Session, Foreman sources the worker
-   environment into its pane and adds the repository's `tileops-run` wrapper to
-   that session's `PATH`. Prefix unchanged commands with `tileops-run`; it maps
+4. Foreman's post-worktree hook builds the round venv and starts one
+   image-pinned container per worktree. Before starting or restarting the Agent
+   Session, Foreman sources the worker environment into its pane: it activates
+   that venv and adds the repository's `tileops-run` wrapper to that session's
+   `PATH`. Prefix unchanged commands with `tileops-run`; it maps
    the pane's current worktree or round directory into that worker's persistent
    container. Put long commands in round-local `evidence/*.sh`; never reconstruct
    the container name, Docker invocation, GPU lock, or absolute container path

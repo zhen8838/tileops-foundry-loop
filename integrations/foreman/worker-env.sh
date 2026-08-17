@@ -21,6 +21,21 @@ fi
 # shellcheck disable=SC1090
 source "$tileops_admission"
 
+# The round's host environment: the `tilefoundry` command for analyze, schedule,
+# spec, models, and tutorial. Everything that executes the production TileLang
+# path -- `tileops-run ...`, including `tilefoundry check` on the runtime twin --
+# goes to the container instead, which is the only side holding TileOPs,
+# TileLang, and the admitted CUDA stack.
+# shellcheck disable=SC1091
+source "$TILEOPS_FOUNDRY_LOOP_ROOT/scripts/round-venv.sh"
+tileops_round_venv=$(round_venv_path "$FOREMAN_WORKTREE") || return
+if [[ ! -f "$tileops_round_venv/bin/activate" ]]; then
+    echo "no round venv in $tileops_round_venv; did post_worktree run?" >&2
+    return 1
+fi
+# shellcheck disable=SC1091
+source "$tileops_round_venv/bin/activate"
+
 if [[ -n ${TILEOPS_DOCKER_BOOTSTRAP:-} ]]; then
     "$TILEOPS_DOCKER_BOOTSTRAP" || return
 fi

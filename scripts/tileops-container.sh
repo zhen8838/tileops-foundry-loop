@@ -161,6 +161,18 @@ ensure_container() {
             "python -m pip install --quiet --root-user-action=ignore --no-deps '$container_dependencies'/*.whl"
         docker exec "$container_name" python -m pip install --quiet \
             --root-user-action=ignore --no-deps --force-reinstall "$container_wheel"
+        # The admitted wheel declares `transformers<5.15`, and the official
+        # runner image ships 5.15.0 because that is what vllm and the other
+        # baselines were built against. No module in the wheel imports
+        # transformers -- only TileFoundry's own model tests do, and tests are
+        # not packaged -- so the bound can only be honoured by replacing part of
+        # the admitted baseline stack for something nothing loads. The line is
+        # dropped in this container instead, where the closure check below can
+        # still see everything else. Remove this once TileFoundry relaxes the
+        # bound upstream.
+        docker exec "$container_name" python \
+            /workspace/tileops-foundry-loop/scripts/drop_wheel_requirement.py \
+            tilefoundry transformers
         docker exec "$container_name" python -c \
             'import cupti, pathlib, tilefoundry; p=pathlib.Path(tilefoundry.__file__).resolve(); assert "/workspace/tilefoundry" not in str(p), p'
         docker exec "$container_name" python \

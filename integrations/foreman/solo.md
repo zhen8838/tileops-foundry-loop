@@ -5,9 +5,11 @@ Task: {plan}{brief}
 Own this task through implementation, evidence, TileOPs PR, CI, and review follow-up. Never
 merge or dispatch another agent. A human may contact you with `foreman say {self_pane} "..."`.
 
-This Agent Session starts in the round directory. Keep HIR, runtime twins, profiling, baselines,
-experiments, and all evidence here. Prefix commands that need the admitted TileOPs environment
-with `tileops-run`, such as `tileops-run tilefoundry analyze ...` or `tileops-run python ...`.
+This Agent Session starts in the round directory with both of its environments ready. Keep HIR,
+runtime twins, profiling, baselines, experiments, and all evidence here. The pane's venv answers
+`tilefoundry` for `tutorial`, `spec`, `models`, `analyze`, and `schedule`; type those bare.
+Prefix commands that execute the production TileLang path with `tileops-run`, such as
+`tileops-run tilefoundry check ...` or `tileops-run python ...`.
 The wrapper maps the current round directory into the persistent container and supplies both loop
 and TileOPs Python roots; never add `PYTHONPATH` or `sys.path` manually. Treat the TileOPs worktree
 only as the final patch target. Its base-to-head diff may contain kernel implementation under
