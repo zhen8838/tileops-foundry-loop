@@ -2,6 +2,9 @@
 set -euo pipefail
 
 (( $# > 0 )) || { echo "usage: tileops-run COMMAND [ARG...]" >&2; exit 2; }
+repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+# shellcheck disable=SC1091
+source "$repo_dir/scripts/container-cache-env.sh"
 : "${FOREMAN_WORKTREE:?source the worker environment before using tileops-run}"
 : "${TILEOPS_ROUND_HOST:?source the worker environment before using tileops-run}"
 : "${TILEOPS_ROUND_SLUG:?source the worker environment before using tileops-run}"
@@ -34,6 +37,6 @@ case "$host_cwd" in
         ;;
 esac
 
-exec docker exec --env "PYTHONPATH=$container_pythonpath" \
+exec docker exec --env "PYTHONPATH=$container_pythonpath" "${container_cache_env[@]}" \
     --workdir "$container_cwd" "$TILEOPS_WORKER_CONTAINER" \
     /workspace/tileops-foundry-loop/scripts/with_gpu_lock.sh 0 "$@"

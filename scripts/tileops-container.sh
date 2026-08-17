@@ -9,6 +9,9 @@ if [[ -f "$repo_dir/.env" ]]; then
     source "$repo_dir/.env"
 fi
 
+# shellcheck disable=SC1091
+source "$repo_dir/scripts/container-cache-env.sh"
+
 image=${TILEOPS_RUNNER_IMAGE:?TILEOPS_RUNNER_IMAGE is required}
 env_schema=${TILEOPS_ENV_SCHEMA:?TILEOPS_ENV_SCHEMA is required}
 default_tileops=${TILEOPS_REPO:-}
@@ -142,6 +145,7 @@ ensure_container() {
             --volume "$loop_state_root:/workspace/tileops-loop-state" \
             --volume "$cache_root:/ci-cache" \
             --workdir /workspace/tileops \
+            "${container_cache_env[@]}" \
             --env CUDA_VISIBLE_DEVICES=0 \
             --env GIT_OPTIONAL_LOCKS=0 \
             --env PYTHONUNBUFFERED=1 \
@@ -207,16 +211,19 @@ case "$action" in
         if [[ -t 0 && -t 1 ]]; then
             exec_args+=(-t)
         fi
-        exec docker exec "${exec_args[@]}" --workdir /workspace/tileops "$container_name" bash
+        exec docker exec "${exec_args[@]}" "${container_cache_env[@]}" \
+            --workdir /workspace/tileops "$container_name" bash
         ;;
     exec)
         shift
         (( $# > 0 )) || { echo "usage: $0 exec COMMAND [ARG...]" >&2; exit 2; }
         ensure_container
-        exec docker exec --workdir /workspace/tileops "$container_name" "$@"
+        exec docker exec "${container_cache_env[@]}" \
+            --workdir /workspace/tileops "$container_name" "$@"
         ;;
     *)
         ensure_container
-        exec docker exec --workdir /workspace/tileops "$container_name" "$@"
+        exec docker exec "${container_cache_env[@]}" \
+            --workdir /workspace/tileops "$container_name" "$@"
         ;;
 esac

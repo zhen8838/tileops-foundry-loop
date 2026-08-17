@@ -67,9 +67,12 @@ worker may inspect or modify.
    the container name, Docker invocation, GPU lock, or absolute container path
    in worker commands. `tileops-run` also supplies the loop and TileOPs Python
    roots; workers must not repeat them with `env PYTHONPATH=...` or `sys.path`.
-5. Worktrees and containers isolate code and packages, not GPUs. `tileops-run`
-   serializes commands against the physical GPU through the shared `/ci-cache`.
-   Native CUPTI attribution fails closed; CUDA-event fallback is diagnostic only.
+5. Worktrees and containers isolate code and packages, not GPUs, and not compiled
+   kernels. `tileops-run` serializes commands against the physical GPU through the
+   shared `/ci-cache`, and `scripts/container-cache-env.sh` puts every container's
+   TileLang and Triton caches on that same mount, namespaced by build, so a round
+   compiles only what no round has compiled before. Native CUPTI attribution fails
+   closed; CUDA-event fallback is diagnostic only.
 
 ## Worker Loop
 
