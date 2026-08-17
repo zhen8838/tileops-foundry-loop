@@ -17,3 +17,7 @@ kernels or fusion boundaries while preserving the public Op signature and math.
 The unchanged benchmark must reach it through normal Op construction, without a
 candidate-only switch. Do not change the contract, benchmark, manifest, workload,
 reference, or evaluation path.
+
+Read `/workspace/tileops-foundry-loop/knowledge/tilelang.md` before authoring the
+kernel, and record what you establish about that surface under `TileLang Notes`
+in the report.

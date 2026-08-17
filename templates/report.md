@@ -46,6 +46,13 @@ Completion is governed by the provenance and PR gates in `PLAYBOOK.md`.
 - `findings.json`:
 - Minimal reproducers:
 
+## TileLang Notes
+
+One line each, in the shape `knowledge/tilelang.md` uses: claim, action, build.
+Entries an entry there already covers go here only to confirm or correct it.
+
+- What this round established about TileLang:
+
 ## Risks And PR Status
 
 - Residual risk:

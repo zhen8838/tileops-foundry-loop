@@ -94,7 +94,9 @@ evidence-bound blocker:
    warp collectives, MMA/WGMMA, or atomics. The bottleneck decides which
    primitive is relevant; no primitive is mandatory for every operator. While
    the candidate trails the external baseline, at least one profiler-motivated
-   lower-level experiment is mandatory.
+   lower-level experiment is mandatory. Read `knowledge/tilelang.md` before
+   authoring: it holds what earlier work measured about this surface, and what
+   you establish about it goes back there through the report's `TileLang Notes`.
 6. Preserve every TileFoundry limitation as a structured finding with a minimal
    reproducer. Do not edit TileFoundry, open a TileFoundry branch, or propose a
    repair from this round.
