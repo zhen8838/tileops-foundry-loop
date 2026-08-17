@@ -9,20 +9,49 @@ import tempfile
 from pathlib import Path
 
 
+# The smoke places its work before computing it, because two of the analysis
+# surfaces the loop admits demand it: a timeline is issued against a level's
+# parallel capacity, so an unplaced result has no layout to issue against, and
+# the roofline states its bandwidth for `gmem`, so work resident only in `rmem`
+# leaves the timeline with no traffic it models. Placing the operand puts the
+# smoke in the same shape a round's final HIR has to reach.
 MODEL = '''\
 from tilefoundry import func, module
-from tilefoundry.dsl import Tensor, Topology, tf
+from tilefoundry.dsl import Tensor, tf
+from tilefoundry.dsl.storage import gmem
+from tilefoundry.ir.types.shard import B, S, Layout, Mesh, ShardLayout, Topology
 from tilefoundry.target import CudaTarget
+
+N = 1024
+BLOCKS = 128
 
 @module(
     entry="main",
     target=CudaTarget("nvidia.h200_sxm"),
-    topologies=(Topology("cta", 1),),
+    topologies=(Topology("cta", BLOCKS),),
 )
 class AdmissionSmoke:
     @func
-    def main(x: Tensor[(1024,), "f32"]):
-        return tf.add(x, x)
+    def main(x: Tensor[(N,), "f32"]) -> Tensor[(N,), "f32"]:
+        local = tf.reshard(
+            x,
+            layout=ShardLayout(
+                Layout((N,)),
+                (S(0),),
+                Mesh((Topology("cta", BLOCKS),), Layout((BLOCKS,)), names=("block",)),
+            ),
+            storage=gmem,
+        )
+        doubled = tf.add(local, local)
+        return tf.reshard(
+            doubled,
+            layout=ShardLayout(
+                Layout((N,)),
+                (B(),),
+                Mesh((Topology("cta", BLOCKS),), Layout((BLOCKS,)), names=("block",)),
+            ),
+            storage=gmem,
+        )
 '''
 
 

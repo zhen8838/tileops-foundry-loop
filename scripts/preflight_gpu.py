@@ -50,9 +50,17 @@ def moe_triton():
 
 
 def marlin():
-    from benchmarks.ops.bench_gemm import _prepare_marlin_w4a16_baseline
+    # The baseline takes the workload's own quantized tensors, so the probe runs
+    # it the way the benchmark does rather than on tensors of its own making.
+    from benchmarks.ops.bench_gemm import (
+        GemmW4A16BenchmarkWorkload,
+        _prepare_marlin_w4a16_baseline,
+    )
 
-    function, inputs = _prepare_marlin_w4a16_baseline(1, 128, 256, use_fp32_reduce=True)
+    workload = GemmW4A16BenchmarkWorkload(1, 128, 256, torch.float16, group_size=128)
+    function, inputs = _prepare_marlin_w4a16_baseline(
+        1, 128, 256, True, *workload.gen_inputs()
+    )
     return function(*inputs)
 
 
@@ -99,13 +107,23 @@ def cupti_smoke():
 
     left = torch.randn(1024, 1024, device="cuda", dtype=torch.float16)
     right = torch.randn_like(left)
+    # One Sample per iteration: device-busy time, wall latency, and the kernel
+    # count CUPTI attributed to that call. A count of None is exactly the
+    # attribution failure this probe exists to catch.
     samples = bench_kernel(torch.mm, args=(left, right))
     result = {
         "samples": len(samples),
-        "median_ms": statistics.median(samples),
+        "median_ms": statistics.median(sample.device_busy_ms for sample in samples),
+        "median_kernels": statistics.median(
+            sample.n_kernels for sample in samples if sample.n_kernels is not None
+        ),
         "metadata": _capture_bench_meta(),
     }
-    if result["metadata"].get("timing") != "cupti" or not math.isfinite(result["median_ms"]):
+    if (
+        result["metadata"].get("timing") != "cupti"
+        or not math.isfinite(result["median_ms"])
+        or any(sample.n_kernels is None for sample in samples)
+    ):
         raise RuntimeError(f"native CUPTI attribution failed: {result}")
     return result
 
