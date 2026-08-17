@@ -20,11 +20,25 @@ exec 9>"$wheel_root/.build.lock"
 flock 9
 commit=${1:-${TILEFOUNDRY_COMMIT:-$(git -C "$tilefoundry_repo" rev-parse HEAD)}}
 commit=$(git -C "$tilefoundry_repo" rev-parse "$commit^{commit}")
-python_bin="$tilefoundry_repo/.venv/bin/python"
-[[ -x "$python_bin" ]] || {
-    echo "TileFoundry build Python is missing: $python_bin" >&2
-    exit 1
-}
+# The build interpreter belongs to the loop, not to the TileFoundry checkout.
+# That checkout's `.venv` is rebuilt from a pinned resolution by foreman's
+# prepare-worktree hook, which creates it with `uv venv` and therefore without
+# pip; borrowing it also made a wheel build depend on how another project
+# happens to arrange its environment. This one is seeded once under the wheel
+# cache and holds only the build backend TileFoundry declares.
+builder_root=$wheel_root/builder
+python_bin="$builder_root/bin/python"
+if ! "$python_bin" -m pip --version >/dev/null 2>&1; then
+    # shellcheck disable=SC1091
+    source "$repo_dir/scripts/uv-bin.sh"
+    rm -rf -- "$builder_root"
+    "$uv_bin" venv --seed --no-project \
+        --python "${TILEFOUNDRY_BUILD_PYTHON:-3.12}" "$builder_root" >&2
+    # `pip wheel` below runs without build isolation, so the backend named in
+    # TileFoundry's `[build-system]` has to be present here.
+    "$uv_bin" pip install --python "$python_bin" \
+        'setuptools>=68' 'setuptools-scm>=8' >&2
+fi
 
 destination="$wheel_root/$commit"
 current_env="$wheel_root/current.env"
