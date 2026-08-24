@@ -71,6 +71,21 @@ commit 和 PR title 严格使用：
 - description 使用简短祈使句，描述实际性能改动。
 - 目标分支必须支持三段式 title；不要为了通过旧 validator 擅自删除 `foundry`。
 
+### 提交、创建 PR 与跟进
+
+满足创建条件时，工作不得停在 `report.md` 或本地 commit；必须自行 push、创建 PR，
+并持续处理 CI/review。使用全局 Git 身份，不加**额外署名**；push 到 origin，不
+merge。
+
+```bash
+git push -u origin <branch>
+gh pr create --repo tile-ai/TileOPs --base main \
+  --head zhen8838:<branch> --title "<title>" --body-file <body-file>
+gh pr checks --watch --interval 300
+```
+
+CI 失败先读失败 step；base 更新后 rebase、重新验证并 `--force-with-lease`。
+
 ### 完整 PR 模板
 
 公开 PR body 严格只含下面四节，按原顺序填写，不增加 Correctness、Reproduce 或
