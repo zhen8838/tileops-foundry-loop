@@ -3,6 +3,11 @@
 **全程必须按照 TileFoundry workflow 开发；失败只能记录为 TileFoundry finding，
 不得绕过 TileFoundry 另行实现。**
 
+**config-only、launch-config-only、tile-size-only 或 tune-only 改动绝不构成
+`[Perf][foundry]` PR。最终 TileFoundry Description 必须是经过分析和多轮比较后选定的
+sharded、placed HIR；production diff 必须包含由该决策导出的结构性 kernel 编写或
+schedule 实现改动。否则本轮只能记为 `no improvement`，不得创建或保留 performance PR。**
+
 使用已安装的 TileFoundry 完成以下任务：
 
 > {{PROMPT}}
@@ -24,18 +29,44 @@
   不使用宿主包装器，也不额外拼接 `PYTHONPATH`。
 - 不改变 public Op、manifest、workload、reference、benchmark 或评估路径。
 - 验证完成后按 TileOPs 项目规则 commit、push、创建 PR 并跟进 CI；不要 merge。
+- 开发早期反复运行 `python check_round.py --tileops-repo /workspace/tileops`；它是
+  `[Perf][foundry]` provenance 和 production diff 的机器门禁，不得绕过或修改。
 
 `knowledge/tilelang.md` 只记录明确版本上复现过的事实，所有结论都要用当前环境
 复核。
+
+## TileFoundry Optimize 硬流程
+
+1. 运行 `tilefoundry tutorial optimize`，从 manifest、Op、workload、reference、测试和
+   benchmark 写出 authored HIR；第一个正确的 production runtime twin 之前不看
+   incumbent kernel body。
+2. runtime twin 必须通过 `tilefoundry check`，且实际调用本轮测量和拟提交的 production
+   TileLang kernel，不得用 Torch/evaluator 或 detached implementation 代替。
+3. 至少编写和实测两种**结构不同**的 sharded、placed HIR。每种 HIR body 都必须显式
+   声明 target、`Mesh`、mesh-bound layout、`reshard`、`gmem` 和至少一种
+   `smem`/`rmem`/`tmem`；只在 `@module(topologies=...)` 填数字不算 placement。
+4. 每个候选都必须运行当前安装版本 `tilefoundry analyze --help` 暴露的全部 core
+   analysis，以及带明确 topology 的 `tilefoundry schedule`，保存 JSON 原始结果并实测。
+   至少一个 placement 被测量后拒绝；最终 kept placement 的 schedule 必须完成搜索，
+   不得使用 `--first-plan`。
+5. decision trace 必须逐项连接 `analysis_fact -> schedule_fact -> hir_change ->
+   kernel_change`。最后根据这些证据改写 production `@T.prim_func`/`@T.macro` 的实现或
+   schedule 结构，并重新做 correctness、benchmark、profile。
+6. 仅改变 threads、warps、heads-per-program、block/tile size、stage 数等常量或 config，
+   即使性能提高，也只能作为 rejected experiment，不能作为最终 production diff。
 
 ## 交付物
 
 round 目录最终至少包含：
 
-- authored HIR、production runtime twin，以及对应的 `tilefoundry check` 原始结果；
-- analyze/schedule 结果和从这些结果到 kernel 决策的记录；
+- `work/final_hir.py`、`work/runtime_twin.py` 和至少一个不同 placement 的候选 HIR；
+- `provenance.json`：记录 `tileops_base`、classification、final/runtime/kernel 路径、
+  check、iterations、decisions、correctness、benchmark 和 profile；
+- 每个 iteration 的 analyze/schedule JSON、正数 `measured_ms`、placement、hypothesis 和
+  `kept`/`rejected` verdict；
+- `findings.json`，即使没有 finding 也必须是 `{"findings": []}`；
 - correctness、benchmark、profile、最强同 contract baseline 的原始证据；
-- `report.md`，说明结果、限制和发现的 TileFoundry 问题。
+- `report.md`、`pr-title.txt` 和 `pr-body.md`。
 
 生产 diff 只留在 `/workspace/tileops`，实验脚本和证据只留在当前 round。
 
@@ -48,6 +79,9 @@ round 目录最终至少包含：
 - candidate 通过 TileOPs contract、reference 和全部要求的 correctness 测试；
 - candidate 是通过本轮 TileFoundry workflow 生成的 kernel，不把 incumbent-derived
   实现包装成 TileFoundry 产物；
+- final HIR 是 sharded、placed form，并有至少一个被实测拒绝的不同 placement；
+- base-to-head 含结构性的 production `@T.prim_func`/`@T.macro` 实现或 schedule diff；
+  归一化掉常量后结构不变的 config/tile tuning 不合格；
 - 在相同 contract 下，相对 TileOPs incumbent 有可审查的性能改进；
 - candidate、incumbent 和所有可运行的最强 external baseline 已在全部 primary
   workloads 上使用 TileOPs 提供的 benchmark 实测；
@@ -69,19 +103,18 @@ commit 和 PR title 严格使用：
 - `<Scope>` 是算子家族，例如 `GEMM`、`MoE`、`Mamba` 或 `FFT`；不得再次使用
   `foundry`，只使用字母、数字、下划线或连字符。
 - description 使用简短祈使句，描述实际性能改动。
+- description 必须描述 kernel/schedule 的结构性改动，不得写成 tune config/tile size。
 - 目标分支必须支持三段式 title；不要为了通过旧 validator 擅自删除 `foundry`。
 
 ### 提交、创建 PR 与跟进
 
-满足创建条件时，工作不得停在 `report.md` 或本地 commit；必须自行 push、创建 PR，
-并持续处理 CI/review。使用全局 Git 身份，不加**额外署名**；push 到 origin，不
-merge。
+满足创建条件时，工作不得停在 `report.md` 或本地 commit；必须自行通过
+`open_pr.sh` push、创建或更新 PR，并持续处理 CI/review。`open_pr.sh` 会先执行
+`check_round.py`；不得直接运行 `gh pr create`/`gh pr edit` 绕过它。使用全局 Git
+身份，不加**额外署名**；push 到 origin，不 merge。
 
 ```bash
-git push -u origin <branch>
-gh pr create --repo tile-ai/TileOPs --base main \
-  --head zhen8838:<branch> --title "<title>" --body-file <body-file>
-gh pr checks --watch --interval 300
+./open_pr.sh
 ```
 
 CI 失败先读失败 step；base 更新后 rebase、重新验证并 `--force-with-lease`。
@@ -109,7 +142,8 @@ Artifacts 等公开章节：
 class <ModuleName>:
     @func
     def <entry>(<完整参数和类型>) -> <完整返回类型>:
-        <最终、完整且可解析的 HIR body>
+        <final_hir.py 中经过比较选定的完整 sharded、placed HIR body；必须含 Mesh、
+        mesh-bound layout、reshard 和显式 storage placement>
 ```
 
 ## Performance
@@ -164,12 +198,14 @@ correctness 和复现证据仍是开 PR 前的硬门禁，但只能留在 `repor
 
 ```text
 correctness passed
+  -> check_round.py PASS
+  -> at least two materially different placed HIR iterations
+  -> final production kernel has a structural body/schedule change
   -> all primary workloads present
   -> candidate + incumbent + strongest runnable external baseline complete
   -> all latencies positive and ratios/geomeans recomputed
   -> public body has exactly four ordered sections and no private evidence
   -> production diff and commit reviewed
-  -> push fork branch
-  -> gh pr create --repo tile-ai/TileOPs --base main --head <fork>:<branch>
+  -> ./open_pr.sh
   -> follow CI/review; never merge
 ```

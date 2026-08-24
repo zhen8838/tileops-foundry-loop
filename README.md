@@ -11,7 +11,7 @@
 
 每轮：foreman assign ... --kind pi
   ├─ Foreman 创建 TileOPs worktree 和 pane
-  ├─ hook 复制 template -> rounds/<task>
+  ├─ hook 复制 brief、knowledge 和 PR gate -> rounds/<task>
   ├─ hook 构建当前 TileFoundry wheel并启动该轮容器
   └─ Pi 通过自带 ssh.ts 在 /workspace/round 工作
 ```
@@ -53,12 +53,14 @@ foreman assign solo \
   --branch perf/fused-moe-r1 \
   --prompt "用 TileFoundry 优化 fused MoE，并完成验证与 PR" \
   --kind pi \
-  --model openai-codex/gpt-5.6-sol \
+  --model openai/gpt-5.6-sol \
   --effort high
 ```
 
 hook 会先生成 `rounds/fused-moe-r1/brief.md`，再启动 Agent。Foreman 只给 Pi 一句
 固定指令：读取当前目录的 `brief.md`；任务、环境、约束和交付物全部在 brief 内。
+`check_round.py` 拒绝 naive/unplaced HIR、单一 placement、config-only kernel diff 和
+不一致的 PR Description；Agent 只能在 gate PASS 后通过 `open_pr.sh` 创建或更新 PR。
 
 失败会按阶段返回，例如：
 
