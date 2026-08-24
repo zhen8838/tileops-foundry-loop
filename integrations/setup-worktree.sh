@@ -42,6 +42,19 @@ stage='configuration validation'
 agent_image=${TILEOPS_AGENT_IMAGE:-tileops-foundry-loop:agent}
 cache_root=${TILEOPS_CACHE_ROOT:-${XDG_CACHE_HOME:-$HOME/.cache}/tileops-runner}
 wheel_root=${TILEFOUNDRY_WHEEL_ROOT:-$cache_root/tilefoundry-wheel}
+host_uv_bin=${TILEFOUNDRY_UV_BIN:-$(command -v uv || true)}
+if [[ ! -x "$host_uv_bin" ]]; then
+    for candidate in "$HOME/bin/uv" "$HOME/.local/bin/uv" "$HOME/.cargo/bin/uv"; do
+        if [[ -x "$candidate" ]]; then
+            host_uv_bin=$candidate
+            break
+        fi
+    done
+fi
+[[ -x "$host_uv_bin" ]] || {
+    echo "uv is not installed; rerun $repo_dir/setup or set TILEFOUNDRY_UV_BIN" >&2
+    exit 1
+}
 pi_command=$(command -v pi || true)
 [[ -n "$pi_command" ]] || {
     echo "pi is not installed; rerun $repo_dir/setup" >&2
@@ -55,7 +68,7 @@ pi_ssh_extension=${PI_SSH_EXTENSION:-$pi_root/examples/extensions/ssh.ts}
     exit 1
 }
 
-for command in docker gh git nvidia-smi python3 ssh ssh-keygen uv; do
+for command in docker gh git nvidia-smi python3 ssh ssh-keygen; do
     command -v "$command" >/dev/null 2>&1 || {
         echo "required host command is missing: $command" >&2
         exit 1
@@ -91,8 +104,7 @@ build_tilefoundry_wheel() {
     fi
     commit=$(git -C "$tilefoundry_repo" rev-parse "$commit^{commit}")
 
-    uv_bin=${TILEFOUNDRY_UV_BIN:-$(command -v uv || true)}
-    [[ -n "$uv_bin" ]] || { echo "uv is required to build TileFoundry" >&2; exit 1; }
+    uv_bin=$host_uv_bin
     builder_root="$wheel_root/builder"
     python_bin="$builder_root/bin/python"
     if [[ ! -x "$python_bin" ]]; then
