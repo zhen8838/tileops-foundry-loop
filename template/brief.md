@@ -22,9 +22,7 @@ config、launch、tile size 或 stage 不得开 PR。TileFoundry 能力阻塞时
    `tilefoundry check`；不得用 Torch、evaluator 或 detached implementation 代替。
 3. 至少实测两个不同的 Sharded/Placed HIR。每个都保存 `tilefoundry analyze` 原始 JSON、
    placement、hypothesis、latency 和 kept/rejected 结论，再据此选择 final HIR。
-4. `tilefoundry schedule` 可用时运行并保存结果；若它阻塞，写入 `findings.json` 和最小
-   reproducer，然后继续 analyze、实测和 kernel 优化。schedule 失败本身不是停手理由。
-5. 根据 final HIR 和分析证据改写 production kernel，重新做 correctness、全部 primary
+4. 根据 final HIR 和分析证据改写 production kernel，重新做 correctness、全部 primary
    workload benchmark、最强可运行 external baseline 和 profile。
 
 当前目录是 `/workspace/round`，生产代码只写 `/workspace/tileops`。命令直接运行；
