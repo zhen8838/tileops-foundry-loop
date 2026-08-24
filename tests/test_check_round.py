@@ -191,23 +191,26 @@ class RoundGateTests(unittest.TestCase):
         )
 
     def validate(self) -> dict:
-        return round_gate.validate_round(
-            self.round,
-            self.repo,
-            analysis_flags=round_gate.CORE_ANALYSIS_FLAGS,
-        )
+        return round_gate.validate_round(self.round, self.repo)
 
     def test_complete_structural_round_passes(self) -> None:
         self.assertEqual(self.validate()["classification"], "improvement without SOTA")
 
-    def test_naive_unplaced_final_hir_fails(self) -> None:
+    def test_hir_semantics_are_not_guessed_by_the_artifact_gate(self) -> None:
         (self.round / "work/final_hir.py").write_text(
             '@module(entry="kernel", target="cuda:h200")\n'
             "class Operator:\n    @func\n    def kernel(self, x):\n        return x\n",
             encoding="utf-8",
         )
-        with self.assertRaisesRegex(round_gate.GateError, "Mesh"):
-            self.validate()
+        body = (self.round / "pr-body.md").read_text(encoding="utf-8")
+        (self.round / "pr-body.md").write_text(
+            body.replace(
+                HIR_B,
+                (self.round / "work/final_hir.py").read_text(encoding="utf-8"),
+            ),
+            encoding="utf-8",
+        )
+        self.assertEqual(self.validate()["classification"], "improvement without SOTA")
 
     def test_one_placement_fails(self) -> None:
         path = self.round / "provenance.json"
@@ -217,26 +220,25 @@ class RoundGateTests(unittest.TestCase):
         with self.assertRaisesRegex(round_gate.GateError, "at least two"):
             self.validate()
 
-    def test_config_only_kernel_change_fails(self) -> None:
+    def test_schedule_is_optional(self) -> None:
+        path = self.round / "provenance.json"
+        data = json.loads(path.read_text(encoding="utf-8"))
+        for iteration in data["iterations"]:
+            iteration.pop("schedule")
+        for decision in data["decisions"]:
+            decision.pop("schedule_fact")
+        path.write_text(json.dumps(data), encoding="utf-8")
+
+        self.assertEqual(self.validate()["classification"], "improvement without SOTA")
+
+    def test_declared_kernel_file_must_change(self) -> None:
         subprocess.run(
             ["git", "reset", "--hard", self.base],
             cwd=self.repo,
             check=True,
             capture_output=True,
         )
-        kernel = self.repo / "src/tileops/kernels/example.py"
-        kernel.write_text(
-            "@T.prim_func\ndef MainKernel(x):\n"
-            "    for i in T.serial(32):\n        x[i] = 1\n",
-            encoding="utf-8",
-        )
-        subprocess.run(["git", "add", "."], cwd=self.repo, check=True)
-        subprocess.run(
-            ["git", "commit", "-qm", "tune config"], cwd=self.repo, check=True
-        )
-        with self.assertRaisesRegex(
-            round_gate.GateError, "only constants/configuration"
-        ):
+        with self.assertRaisesRegex(round_gate.GateError, "diff is empty"):
             self.validate()
 
     def test_description_must_match_final_hir(self) -> None:
@@ -244,7 +246,7 @@ class RoundGateTests(unittest.TestCase):
         (self.round / "pr-body.md").write_text(
             body.replace(HIR_B, HIR_A), encoding="utf-8"
         )
-        with self.assertRaisesRegex(round_gate.GateError, "exact final placed HIR"):
+        with self.assertRaisesRegex(round_gate.GateError, "exact final HIR"):
             self.validate()
 
 

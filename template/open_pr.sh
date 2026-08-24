@@ -9,6 +9,25 @@ python "$round_dir/check_round.py" \
     --tileops-repo "$tileops_repo" \
     --head HEAD
 
+cat >&2 <<'EOF'
+
+Artifact checks passed. Re-open the actual files before creating the PR:
+
+1. Was final_hir.py actually analyzed and measured, rather than reconstructed after tuning?
+2. Do raw analyze and measurement results justify the kept and rejected placements?
+3. Does the production diff implement that HIR decision beyond config/tile/launch tuning?
+
+If any answer is no or uncertain, continue the round instead of opening a PR.
+EOF
+if [[ ${1:-} != --reviewed ]]; then
+    echo "PR not opened. Inspect those files, then rerun: ./open_pr.sh --reviewed" >&2
+    exit 2
+fi
+(( $# == 1 )) || {
+    echo "usage: ./open_pr.sh [--reviewed]" >&2
+    exit 2
+}
+
 branch=$(git -C "$tileops_repo" branch --show-current)
 [[ -n "$branch" ]] || {
     echo "TileOPs worktree is not on a branch" >&2

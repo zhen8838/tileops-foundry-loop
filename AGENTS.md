@@ -1,8 +1,8 @@
 # Repository Instructions
 
 This repository is intentionally small. The versioned round contract lives in
-`template/brief.md`; `setup` installs the one Foreman hook that creates rounds,
-builds the admitted TileFoundry wheel, and starts the SSH-enabled TileOPs runner.
+`template/brief.md`; `setup` installs the Foreman hooks that create rounds, start the
+SSH-enabled TileOPs runner, archive sessions, and release per-round resources.
 
 Keep round-specific HIR, experiments, logs, profiles, and reports under the
 generated `rounds/<slug>/` directory. Git and GitHub operations use the mounted

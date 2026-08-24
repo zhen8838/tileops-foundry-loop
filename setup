@@ -68,6 +68,8 @@ if [[ ! -f "$ssh_config" ]] || ! grep -Fqx "$ssh_include" "$ssh_config"; then
 fi
 ln -sfn "$repo_dir/integrations/setup-worktree.sh" \
     "$foreman_repo/local/tileops-setup-worktree.sh"
+ln -sfn "$repo_dir/integrations/pre-done.sh" \
+    "$foreman_repo/local/tileops-pre-done.sh"
 ln -sfn "$repo_dir/integrations/solo.md" \
     "$foreman_repo/local/templates/tileops/solo.md"
 
@@ -85,6 +87,7 @@ tmp=$(mktemp "$project_config.XXXXXX")
     printf '[hooks]\n'
     printf 'source_env = "local/tileops-setup-worktree.sh"\n'
     printf 'source_env_timeout_ms = 1500000\n'
+    printf 'pre_done = "local/tileops-pre-done.sh"\n'
 } >"$tmp"
 mv -- "$tmp" "$project_config"
 

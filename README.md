@@ -14,6 +14,11 @@
   ├─ hook 复制 brief、knowledge 和 PR gate -> rounds/<task>
   ├─ hook 构建当前 TileFoundry wheel并启动该轮容器
   └─ Pi 通过自带 ssh.ts 在 /workspace/round 工作
+
+结束：foreman done <task> --rm
+  ├─ pre_done hook 将完整 Pi transcript 归档到 rounds/<task>/session
+  ├─ pre_done hook 删除本轮容器、SSH alias 和临时 key
+  └─ Foreman 删除 pane/worktree，保留 round 目录
 ```
 
 ## 目录
@@ -24,7 +29,7 @@
 | `container/` | Agent image |
 | `integrations/` | Foreman hook 和固定的起始 prompt |
 | `template/` | 每轮复制的 brief、knowledge、work 和 evidence |
-| `rounds/<task>/` | 该轮实验、证据、环境记录和报告 |
+| `rounds/<task>/` | 该轮实验、证据、环境记录、报告和 session transcript |
 
 容器只挂载当前 round、当前 TileOPs worktree、该 worktree 的 Git common dir、
 TileFoundry wheel 和 runtime cache。宿主 TileFoundry checkout、loop 仓库和其他
@@ -59,8 +64,9 @@ foreman assign solo \
 
 hook 会先生成 `rounds/fused-moe-r1/brief.md`，再启动 Agent。Foreman 只给 Pi 一句
 固定指令：读取当前目录的 `brief.md`；任务、环境、约束和交付物全部在 brief 内。
-`check_round.py` 拒绝 naive/unplaced HIR、单一 placement、config-only kernel diff 和
-不一致的 PR Description；Agent 只能在 gate PASS 后通过 `open_pr.sh` 创建或更新 PR。
+`check_round.py` 只检查 artifact、命令记录、diff 边界和 PR 内容一致性；它不猜优化
+语义。`open_pr.sh` 在 push 前要求 Agent 重新阅读最终 HIR、analyze/measure 证据和
+production diff；未完成的 `tilefoundry schedule` 只记录 finding，不阻断 round。
 
 失败会按阶段返回，例如：
 
