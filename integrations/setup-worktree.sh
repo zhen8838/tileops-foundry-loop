@@ -362,6 +362,7 @@ start_container() {
         printf '    BatchMode yes\n'
         printf '    StrictHostKeyChecking no\n'
         printf '    UserKnownHostsFile /dev/null\n'
+        printf '    LogLevel ERROR\n'
     } >"$tmp"
     chmod 0600 "$tmp"
     mv -- "$tmp" "$ssh_config"
