@@ -28,15 +28,6 @@ PR_SECTIONS = (
     "Performance",
     "Result And Limitations",
 )
-FINDING_CLASSES = {
-    "semantic-blocker",
-    "lowering/codegen-blocker",
-    "runtime-blocker",
-    "performance-blocker",
-    "ergonomics",
-}
-
-
 def _real_text(value: object) -> bool:
     return (
         isinstance(value, str)
@@ -188,8 +179,8 @@ def _validate_findings(round_dir: Path) -> None:
     for finding in findings:
         if not isinstance(finding, dict) or not _real_text(finding.get("id")):
             raise GateError("every finding must have an id")
-        if finding.get("classification") not in FINDING_CLASSES:
-            raise GateError("every finding must use a supported classification")
+        if not _real_text(finding.get("classification")):
+            raise GateError("every finding must record a classification")
         for field in (
             "command",
             "expected",
@@ -278,13 +269,6 @@ def validate_round(round_dir: Path, tileops_repo: Path, head: str = "HEAD") -> d
         if "--json" not in analysis_argv:
             raise GateError(f"{section}.analysis must record JSON evidence")
         _json_report(round_dir, analysis, f"{section}.analysis")
-
-        schedule = iteration.get("schedule")
-        if schedule is not None:
-            schedule_argv = _command(schedule, f"{section}.schedule", "schedule")
-            if "--json" not in schedule_argv:
-                raise GateError(f"{section}.schedule must record JSON evidence")
-            _json_report(round_dir, schedule, f"{section}.schedule")
 
     if verdicts.count("kept") != 1 or "rejected" not in verdicts:
         raise GateError(

@@ -36,11 +36,30 @@ branch=$(git -C "$tileops_repo" branch --show-current)
 title=$(<"$round_dir/pr-title.txt")
 
 git -C "$tileops_repo" push -u origin "$branch"
-if gh pr view "$branch" --repo tile-ai/TileOPs >/dev/null 2>&1; then
-    gh pr edit "$branch" --repo tile-ai/TileOPs \
-        --title "$title" --body-file "$round_dir/pr-body.md"
-else
-    gh pr create --repo tile-ai/TileOPs --base main \
-        --head "zhen8838:$branch" --title "$title" --body-file "$round_dir/pr-body.md"
+pr_number=
+pr_state=
+if pr_info=$(gh pr view "$branch" --repo tile-ai/TileOPs \
+    --json number,state --jq '[.number, .state] | @tsv' 2>/dev/null); then
+    IFS=$'\t' read -r pr_number pr_state <<<"$pr_info"
 fi
+case "$pr_state" in
+    OPEN)
+        gh pr edit "$pr_number" --repo tile-ai/TileOPs \
+            --title "$title" --body-file "$round_dir/pr-body.md"
+        ;;
+    CLOSED)
+        gh pr reopen "$pr_number" --repo tile-ai/TileOPs
+        gh pr edit "$pr_number" --repo tile-ai/TileOPs \
+            --title "$title" --body-file "$round_dir/pr-body.md"
+        ;;
+    MERGED|"")
+        gh pr create --repo tile-ai/TileOPs --base main \
+            --head "zhen8838:$branch" --title "$title" \
+            --body-file "$round_dir/pr-body.md"
+        ;;
+    *)
+        echo "unsupported PR state for #$pr_number: $pr_state" >&2
+        exit 1
+        ;;
+esac
 gh pr checks "$branch" --repo tile-ai/TileOPs --watch --interval 300

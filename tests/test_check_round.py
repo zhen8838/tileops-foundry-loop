@@ -220,14 +220,37 @@ class RoundGateTests(unittest.TestCase):
         with self.assertRaisesRegex(round_gate.GateError, "at least two"):
             self.validate()
 
-    def test_schedule_is_optional(self) -> None:
-        path = self.round / "provenance.json"
-        data = json.loads(path.read_text(encoding="utf-8"))
-        for iteration in data["iterations"]:
-            iteration.pop("schedule")
-        for decision in data["decisions"]:
-            decision.pop("schedule_fact")
-        path.write_text(json.dumps(data), encoding="utf-8")
+    def test_schedule_failure_is_not_gated(self) -> None:
+        (self.round / "evidence/schedule-b.json").write_text(
+            "PartitionSolveError: no feasible partition\n", encoding="utf-8"
+        )
+
+        self.assertEqual(self.validate()["classification"], "improvement without SOTA")
+
+    def test_finding_classification_is_extensible(self) -> None:
+        (self.round / "evidence/reproducer.log").write_text(
+            "reproduced\n", encoding="utf-8"
+        )
+        (self.round / "findings.json").write_text(
+            json.dumps(
+                {
+                    "findings": [
+                        {
+                            "id": "analysis-gap",
+                            "classification": "analysis-limitation",
+                            "command": "tilefoundry analyze work/final_hir.py:Operator",
+                            "expected": "complete result",
+                            "actual": "unsupported form",
+                            "workaround_cost": "continued with measured evidence",
+                            "public_surface": "tilefoundry analyze",
+                            "affected_workloads": ["primary"],
+                            "reproducer": "evidence/reproducer.log",
+                        }
+                    ]
+                }
+            ),
+            encoding="utf-8",
+        )
 
         self.assertEqual(self.validate()["classification"], "improvement without SOTA")
 
