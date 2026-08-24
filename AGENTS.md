@@ -1,8 +1,10 @@
 # Repository Instructions
 
-Read `PLAYBOOK.md` completely before changing or executing this repository. It
-is the only normative workflow source. Keep concrete operator choices in
-`plans/`, the round brief in `templates/`, reusable measured facts in
-`knowledge/`, and implementation enforcement in `tileops_foundry_loop/`; do not
-duplicate policy in those locations. A round gets a brief and commands, never a
-record to fill in.
+This repository is intentionally small. The versioned round contract lives in
+`templates/round/`; the shell scripts only create the round, build the admitted
+TileFoundry wheel, start the SSH-enabled TileOPs runner, and connect Foreman/Pi.
+
+Keep round-specific HIR, experiments, logs, profiles, and reports under the
+generated `rounds/<slug>/` directory. Git commit, push, PR, and CI remain host
+operations on the TileOPs worktree. Do not add a second policy document or a
+historical trial archive here.

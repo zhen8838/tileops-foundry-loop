@@ -1,28 +1,35 @@
 #!/usr/bin/env python3
-"""Create a round directory holding its brief, and nothing else.
-
-A round used to start from filled-in copies of an authored HIR, a runtime twin,
-a report and three JSON records. Every one of them was a graph or a shape to
-copy, which is the opposite of what the loop asks for -- the worker authors the
-description, and `scripts/check_round.py` states the contract by refusing what is
-missing. So the scaffold is gone: what a round gets is a brief and the commands.
-"""
+"""Create a round by copying the versioned round template."""
 
 from __future__ import annotations
 
 import argparse
+import os
+import re
+import shutil
 import subprocess
 from pathlib import Path
 
 
 def git_commit(repo: Path) -> str:
     return subprocess.run(
-        ["git", "rev-parse", "HEAD"],
-        cwd=repo,
+        ["git", "-C", str(repo), "rev-parse", "HEAD"],
         check=True,
         capture_output=True,
         text=True,
     ).stdout.strip()
+
+
+def replace_tokens(path: Path, values: dict[str, str]) -> None:
+    if not path.is_file():
+        return
+    try:
+        text = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        return
+    for token, value in values.items():
+        text = text.replace("{{" + token + "}}", value)
+    path.write_text(text, encoding="utf-8")
 
 
 def main() -> int:
@@ -35,27 +42,36 @@ def main() -> int:
     parser.add_argument("--tilefoundry-repo", type=Path, required=True)
     parser.add_argument("--root", type=Path)
     args = parser.parse_args()
+    if not re.fullmatch(r"[a-z][a-z0-9_-]*", args.slug):
+        parser.error(
+            "slug must start with a letter and contain only lowercase letters, "
+            "digits, '-' or '_'"
+        )
 
-    repo = Path(__file__).resolve().parents[1]
-    root = (args.root or repo / "rounds").resolve()
+    loop_root = Path(__file__).resolve().parents[1]
+    configured_root = os.environ.get("TILEOPS_LOOP_STATE_ROOT")
+    root = (args.root or configured_root or loop_root / "rounds")
+    root = Path(root).expanduser().resolve()
     destination = root / args.slug
     if destination.exists():
         parser.error(f"round already exists: {destination}")
-    destination.mkdir(parents=True)
 
-    replacements = {
-        "{{SLUG}}": args.slug,
-        "{{OPERATOR}}": args.operator,
-        "{{SCOPE}}": args.scope,
-        "{{BASELINE}}": args.baseline,
-        "{{TILEOPS_BASE}}": git_commit(args.tileops_repo.resolve()),
-        "{{TILEFOUNDRY_COMMIT}}": git_commit(args.tilefoundry_repo.resolve()),
-        "{{ROUND_DIR}}": str(destination),
+    values = {
+        "SLUG": args.slug,
+        "OPERATOR": args.operator,
+        "SCOPE": args.scope,
+        "BASELINE": args.baseline,
+        "TILEOPS_BASE": git_commit(args.tileops_repo.resolve()),
+        "TILEFOUNDRY_COMMIT": git_commit(args.tilefoundry_repo.resolve()),
     }
-    brief = (repo / "templates" / "round-brief.md").read_text(encoding="utf-8")
-    for before, after in replacements.items():
-        brief = brief.replace(before, after)
-    (destination / "brief.md").write_text(brief, encoding="utf-8")
+
+    template = loop_root / "templates" / "round"
+    if not template.is_dir():
+        parser.error(f"missing round template: {template}")
+    root.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(template, destination)
+    for path in destination.rglob("*"):
+        replace_tokens(path, values)
     print(destination)
     return 0
 

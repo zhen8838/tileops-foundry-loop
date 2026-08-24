@@ -2,12 +2,18 @@
 set -euo pipefail
 
 : "${FOREMAN_WORKTREE:?FOREMAN_WORKTREE is required}"
+: "${FOREMAN_TASK:?FOREMAN_TASK is required}"
 : "${TILEOPS_FOUNDRY_LOOP_ROOT:?TILEOPS_FOUNDRY_LOOP_ROOT is required}"
 
-git -C "$FOREMAN_WORKTREE" submodule update --init --recursive
+source "$TILEOPS_FOUNDRY_LOOP_ROOT/config/defaults.env"
+if [[ -f "$TILEOPS_FOUNDRY_LOOP_ROOT/.env" ]]; then
+    source "$TILEOPS_FOUNDRY_LOOP_ROOT/.env"
+fi
+cache_root=${TILEOPS_CACHE_ROOT:-${XDG_CACHE_HOME:-$HOME/.cache}/tileops-runner}
+admission="$cache_root/worker-admissions/$FOREMAN_TASK.env"
+[[ -f "$admission" ]] || { echo "missing worker admission: $admission" >&2; exit 1; }
+source "$admission"
+
 "$TILEOPS_FOUNDRY_LOOP_ROOT/scripts/build_tilefoundry_wheel.sh" >/dev/null
-# Both of the round's environments are built here, so a worker's pane opens onto
-# a `tilefoundry` command and a `tileops-run` container that already exist.
-"$TILEOPS_FOUNDRY_LOOP_ROOT/scripts/build_round_venv.sh" "$FOREMAN_WORKTREE" >/dev/null
 cd "$FOREMAN_WORKTREE"
 "$TILEOPS_FOUNDRY_LOOP_ROOT/scripts/tileops-container.sh" start

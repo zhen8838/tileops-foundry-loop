@@ -1,2 +1,0 @@
-4:IMAGE=ghcr.io/tile-ai/tileops-runner:cu132-torch2.13-tl-afcebed1-dev
-5:ENV_SCHEMA=3

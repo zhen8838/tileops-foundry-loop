@@ -1,1 +1,0 @@
-tilefoundry: error: schedule: topology 'cta' has extent None, which is not known until launch; scheduling a level requires its static extent. The rule: tilefoundry spec target topology-levels

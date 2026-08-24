@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+: "${TILEOPS_PI_SSH_TARGET:?worker environment did not start the round container}"
+extension=${TILEOPS_PI_SSH_EXTENSION:-$repo_dir/integrations/pi/ssh.ts}
+
+if [[ -n ${TILEOPS_PI_BIN:-} ]]; then
+    pi_bin=$TILEOPS_PI_BIN
+else
+    search_path=${PATH#"$repo_dir/scripts:"}
+    pi_bin=$(PATH="$search_path" command -v pi || true)
+fi
+[[ -n "$pi_bin" && -x "$pi_bin" ]] || {
+    echo "pi not found; set TILEOPS_PI_BIN in .env" >&2
+    exit 1
+}
+
+exec "$pi_bin" --no-extensions --extension "$extension" \
+    --tools read,write,edit,bash --ssh "$TILEOPS_PI_SSH_TARGET" "$@"
