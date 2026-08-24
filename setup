@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+if [[ -f "$repo_dir/.env" ]]; then source "$repo_dir/.env"; fi
+
+fail() {
+    printf 'tileops-foundry-loop setup: %s\n' "$*" >&2
+    exit 1
+}
+require_command() {
+    command -v "$1" >/dev/null 2>&1 || fail "required command is missing: $1"
+}
+
+: "${TILEOPS_REPO:?Set TILEOPS_REPO in .env}"
+: "${TILEFOUNDRY_REPO:?Set TILEFOUNDRY_REPO in .env}"
+foreman_repo=${FOREMAN_REPO:-$HOME/foreman}
+worktree_root=${TILEOPS_WORKTREE_ROOT:-$(dirname -- "$TILEOPS_REPO")/TileOPs-worktrees}
+runner_image=${TILEOPS_RUNNER_IMAGE:-ghcr.io/tile-ai/tileops-runner:cu132-torch2.13-tl-afcebed1-dev}
+agent_image=${TILEOPS_AGENT_IMAGE:-tileops-foundry-loop:agent}
+cache_root=${TILEOPS_CACHE_ROOT:-${XDG_CACHE_HOME:-$HOME/.cache}/tileops-runner}
+
+for command in docker foreman gh git herdr pi python3 ssh uv; do
+    require_command "$command"
+done
+[[ -d "$TILEOPS_REPO/.git" ]] || fail "TILEOPS_REPO is not a Git checkout: $TILEOPS_REPO"
+[[ -d "$TILEFOUNDRY_REPO/.git" ]] || \
+    fail "TILEFOUNDRY_REPO is not a Git checkout: $TILEFOUNDRY_REPO"
+[[ -d "$foreman_repo/local" && -x "$foreman_repo/bin/foreman" ]] || \
+    fail "Foreman repository is not installed at $foreman_repo"
+
+pi_command=$(command -v pi)
+pi_cli=$(readlink -f -- "$pi_command")
+pi_root=$(cd -- "$(dirname -- "$pi_cli")/.." && pwd)
+pi_ssh_extension=${PI_SSH_EXTENSION:-$pi_root/examples/extensions/ssh.ts}
+[[ -f "$pi_ssh_extension" ]] || {
+    echo "Pi SSH extension not found: $pi_ssh_extension" >&2
+    echo "Set PI_SSH_EXTENSION to the ssh.ts shipped with your Pi install." >&2
+    exit 1
+}
+pi_help=$(pi -e "$pi_ssh_extension" --help 2>&1) || {
+    echo "$pi_help" >&2
+    fail "Pi could not load $pi_ssh_extension"
+}
+grep -q -- '--ssh' <<<"$pi_help" || {
+    echo "Pi did not load --ssh from $pi_ssh_extension" >&2
+    exit 1
+}
+
+if [[ -n ${TILEOPS_DOCKER_BOOTSTRAP:-} ]]; then "$TILEOPS_DOCKER_BOOTSTRAP"; fi
+if [[ -n ${TILEOPS_DOCKER_HOST:-} ]]; then export DOCKER_HOST=$TILEOPS_DOCKER_HOST; fi
+
+docker image inspect "$runner_image" >/dev/null 2>&1 || docker pull "$runner_image"
+docker build --quiet --build-arg "BASE_IMAGE=$runner_image" \
+    --tag "$agent_image" "$repo_dir/container" >/dev/null
+
+ssh_config_dir="$cache_root/ssh-config"
+mkdir -p "$foreman_repo/local/templates/tileops" "$ssh_config_dir" "$HOME/.ssh"
+chmod 0700 "$HOME/.ssh"
+ssh_include="Include \"$ssh_config_dir/*\""
+ssh_config="$HOME/.ssh/config"
+if [[ ! -f "$ssh_config" ]] || ! grep -Fqx "$ssh_include" "$ssh_config"; then
+    ssh_tmp=$(mktemp "$HOME/.ssh/config.XXXXXX")
+    printf '%s\n' "$ssh_include" >"$ssh_tmp"
+    [[ ! -f "$ssh_config" ]] || cat "$ssh_config" >>"$ssh_tmp"
+    chmod 0600 "$ssh_tmp"
+    mv -- "$ssh_tmp" "$ssh_config"
+fi
+ln -sfn "$repo_dir/integrations/setup-worktree.sh" \
+    "$foreman_repo/local/tileops-setup-worktree.sh"
+ln -sfn "$repo_dir/integrations/solo.md" \
+    "$foreman_repo/local/templates/tileops/solo.md"
+
+toml_string() {
+    python3 -c 'import json, sys; print(json.dumps(sys.argv[1]))' "$1"
+}
+project_config="$foreman_repo/local/tileops.toml"
+tmp=$(mktemp "$project_config.XXXXXX")
+{
+    printf 'name = "tileops"\n'
+    printf 'main = %s\n' "$(toml_string "$TILEOPS_REPO")"
+    printf 'worktree_root = %s\n' "$(toml_string "$worktree_root")"
+    printf 'dir_prefix = "tileops-"\n'
+    printf 'base = "main"\n\n'
+    printf '[hooks]\n'
+    printf 'source_env = "local/tileops-setup-worktree.sh"\n'
+    printf 'source_env_timeout_ms = 1500000\n'
+} >"$tmp"
+mv -- "$tmp" "$project_config"
+
+printf 'ready: %s\n' "$agent_image"
+printf 'Pi SSH: %s\n' "$pi_ssh_extension"
+printf 'run:   foreman assign solo --project tileops --task <slug> --branch <branch> --prompt "<task>" --kind pi\n'

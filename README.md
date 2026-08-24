@@ -1,89 +1,69 @@
 # TileOPs Foundry Loop
 
-这个仓库只负责把一个 TileOPs round 准备好，并把 Agent 的工作环境放进
-TileOPs runner Docker。Foreman 仍然创建 worktree、space 和 pane；pane 里运行
-Pi，Pi 的文件和命令工具通过 SSH 转发到 round 容器。
+这个仓库只为 Foreman 提供 TileOPs round 环境。下载后运行一次 `./setup`；以后直接
+使用 `foreman assign`，不再经过 loop 命令。
 
 ```text
-new_round.py
-    -> copy templates/round -> rounds/<slug>
-dispatch_round.sh
-    -> build TileFoundry wheel
-    -> write worker admission
-    -> foreman assign solo (kind=pi)
-post-worktree.sh
-    -> build SSH-enabled runner image
-    -> start one container
-worker-env.sh
-    -> export Pi SSH target
-    -> pane starts scripts/pi
+首次：./setup
+  ├─ 检查 Foreman、Pi 和 Pi 自带的 examples/extensions/ssh.ts
+  ├─ 构建含 SSH 和 TileOPs runtime 的 Docker image
+  └─ 将 hook/template 软链接到 foreman/local
+
+每轮：foreman assign ... --kind pi
+  ├─ Foreman 创建 TileOPs worktree 和 pane
+  ├─ hook 复制 template -> rounds/<task>
+  ├─ hook 构建当前 TileFoundry wheel并启动该轮容器
+  └─ Pi 通过自带 ssh.ts 在 /workspace/round 工作
 ```
 
-## 目录边界
+## 目录
 
-| 位置 | 用途 |
+| 路径 | 内容 |
 | --- | --- |
-| `templates/round/` | 每轮工作目录的唯一模板，包含说明、knowledge 和证据目录 |
-| `rounds/<slug>/` | 一轮实际工作目录；Agent 的 HIR、脚本、日志和报告都放这里 |
-| TileOPs worktree | Agent 修改的生产 kernel/dispatch 目标 |
-| Docker | TileLang、CUDA、TileFoundry wheel 和 GPU 运行时 |
-| 宿主机 | Git commit、push、PR、CI 和最终审阅 |
+| `setup` | 唯一安装入口 |
+| `container/` | Agent image |
+| `integrations/` | Foreman hook 和固定的起始 prompt |
+| `template/` | 每轮复制的 brief、knowledge、work 和 evidence |
+| `rounds/<task>/` | 该轮实验、证据、环境记录和报告 |
 
-容器只挂载当前 round 和当前 TileOPs worktree。loop 仓库、历史 round、宿主
-TileFoundry checkout 和 Git common dir 都不需要挂载。
+容器只挂载当前 round、当前 TileOPs worktree、该 worktree 的 Git common dir、
+TileFoundry wheel 和 runtime cache。宿主 TileFoundry checkout、loop 仓库和其他
+round 不挂载。Git、GitHub 和 SSH 认证以只读方式从宿主提供给容器，Agent 可以在
+`/workspace/tileops` 按项目规则完成 commit、push 和 PR；PR 不在 loop 内处理。
 
-## 配置
-
-```bash
-cp config/local.env.example .env
-# 修改路径和 GPU；Docker daemon 使用当前机器的配置
-source .env
-```
-
-需要本机已经安装并配置：`docker`、`foreman`、`herdr` 和 `pi`。Pi 的 provider
-认证继续使用宿主机配置；只有 Pi 的工作工具通过 SSH 进入容器。
-
-loop 的 dispatch 会显式传 `foreman assign ... --kind pi`。这不会改动 Foreman
-的默认配置；`[modes.solo.agent]` 仍然可以继续使用 Claude。机器上的
-`foreman.toml` 只需要为显式的 `pi` kind 提供命令映射。
-
-每轮可以选择 Pi 使用的 provider/model：
+## 安装
 
 ```bash
-TILEOPS_ROUND_MODEL=anthropic/<claude-model-id> \
-TILEOPS_ROUND_EFFORT=xhigh ./scripts/dispatch_round.sh <task> <branch> <brief>
-
-TILEOPS_ROUND_MODEL=openai-codex/<gpt-model-id> \
-TILEOPS_ROUND_EFFORT=xhigh ./scripts/dispatch_round.sh <task> <branch> <brief>
+cp .env.example .env
+# 修改 TILEOPS_REPO、TILEFOUNDRY_REPO 和可选的机器配置
+./setup
 ```
 
-不设置 `TILEOPS_ROUND_MODEL` 时，Pi 使用自己保存的 provider/model。
+需要本机已有 `docker`、`foreman`、`gh`、`herdr`、`pi`、`uv`、`git`、`ssh` 和
+`nvidia-smi`。`setup` 会验证 Pi 自带的 `examples/extensions/ssh.ts` 能提供
+`--ssh`；不会安装或维护另一个 SSH 扩展，也不会修改 Foreman 的默认 Claude/Codex
+配置。
 
-## 使用
+## 启动
 
 ```bash
-python scripts/new_round.py \
-  --slug fused-moe-r1 \
-  --operator fused_moe \
-  --scope "fused MoE expert projection" \
-  --baseline "vLLM" \
-  --tileops-repo "$TILEOPS_REPO" \
-  --tilefoundry-repo "$TILEFOUNDRY_REPO" \
-  --root "$TILEOPS_LOOP_STATE_ROOT"
-
-./scripts/dispatch_round.sh \
-  fused-moe-r1 perf/fused-moe-r1 \
-  "$TILEOPS_LOOP_STATE_ROOT/fused-moe-r1/brief.md"
+foreman assign solo \
+  --project tileops \
+  --task fused-moe-r1 \
+  --branch perf/fused-moe-r1 \
+  --prompt "用 TileFoundry 优化 fused MoE，并完成验证与 PR" \
+  --kind pi \
+  --model openai-codex/gpt-5.6-sol \
+  --effort high
 ```
 
-round 创建后，先看 `rounds/<slug>/brief.md`。Agent 会在同一个目录中留下
-证据；容器销毁不会删除这些文件。工作完成后，回到宿主 worktree 执行项目自身
-的测试、commit、push 和 PR 命令。loop 不替宿主项目定义 PR 格式。
+hook 会先生成 `rounds/fused-moe-r1/brief.md`，再启动 Agent。Foreman 只给 Pi 一句
+固定指令：读取当前目录的 `brief.md`；任务、环境、约束和交付物全部在 brief 内。
 
-结束一轮：
+失败会按阶段返回，例如：
 
-```bash
-./scripts/stop_round.sh <task> <round-dir> <worktree>
+```text
+tileops setup-worktree: [TileFoundry wheel] failed (exit 1)
+  task=fused-moe-r1
+  worktree=/home/.../TileOPs-worktrees/tileops-fused-moe-r1
 ```
-
-`stop_round.sh` 只停止容器并调用 `foreman done`；round 目录和 worktree 默认保留。

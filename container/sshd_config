@@ -6,7 +6,7 @@ PubkeyAuthentication yes
 AuthorizedKeysFile /run/tileops/authorized_keys
 UsePAM no
 PermitEmptyPasswords no
-SetEnv LD_LIBRARY_PATH=/usr/local/lib:/usr/local/nvidia/lib:/usr/local/nvidia/lib64:/usr/local/cuda/lib64
+PermitUserEnvironment yes
 AllowAgentForwarding yes
 AllowTcpForwarding yes
 X11Forwarding yes

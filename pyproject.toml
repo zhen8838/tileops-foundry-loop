@@ -1,9 +1,0 @@
-[project]
-name = "tileops-foundry-loop"
-version = "0.2.0"
-description = "Small Docker/Pi round launcher for TileOPs kernel work"
-requires-python = ">=3.11"
-dependencies = []
-
-[tool.uv]
-package = false
