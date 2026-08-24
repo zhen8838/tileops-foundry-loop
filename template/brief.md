@@ -1,5 +1,8 @@
 # {{TASK}}
 
+**全程必须按照 TileFoundry workflow 开发；失败只能记录为 TileFoundry finding，
+不得绕过 TileFoundry 另行实现。**
+
 使用已安装的 TileFoundry 完成以下任务：
 
 > {{PROMPT}}
