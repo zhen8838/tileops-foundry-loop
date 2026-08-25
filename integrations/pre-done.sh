@@ -103,7 +103,30 @@ if [[ "$FOREMAN_REMOVE_WORKTREE" == 1 ]]; then
         [[ -n "$container" ]] && containers+=("$container")
     done < <(docker ps -aq --filter "label=tileops.task=$FOREMAN_TASK")
     if (( ${#containers[@]} )); then
-        printf '%s\n' "${containers[@]}" | sort -u | xargs -r docker rm -f >/dev/null
+        remove_container() {
+            local container=$1
+            local deadline=$((SECONDS + 60))
+            local output
+            while docker container inspect "$container" >/dev/null 2>&1; do
+                if output=$(docker rm -f "$container" 2>&1); then
+                    return 0
+                fi
+                if grep -qiE 'already in progress|no such container' <<<"$output"; then
+                    (( SECONDS < deadline )) || {
+                        echo "timed out waiting for container removal: $container" >&2
+                        return 1
+                    }
+                    sleep 0.5
+                    continue
+                fi
+                printf '%s\n' "$output" >&2
+                return 1
+            done
+        }
+
+        while IFS= read -r container; do
+            [[ -n "$container" ]] && remove_container "$container"
+        done < <(printf '%s\n' "${containers[@]}" | sort -u)
         printf 'removed round container(s) for %s\n' "$FOREMAN_TASK"
     fi
 
