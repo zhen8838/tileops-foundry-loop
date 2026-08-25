@@ -46,7 +46,7 @@ for source in sorted(session_root.glob("*/*.jsonl")):
         sources.append((source, header))
 
 if not sources:
-    raise SystemExit(f"no Pi transcript found for task {task} under {session_root}")
+    print(f"warning: no Pi transcript found for task {task} under {session_root}", file=sys.stderr)
 
 destination = round_dir / "session"
 destination.mkdir(parents=True, exist_ok=True)
