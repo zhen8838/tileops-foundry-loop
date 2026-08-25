@@ -20,7 +20,7 @@ config、launch、tile size 或 stage 不得开 PR。TileFoundry 能力阻塞时
    kernel body。
 2. runtime twin 必须实际调用拟提交的 production TileLang kernel，并通过
    `tilefoundry check`；不得用 Torch、evaluator 或 detached implementation 代替。
-3. 至少实测两个不同的 Sharded/Placed HIR。每个都保存 `tilefoundry analyze` 原始 JSON、
+3. 至少实测10个不同的 Sharded/Placed HIR。每个都保存 `tilefoundry analyze` 原始 JSON、
    placement、hypothesis、latency 和 kept/rejected 结论，再据此选择 final HIR。
 4. 根据 final HIR 和分析证据改写 production kernel，重新做 correctness、全部 primary
    workload benchmark、最强可运行 external baseline 和 profile。
