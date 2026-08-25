@@ -210,8 +210,9 @@ start_container() {
     local git_common_dir host_git_config host_gh_config host_gh_bin host_ssh_dir auth_key
     local container_exists current_worktree current_round current_wheel current_image current_auth
     local marker port ssh_ready tmp image_id ssh_alias ssh_config_dir ssh_config
-    local ssh_include pi_ssh_target args_tmp
-    local -a auth_mounts auth_env
+    local ssh_include pi_ssh_target args_tmp proxy_host proxy_value proxy_key
+    local proxy_name
+    local -a auth_mounts auth_env proxy_env
 
     worktree=$(cd -- "$FOREMAN_WORKTREE" && pwd -P)
     worktree_key=$(printf '%s' "$worktree" | sha256sum | awk '{print substr($1,1,10)}')
@@ -257,8 +258,25 @@ start_container() {
         auth_mounts+=(--volume "$host_ssh_dir:$host_ssh_dir:ro")
         auth_env+=(--env "TILEOPS_HOST_SSH_DIR=$host_ssh_dir")
     fi
+
+    # The host proxy listens on loopback. Rootless Docker exposes that loopback through
+    # 10.0.2.2; regular Docker users can override the address with TILEOPS_PROXY_HOST.
+    proxy_host=${TILEOPS_PROXY_HOST:-10.0.2.2}
+    for proxy_name in HTTP_PROXY HTTPS_PROXY ALL_PROXY http_proxy https_proxy all_proxy; do
+        proxy_value=${!proxy_name:-}
+        [[ -n "$proxy_value" ]] || continue
+        proxy_value=${proxy_value//127.0.0.1/$proxy_host}
+        proxy_value=${proxy_value//localhost/$proxy_host}
+        proxy_env+=(--env "$proxy_name=$proxy_value")
+    done
+    for proxy_name in NO_PROXY no_proxy; do
+        proxy_value=${!proxy_name:-}
+        [[ -n "$proxy_value" ]] && proxy_env+=(--env "$proxy_name=$proxy_value")
+    done
+    proxy_key=$(printf '%s\n' "${proxy_env[@]}" | sha256sum | awk '{print $1}')
     auth_key=$(printf '%s\n' "$git_common_dir" "$host_git_config" \
-        "$host_gh_config" "$host_gh_bin" "$host_ssh_dir" | sha256sum | awk '{print $1}')
+        "$host_gh_config" "$host_gh_bin" "$host_ssh_dir" "$proxy_key" \
+        | sha256sum | awk '{print $1}')
 
     container_exists=false
     requested_gpu=${TILEOPS_GPU:-}
@@ -301,6 +319,7 @@ start_container() {
             --label "tileops.image=$image_id" \
             --label "tileops.auth=$auth_key" \
             --label "tileops.gpu=$gpu" \
+            --add-host "host.docker.internal:host-gateway" \
             --device "nvidia.com/gpu=$gpu" --ipc=host --shm-size=16g \
             --publish 127.0.0.1::22 \
             --volume "$worktree:/workspace/tileops" \
@@ -319,6 +338,7 @@ start_container() {
             --env TILELANG_TMP_DIR=/ci-cache/tilelang/tmp \
             --env TRITON_CACHE_DIR=/ci-cache/triton \
             "${auth_env[@]}" \
+            "${proxy_env[@]}" \
             "$agent_image" >/dev/null
     fi
 
