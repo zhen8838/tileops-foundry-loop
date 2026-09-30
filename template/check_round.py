@@ -18,6 +18,7 @@ class GateError(ValueError):
 
 ALLOWED_CHANGE_ROOTS = (
     "src/tileops/kernels/",
+    "src/tileops/manifest/spec/",
     "src/tileops/ops/",
     "tests/kernels/",
     "tests/ops/",

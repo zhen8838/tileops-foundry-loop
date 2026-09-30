@@ -32,7 +32,8 @@ config、launch、tile size 或 stage 不得开 PR。TileFoundry 能力阻塞时
 
 当前目录是 `/workspace/round`，生产代码只写 `/workspace/tileops`。命令直接运行；
 TileOPs 已 editable install，不拼 `PYTHONPATH`，不改变 public Op、manifest、workload、
-reference、benchmark 或评估路径。
+reference、benchmark 或评估路径。本轮若是新增算子，可以在 `src/tileops/manifest/spec/`
+下加一条自己的 entry，但不得改动已有 entry。
 
 ## TileFoundry 源码
 
@@ -70,6 +71,10 @@ checkout，容器里的 `tilefoundry` 就是它的 editable 安装——改完�
 只有 candidate correctness 通过、全部 primary workload 完成同 contract 对比、相对
 incumbent 有改进且 production kernel 有结构改动时才开 performance PR；否则在
 `report.md` 记为 `no improvement`，不创建或保留 PR。
+
+新增算子这一轮没有 incumbent：对照物换成 reference（正确性）和最强可运行的 external
+baseline（性能），Performance 表去掉 incumbent 那一列，开 PR 的条件是 correctness 通过
+且不慢于 baseline；慢于 baseline 就记 `no improvement`，不开 PR。
 
 commit 和 PR title 使用：
 
@@ -140,7 +145,7 @@ Method: <本轮使用的 TileOPs benchmark。>
 Ratio in comparator columns: implementation / candidate. &#x1F7E2; > 1 means the candidate is faster;
 &#x1F534; <= 1 means it is not.
 
-| Workload | <dim 1> | <dim 2> | Dtype | TileFoundry candidate (ms) | TileOPs incumbent (ms)<br>/ candidate | <External baseline> (ms)<br>/ candidate |
+| Workload | <dim 1> | <dim 2> | Dtype | TileFoundry candidate (ms) | TileOPs incumbent (ms)<br>/ candidate（新增算子无此列） | <External baseline> (ms)<br>/ candidate |
 | --- | ---: | ---: | --- | ---: | ---: | ---: |
 | <primary workload 1> | <value> | <value> | <dtype> | <candidate median> | **<incumbent median><br><marker>&nbsp;<incumbent/candidate ratio>x** | <external median><br><marker>&nbsp;<external/candidate ratio>x |
 | <每个 primary workload 各一行> | ... | ... | ... | ... | ... | ... |
