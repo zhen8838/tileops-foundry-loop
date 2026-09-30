@@ -165,6 +165,8 @@ def _validate_pr(round_dir: Path, final_hir: Path) -> None:
         raise GateError("TileFoundry Description must contain one Python HIR block")
     if match.group(1).strip() != final_hir.read_text(encoding="utf-8").strip():
         raise GateError("TileFoundry Description is not the exact final HIR")
+    if "tf.schedule(" not in match.group(1):
+        raise GateError("the final HIR must carry its tf.schedule instruction choices")
     if re.search(
         r"(?:/home/|/mnt/|/tmp/|/workspace/|/Users/|file://|[A-Za-z]:\\)", body
     ):
@@ -209,6 +211,10 @@ def validate_round(round_dir: Path, tileops_repo: Path, head: str = "HEAD") -> d
         )
     if _git(tileops_repo, "status", "--porcelain").stdout.strip():
         raise GateError("TileOPs worktree must be clean and committed before the PR gate")
+
+    foundry_base = provenance.get("tilefoundry_base")
+    if not isinstance(foundry_base, str) or re.fullmatch(r"[0-9a-f]{40}", foundry_base) is None:
+        raise GateError("provenance tilefoundry_base must be the full TileFoundry commit")
 
     classification = provenance.get("classification")
     if classification not in {

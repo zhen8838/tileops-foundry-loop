@@ -4,7 +4,7 @@
 由最终保留的 HIR 导出 production kernel 的结构改动，并把该 HIR 原样放进 PR；只调
 config、launch、tile size 或 stage 不得开 PR。TileFoundry 能力阻塞时记录 finding 并
 继续仍可执行的 workflow，不得绕过 TileFoundry 另写实现，也不得因此停手。阻塞的例子
-按原样保留成最小复现，不要改小到能过为止——它们是反馈给 TileFoundry 修复的输入。**
+按原样保留成最小复现，不要改小到能过为止。**
 
 > {{PROMPT}}
 
@@ -12,7 +12,7 @@ config、launch、tile size 或 stage 不得开 PR。TileFoundry 能力阻塞时
 | --- | --- |
 | branch | `{{BRANCH}}` |
 | TileOPs base | `{{TILEOPS_BASE}}` |
-| TileFoundry wheel | `{{TILEFOUNDRY_COMMIT}}` |
+| TileFoundry base | `{{TILEFOUNDRY_BASE}}` |
 
 ## 开发流程
 
@@ -32,12 +32,28 @@ config、launch、tile size 或 stage 不得开 PR。TileFoundry 能力阻塞时
 
 当前目录是 `/workspace/round`，生产代码只写 `/workspace/tileops`。命令直接运行；
 TileOPs 已 editable install，不拼 `PYTHONPATH`，不改变 public Op、manifest、workload、
-reference、benchmark 或评估路径。TileFoundry 能力以已安装的 `tilefoundry` 命令为准。
+reference、benchmark 或评估路径。
+
+## TileFoundry 源码
+
+`/workspace/tilefoundry` 是 TileFoundry 在 base `{{TILEFOUNDRY_BASE}}` 上的一份可写
+checkout，容器里的 `tilefoundry` 就是它的 editable 安装——改完立刻生效，不用重装。
+`tilefoundry tutorial`、`spec` 和 `tests/fixtures/schedule/` 都直接读这份源码。
+
+挡路的 TileFoundry bug 自己修：先把最小复现留在 `work/blocked/<finding-id>/`，再改
+`/workspace/tilefoundry` 并跑该模块自己的 pytest，两者都写进 `findings.json`。修完自己
+收尾——在 `/workspace/tilefoundry`（已在分支 `foundry/{{TASK}}` 上）提交，push 到
+`origin`，用挂载好的 `gh` 先开 issue
+（贴上最小复现和它的原始输出），再对 `tile-ai/TileFoundry` 开 PR 并引用该 issue，title
+用 `fix(<area>): <祈使句>`，body 分 Why / What / Contract / Risk 四节。轮次结束还会把整
+份改动导出成 `foundry.patch` 留档。交付的仍然是 TileOPs 的算子，TileFoundry 只是写算子
+的工具。
 
 ## Round 交付物
 
-- `work/final_hir.py`、`work/runtime_twin.py` 和至少一个不同 placement 的候选 HIR；
-- `work/scheduled_hir.py`、`schedule finalize` 产出的 TIR，以及 candidates 和 facts 报告原文；
+- `work/final_hir.py`（必须是带 `tf.schedule` 的那份）、`work/runtime_twin.py` 和至少
+  一个不同 placement 的候选 HIR；
+- `schedule finalize` 产出的 TIR，以及 candidates 和 facts 报告原文；
 - `provenance.json`：记录 base、classification、final/runtime/kernel 路径、check、
   iterations、decisions、correctness、benchmark 和 profile；
 - 每个 iteration 的 analyze JSON、正数 `measured_ms`、placement、hypothesis 和 verdict；
@@ -71,7 +87,11 @@ push 到 origin，不 merge，持续处理 CI/review。
 ./open_pr.sh --reviewed
 ```
 
-base 更新后 rebase、重新验证并 `--force-with-lease`。
+base 更新后 rebase、重新验证并 `--force-with-lease`。本轮若改过 TileFoundry，在
+`report.md` 里写上那条 issue 和 PR 的编号，并说明 TileOPs 这条 PR 是否依赖它先合。
+
+两个 PR 都开完后停下来报告链接，不要自行结束轮次：容器、worktree 和这个会话都留着，
+CI 和 review 在同一个会话里继续跟。
 
 ### 完整 PR 模板
 
@@ -95,7 +115,8 @@ base 更新后 rebase、重新验证并 `--force-with-lease`。
 class <ModuleName>:
     @func
     def <entry>(<完整参数和类型>) -> <完整返回类型>:
-        <原样填写 final_hir.py 中实际 analyze 并实测保留的完整 HIR body>
+        <原样填写 final_hir.py 中实际 analyze、实测并 finalize 通过的完整 HIR body，
+         含全部 tf.schedule 指令选择>
 ```
 
 ## Performance

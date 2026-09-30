@@ -41,7 +41,7 @@ stage='configuration validation'
 
 agent_image=${TILEOPS_AGENT_IMAGE:-tileops-foundry-loop:agent}
 cache_root=${TILEOPS_CACHE_ROOT:-${XDG_CACHE_HOME:-$HOME/.cache}/tileops-runner}
-wheel_root=${TILEFOUNDRY_WHEEL_ROOT:-$cache_root/tilefoundry-wheel}
+foundry_root=${TILEFOUNDRY_CACHE_ROOT:-$cache_root/tilefoundry}
 host_uv_bin=${TILEFOUNDRY_UV_BIN:-$(command -v uv || true)}
 if [[ ! -x "$host_uv_bin" ]]; then
     for candidate in "$HOME/bin/uv" "$HOME/.local/bin/uv" "$HOME/.cargo/bin/uv"; do
@@ -61,10 +61,21 @@ pi_command=$(command -v pi || true)
     exit 1
 }
 pi_cli=$(readlink -f -- "$pi_command")
-pi_root=$(cd -- "$(dirname -- "$pi_cli")/.." && pwd)
-pi_ssh_extension=${PI_SSH_EXTENSION:-$pi_root/examples/extensions/ssh.ts}
+pi_ssh_extension=${PI_SSH_EXTENSION:-}
+if [[ -z "$pi_ssh_extension" ]]; then
+    # The published layout moved the examples out of dist/, so walk up from the CLI
+    # until the package root that carries them.
+    pi_root=$(dirname -- "$pi_cli")
+    while [[ "$pi_root" != / ]]; do
+        if [[ -f "$pi_root/examples/extensions/ssh.ts" ]]; then
+            pi_ssh_extension="$pi_root/examples/extensions/ssh.ts"
+            break
+        fi
+        pi_root=$(dirname -- "$pi_root")
+    done
+fi
 [[ -f "$pi_ssh_extension" ]] || {
-    echo "Pi SSH extension not found: $pi_ssh_extension; rerun $repo_dir/setup" >&2
+    echo "Pi SSH extension not found near $pi_cli; set PI_SSH_EXTENSION" >&2
     exit 1
 }
 
@@ -82,71 +93,35 @@ docker image inspect "$agent_image" >/dev/null 2>&1 || {
     exit 1
 }
 
-build_tilefoundry_wheel() {
-    local requirements requirements_sha256 tilefoundry_repo commit remote
-    local uv_bin builder_root python_bin destination temp_root source_tree staging
-    local dependency_root temp_dependencies
+prepare_tilefoundry() {
+    local requirements commit remote uv_bin builder_root python_bin
+    local dependency_root tools_root temp_dependencies
 
-    tilefoundry_repo=$TILEFOUNDRY_REPO
     requirements="$repo_dir/tilefoundry-requirements.txt"
-    requirements_sha256=$(sha256sum "$requirements" | awk '{print $1}')
-    mkdir -p "$wheel_root"
-    exec 9>"$wheel_root/.build.lock"
+    tilefoundry_requirements_sha=$(sha256sum "$requirements" | awk '{print $1}')
+    mkdir -p "$foundry_root"
+    exec 9>"$foundry_root/.prepare.lock"
     flock 9
 
     if [[ -n ${TILEFOUNDRY_COMMIT:-} ]]; then
         commit=$TILEFOUNDRY_COMMIT
     else
         remote=upstream
-        git -C "$tilefoundry_repo" remote | grep -qx upstream || remote=origin
-        git -C "$tilefoundry_repo" fetch --quiet "$remote" main
-        commit=$(git -C "$tilefoundry_repo" rev-parse "$remote/main")
+        git -C "$TILEFOUNDRY_REPO" remote | grep -qx upstream || remote=origin
+        git -C "$TILEFOUNDRY_REPO" fetch --quiet "$remote" main
+        commit=$(git -C "$TILEFOUNDRY_REPO" rev-parse "$remote/main")
     fi
-    commit=$(git -C "$tilefoundry_repo" rev-parse "$commit^{commit}")
+    tilefoundry_commit=$(git -C "$TILEFOUNDRY_REPO" rev-parse "$commit^{commit}")
 
     uv_bin=$host_uv_bin
-    builder_root="$wheel_root/builder"
+    builder_root="$foundry_root/builder"
     python_bin="$builder_root/bin/python"
     if [[ ! -x "$python_bin" ]]; then
         "$uv_bin" venv --seed --no-project \
             --python "${TILEFOUNDRY_BUILD_PYTHON:-3.12}" "$builder_root" >&2
-        "$uv_bin" pip install --python "$python_bin" \
-            'setuptools>=68' 'setuptools-scm>=8' >&2
     fi
 
-    destination="$wheel_root/$commit"
-    mkdir -p "$destination"
-    tilefoundry_wheel=$(find "$destination" -maxdepth 1 -type f \
-        -name 'tilefoundry-*.whl' -print -quit)
-    if [[ -z "$tilefoundry_wheel" ]]; then
-        temp_root=$(mktemp -d "${TMPDIR:-/tmp}/tilefoundry-wheel.XXXXXX")
-        source_tree="$temp_root/source"
-        cleanup_wheel() {
-            git -C "$tilefoundry_repo" worktree remove --force "$source_tree" \
-                >/dev/null 2>&1 || true
-            rm -rf -- "$temp_root"
-        }
-        trap 'rc=$?; cleanup_wheel; report_failure "$rc"' EXIT
-        git -C "$tilefoundry_repo" worktree add --detach "$source_tree" "$commit" >&2
-        staging="$temp_root/wheel"
-        mkdir -p "$staging"
-        "$python_bin" -m pip wheel "$source_tree" --no-deps --no-build-isolation \
-            --wheel-dir "$staging" >&2
-        tilefoundry_wheel=$(find "$staging" -maxdepth 1 -type f \
-            -name 'tilefoundry-*.whl' -print -quit)
-        [[ -n "$tilefoundry_wheel" ]] || {
-            echo "TileFoundry wheel build produced no wheel" >&2
-            exit 1
-        }
-        cp -- "$tilefoundry_wheel" "$destination/"
-        tilefoundry_wheel="$destination/$(basename -- "$tilefoundry_wheel")"
-        cleanup_wheel
-        trap report_failure EXIT
-    else
-        tilefoundry_wheel=$(realpath "$tilefoundry_wheel")
-    fi
-
-    dependency_root="$wheel_root/deps/$requirements_sha256"
+    dependency_root="$foundry_root/deps/$tilefoundry_requirements_sha"
     if [[ ! -f "$dependency_root/.complete" ]]; then
         temp_dependencies=$(mktemp -d "${TMPDIR:-/tmp}/tilefoundry-deps.XXXXXX")
         "$python_bin" -m pip download --only-binary=:all: --no-deps \
@@ -157,10 +132,39 @@ build_tilefoundry_wheel() {
         rm -rf -- "$temp_dependencies"
     fi
 
-    tilefoundry_wheel=$(realpath "$tilefoundry_wheel")
-    tilefoundry_wheel_sha=$(sha256sum "$tilefoundry_wheel" | awk '{print $1}')
-    tilefoundry_commit=$commit
-    tilefoundry_requirements_sha=$requirements_sha256
+    # The editable install must not fetch its build backend mid-round, and must not
+    # replace the runner's setuptools either. The backend is staged here and reaches
+    # pip through PYTHONPATH for that one command.
+    tools_root="$foundry_root/build-tools"
+    if [[ ! -f "$tools_root/.complete" ]]; then
+        rm -rf -- "$tools_root"
+        "$python_bin" -m pip install --quiet --target "$tools_root" \
+            'setuptools>=68' 'setuptools-scm>=8' >&2
+        touch "$tools_root/.complete"
+    fi
+}
+
+prepare_foundry_source() {
+    local base_file base
+
+    foundry_source="$foundry_root/source/$FOREMAN_TASK"
+    base_file="$round_host/.foundry-base"
+    mkdir -p "$foundry_root/source"
+
+    # A round that is resumed keeps the source it already has: the fixes the worker
+    # made to TileFoundry are the round's own output, not something to re-create.
+    base=$tilefoundry_commit
+    [[ ! -f "$base_file" ]] || base=$(<"$base_file")
+    if [[ ! -e "$foundry_source/.git" ]]; then
+        rm -rf -- "$foundry_source"
+        git -C "$TILEFOUNDRY_REPO" worktree prune
+        git -C "$TILEFOUNDRY_REPO" worktree add -B "foundry/$FOREMAN_TASK" \
+            "$foundry_source" "$base" >&2
+    fi
+    printf '%s\n' "$base" >"$base_file"
+    tilefoundry_base=$base
+    foundry_git_dir=$(git -C "$foundry_source" \
+        rev-parse --path-format=absolute --git-common-dir)
 }
 
 create_round() {
@@ -183,7 +187,7 @@ create_round() {
     ROUND_PROMPT=$FOREMAN_PROMPT \
     ROUND_BRANCH=${FOREMAN_BRANCH:-} \
     ROUND_TILEOPS_BASE=$(git -C "$FOREMAN_WORKTREE" rev-parse HEAD) \
-    ROUND_TILEFOUNDRY_COMMIT=$tilefoundry_commit \
+    ROUND_TILEFOUNDRY_BASE=$tilefoundry_commit \
         python3 - "$round_host/brief.md" <<'PY'
 import os
 import sys
@@ -196,7 +200,7 @@ values = {
     "PROMPT": os.environ["ROUND_PROMPT"],
     "BRANCH": os.environ["ROUND_BRANCH"],
     "TILEOPS_BASE": os.environ["ROUND_TILEOPS_BASE"],
-    "TILEFOUNDRY_COMMIT": os.environ["ROUND_TILEFOUNDRY_COMMIT"],
+    "TILEFOUNDRY_BASE": os.environ["ROUND_TILEFOUNDRY_BASE"],
 }
 for key, value in values.items():
     text = text.replace("{{" + key + "}}", value)
@@ -205,10 +209,10 @@ PY
 }
 
 start_container() {
-    local worktree worktree_key container_name wheel_name container_wheel container_deps
+    local worktree worktree_key container_name container_deps container_tools
     local ssh_dir tilelang_cache triton_cache public_key requested_gpu gpu
     local git_common_dir host_git_config host_gh_config host_gh_bin host_ssh_dir auth_key
-    local container_exists current_worktree current_round current_wheel current_image current_auth
+    local container_exists current_worktree current_round current_foundry current_image current_auth
     local marker port ssh_ready tmp image_id ssh_alias ssh_config_dir ssh_config
     local ssh_include pi_ssh_target args_tmp proxy_host proxy_value proxy_key
     local proxy_name
@@ -217,9 +221,8 @@ start_container() {
     worktree=$(cd -- "$FOREMAN_WORKTREE" && pwd -P)
     worktree_key=$(printf '%s' "$worktree" | sha256sum | awk '{print substr($1,1,10)}')
     container_name="tileops-round-${FOREMAN_TASK}-${worktree_key}"
-    wheel_name=$(basename -- "$tilefoundry_wheel")
-    container_wheel="/opt/tilefoundry-wheel/$tilefoundry_commit/$wheel_name"
-    container_deps="/opt/tilefoundry-wheel/deps/$tilefoundry_requirements_sha"
+    container_deps="/opt/tilefoundry/deps/$tilefoundry_requirements_sha"
+    container_tools=/opt/tilefoundry/build-tools
     image_id=$(docker image inspect "$agent_image" --format '{{.Id}}')
 
     ssh_dir="$cache_root/round-ssh/$FOREMAN_TASK"
@@ -274,7 +277,7 @@ start_container() {
         [[ -n "$proxy_value" ]] && proxy_env+=(--env "$proxy_name=$proxy_value")
     done
     proxy_key=$(printf '%s\n' "${proxy_env[@]}" | sha256sum | awk '{print $1}')
-    auth_key=$(printf '%s\n' "$git_common_dir" "$host_git_config" \
+    auth_key=$(printf '%s\n' "$git_common_dir" "$foundry_git_dir" "$host_git_config" \
         "$host_gh_config" "$host_gh_bin" "$host_ssh_dir" "$proxy_key" \
         | sha256sum | awk '{print $1}')
 
@@ -288,15 +291,15 @@ start_container() {
             '{{index .Config.Labels "tileops.worktree"}}' "$container_name")
         current_round=$(docker inspect --format \
             '{{index .Config.Labels "tileops.round"}}' "$container_name")
-        current_wheel=$(docker inspect --format \
-            '{{index .Config.Labels "tileops.wheel"}}' "$container_name")
+        current_foundry=$(docker inspect --format \
+            '{{index .Config.Labels "tileops.foundry"}}' "$container_name")
         current_image=$(docker inspect --format \
             '{{index .Config.Labels "tileops.image"}}' "$container_name")
         current_auth=$(docker inspect --format \
             '{{index .Config.Labels "tileops.auth"}}' "$container_name")
         gpu=$(docker inspect --format '{{index .Config.Labels "tileops.gpu"}}' "$container_name")
         if [[ "$current_worktree" != "$worktree" || "$current_round" != "$round_host" || \
-            "$current_wheel" != "$tilefoundry_wheel_sha" || \
+            "$current_foundry" != "$tilefoundry_base" || \
             "$current_image" != "$image_id" || "$current_auth" != "$auth_key" || \
             ( -n "$requested_gpu" && "$gpu" != "$requested_gpu" ) ]]; then
             docker rm -f "$container_name" >/dev/null
@@ -315,7 +318,7 @@ start_container() {
             --label "tileops.task=$FOREMAN_TASK" \
             --label "tileops.worktree=$worktree" \
             --label "tileops.round=$round_host" \
-            --label "tileops.wheel=$tilefoundry_wheel_sha" \
+            --label "tileops.foundry=$tilefoundry_base" \
             --label "tileops.image=$image_id" \
             --label "tileops.auth=$auth_key" \
             --label "tileops.gpu=$gpu" \
@@ -324,7 +327,10 @@ start_container() {
             --publish 127.0.0.1::22 \
             --volume "$worktree:/workspace/tileops" \
             --volume "$round_host:/workspace/round" \
-            --volume "$wheel_root:/opt/tilefoundry-wheel:ro" \
+            --volume "$foundry_source:/workspace/tilefoundry" \
+            --volume "$foundry_git_dir:$foundry_git_dir" \
+            --volume "$foundry_root/deps:/opt/tilefoundry/deps:ro" \
+            --volume "$foundry_root/build-tools:/opt/tilefoundry/build-tools:ro" \
             --volume "$tilelang_cache:/ci-cache/tilelang" \
             --volume "$triton_cache:/ci-cache/triton" \
             "${auth_mounts[@]}" \
@@ -346,16 +352,18 @@ start_container() {
         docker start "$container_name" >/dev/null
     fi
 
-    marker="/var/lib/tileops-wheel-$tilefoundry_wheel_sha"
+    marker="/var/lib/tileops-foundry-$tilefoundry_base"
     if ! docker exec "$container_name" test -f "$marker"; then
-        docker exec "$container_name" python -m pip install --quiet \
-            --root-user-action=ignore --no-deps "$container_wheel"
         docker exec "$container_name" bash -lc \
             "python -m pip install --quiet --root-user-action=ignore --no-deps '$container_deps'/*.whl"
+        docker exec --env "PYTHONPATH=$container_tools" \
+            --workdir /workspace/tilefoundry "$container_name" \
+            python -m pip install --quiet --root-user-action=ignore \
+            --no-deps --no-build-isolation --editable .
         docker exec --workdir /workspace/tileops "$container_name" \
             python -m pip install --quiet --root-user-action=ignore --no-deps --editable .
         docker exec "$container_name" python -c \
-            'import pathlib, tilefoundry; p=pathlib.Path(tilefoundry.__file__).resolve(); assert "/workspace/tilefoundry" not in str(p), p'
+            'import pathlib, tilefoundry; p=pathlib.Path(tilefoundry.__file__).resolve(); assert str(p).startswith("/workspace/tilefoundry/"), p'
         docker exec "$container_name" touch "$marker"
     fi
 
@@ -420,6 +428,8 @@ start_container() {
         pi_ssh_target="$ssh_alias:/workspace/round"
         printf 'export TILEOPS_PI_SSH_TARGET=%q\n' "$pi_ssh_target"
         printf 'export TILEOPS_AGENT_IMAGE=%q\n' "$agent_image"
+        printf 'export TILEOPS_FOUNDRY_SOURCE=%q\n' "$foundry_source"
+        printf 'export TILEOPS_FOUNDRY_BASE=%q\n' "$tilefoundry_base"
     } >"$tmp"
     chmod 0600 "$tmp"
     mv -- "$tmp" "$worker_env"
@@ -429,7 +439,7 @@ start_container() {
         printf -- '- container: `%s`\n' "$container_name"
         printf -- '- image: `%s`\n' "$image_id"
         printf -- '- GPU: `%s`\n' "$gpu"
-        printf -- '- TileFoundry wheel: `%s`\n' "$tilefoundry_commit"
+        printf -- '- TileFoundry: `/workspace/tilefoundry` (base `%s`)\n' "$tilefoundry_base"
         printf -- '- TileOPs: `/workspace/tileops`\n'
         printf -- '- round: `/workspace/round`\n'
         printf -- '- SSH: `root@127.0.0.1:%s`\n' "$port"
@@ -447,10 +457,11 @@ PY
     mv -- "$args_tmp" "$FOREMAN_AGENT_ARGS_FILE"
 }
 
-stage='TileFoundry wheel'
-build_tilefoundry_wheel
+stage='TileFoundry source'
+prepare_tilefoundry
 stage='round workspace'
 create_round
+prepare_foundry_source
 stage='container, SSH, and agent handoff'
 start_container
 stage=complete

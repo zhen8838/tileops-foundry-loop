@@ -20,7 +20,7 @@ class Operator:
     @func
     def kernel(self, x):
         with Mesh(("cta",), (4,), ("block",)) as mesh:
-            local = reshard(x, (128 @ mesh.block,), "smem")
+            local = tf.schedule((x,), op=T.cuda.sm90.CopyAsyncTensor(), buffers=2)
             return reshard(local, (128 @ mesh.block,), "gmem")
 """
 
@@ -30,7 +30,7 @@ class Operator:
     @func
     def kernel(self, x):
         with Mesh(("thread",), (128,), ("lane",)) as mesh:
-            local = reshard(x, (4 @ mesh.lane,), "rmem")
+            local = tf.schedule((x,), op=T.cuda.sm90.Wgmma(n=16), buffers=3)
             reduced = reduce_sum(local)
             return reshard(reduced, (4 @ mesh.lane,), "gmem")
 """
@@ -123,6 +123,7 @@ class RoundGateTests(unittest.TestCase):
         analysis = "tilefoundry analyze {hir} --compute-cost --memory --roofline --performance --json"
         provenance = {
             "tileops_base": self.base,
+            "tilefoundry_base": "b" * 40,
             "classification": "improvement without SOTA",
             "final_hir": "work/final_hir.py",
             "runtime_twin": "work/runtime_twin.py",
@@ -199,7 +200,8 @@ class RoundGateTests(unittest.TestCase):
     def test_hir_semantics_are_not_guessed_by_the_artifact_gate(self) -> None:
         (self.round / "work/final_hir.py").write_text(
             '@module(entry="kernel", target="cuda:h200")\n'
-            "class Operator:\n    @func\n    def kernel(self, x):\n        return x\n",
+            "class Operator:\n    @func\n    def kernel(self, x):\n"
+            "        return tf.schedule((x,), op=T.cuda.sm90.Wgmma(n=16))\n",
             encoding="utf-8",
         )
         body = (self.round / "pr-body.md").read_text(encoding="utf-8")

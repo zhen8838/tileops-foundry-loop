@@ -25,6 +25,7 @@ if [[ -f /opt/tileops-host-auth/gitconfig ]]; then
     git config --file "$git_config" include.path /opt/tileops-host-auth/gitconfig
 fi
 git config --file "$git_config" --add safe.directory /workspace/tileops
+git config --file "$git_config" --add safe.directory /workspace/tilefoundry
 if [[ -x /usr/local/bin/gh && -d ${GH_CONFIG_DIR:-} ]]; then
     for host in github.com gist.github.com; do
         git config --file "$git_config" --add "credential.https://$host.helper" ""
