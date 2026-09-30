@@ -212,6 +212,7 @@ start_container() {
     local worktree worktree_key container_name container_deps container_tools
     local ssh_dir tilelang_cache triton_cache public_key requested_gpu gpu
     local git_common_dir host_git_config host_gh_config host_gh_bin host_ssh_dir auth_key
+    local host_claude_code host_claude_credentials claude_cli
     local container_exists current_worktree current_round current_foundry current_image current_auth
     local marker port ssh_ready tmp image_id ssh_alias ssh_config_dir ssh_config
     local ssh_include pi_ssh_target args_tmp proxy_host proxy_value proxy_key
@@ -237,6 +238,13 @@ start_container() {
     public_key=$(<"$ssh_dir/id_ed25519.pub")
 
     git_common_dir=$(git -C "$worktree" rev-parse --path-format=absolute --git-common-dir)
+    host_claude_code=${TILEOPS_HOST_CLAUDE_CODE:-$(
+        claude_cli=$(command -v claude || true)
+        [[ -n "$claude_cli" ]] && cd -- "$(dirname -- "$(readlink -f -- "$claude_cli")")/.." && pwd
+    )}
+    host_claude_credentials=${TILEOPS_HOST_CLAUDE_CREDENTIALS:-$HOME/.claude/.credentials.json}
+    [[ -x "$host_claude_code/bin/claude.exe" ]] || host_claude_code=
+    [[ -f "$host_claude_credentials" ]] || host_claude_credentials=
     host_git_config=${TILEOPS_HOST_GIT_CONFIG:-$HOME/.gitconfig}
     host_gh_config=${TILEOPS_HOST_GH_CONFIG:-$HOME/.config/gh}
     host_gh_bin=${TILEOPS_HOST_GH_BIN:-$(command -v gh || true)}
@@ -262,6 +270,15 @@ start_container() {
         auth_mounts+=(--volume "$host_ssh_dir:$host_ssh_dir:ro")
         auth_env+=(--env "TILEOPS_HOST_SSH_DIR=$host_ssh_dir")
     fi
+    # Claude Code ships one self-contained binary, so the host copy runs here as is.
+    # IS_SANDBOX lets it skip permission prompts although the container user is root.
+    if [[ -n "$host_claude_code" && -n "$host_claude_credentials" ]]; then
+        auth_mounts+=(
+            --volume "$host_claude_code:/opt/claude-code:ro"
+            --volume "$host_claude_credentials:/root/.claude/.credentials.json"
+        )
+        auth_env+=(--env IS_SANDBOX=1)
+    fi
 
     # The host proxy listens on loopback. Rootless Docker exposes that loopback through
     # 10.0.2.2; regular Docker users can override the address with TILEOPS_PROXY_HOST.
@@ -279,6 +296,7 @@ start_container() {
     done
     proxy_key=$(printf '%s\n' "${proxy_env[@]}" | sha256sum | awk '{print $1}')
     auth_key=$(printf '%s\n' "$git_common_dir" "$foundry_git_dir" "$host_git_config" \
+        "$host_claude_code" "$host_claude_credentials" \
         "$host_gh_config" "$host_gh_bin" "$host_ssh_dir" "$proxy_key" \
         | sha256sum | awk '{print $1}')
 
@@ -449,6 +467,20 @@ start_container() {
         }
     fi
 
+    # `herdr agent start --kind claude` runs whatever `claude` is on PATH. This one
+    # runs the round's own Claude Code, inside the container, in the round directory.
+    mkdir -p "$round_host/.bin"
+    tmp=$(mktemp "$round_host/.bin/claude.XXXXXX")
+    {
+        printf '#!/usr/bin/env bash\n'
+        printf 'set -euo pipefail\n'
+        printf 'remote="cd /workspace/round && exec claude --dangerously-skip-permissions"\n'
+        printf 'for argument in "$@"; do remote+=" $(printf %%q "$argument")"; done\n'
+        printf 'exec ssh -t %q "$remote"\n' "$ssh_alias"
+    } >"$tmp"
+    chmod 0755 "$tmp"
+    mv -- "$tmp" "$round_host/.bin/claude"
+
     worker_env="$round_host/.worker-env"
     tmp=$(mktemp "$worker_env.XXXXXX")
     {
@@ -461,6 +493,7 @@ start_container() {
         printf 'export TILEOPS_AGENT_IMAGE=%q\n' "$agent_image"
         printf 'export TILEOPS_FOUNDRY_SOURCE=%q\n' "$foundry_source"
         printf 'export TILEOPS_FOUNDRY_BASE=%q\n' "$tilefoundry_base"
+        printf 'export PATH=%q:$PATH\n' "$round_host/.bin"
     } >"$tmp"
     chmod 0600 "$tmp"
     mv -- "$tmp" "$worker_env"
@@ -477,7 +510,8 @@ start_container() {
     } >"$round_host/environment.md"
 
     args_tmp=$(mktemp "$FOREMAN_AGENT_ARGS_FILE.XXXXXX")
-    python3 - "$args_tmp" "$pi_ssh_extension" "$pi_ssh_target" <<'PY'
+    if [[ ${TILEOPS_AGENT_KIND:-claude} == pi ]]; then
+        python3 - "$args_tmp" "$pi_ssh_extension" "$pi_ssh_target" <<'PY'
 import json
 import sys
 
@@ -485,6 +519,9 @@ with open(sys.argv[1], "w", encoding="utf-8") as stream:
     json.dump(["-e", sys.argv[2], "--ssh", sys.argv[3]], stream)
     stream.write("\n")
 PY
+    else
+        printf '[]\n' >"$args_tmp"
+    fi
     mv -- "$args_tmp" "$FOREMAN_AGENT_ARGS_FILE"
 }
 
