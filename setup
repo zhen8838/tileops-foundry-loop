@@ -20,7 +20,7 @@ runner_image=${TILEOPS_RUNNER_IMAGE:-ghcr.io/tile-ai/tileops-runner:cu132-torch2
 agent_image=${TILEOPS_AGENT_IMAGE:-tileops-foundry-loop:agent}
 cache_root=${TILEOPS_CACHE_ROOT:-${XDG_CACHE_HOME:-$HOME/.cache}/tileops-runner}
 
-for command in docker foreman gh git herdr pi python3 ssh uv; do
+for command in claude docker foreman gh git herdr python3 ssh uv; do
     require_command "$command"
 done
 [[ -d "$TILEOPS_REPO/.git" ]] || fail "TILEOPS_REPO is not a Git checkout: $TILEOPS_REPO"
@@ -74,4 +74,4 @@ tmp=$(mktemp "$project_config.XXXXXX")
 mv -- "$tmp" "$project_config"
 
 printf 'ready: %s\n' "$agent_image"
-printf 'run:   foreman assign solo --project tileops --task <slug> --branch <branch> --prompt "<task>" --kind pi\n'
+printf 'run:   foreman assign solo --project tileops --task <slug> --branch <branch> --prompt "<task>" --kind claude\n'

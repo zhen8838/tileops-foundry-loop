@@ -1,5 +1,11 @@
 # {{TASK}}
 
+本轮是给开源算子库 [tile-ai/TileOPs](https://github.com/tile-ai/TileOPs) 贡献一个 GPU
+kernel：按公开 issue 描述实现或优化一个算子，用仓库自带的 reference 验证数值，再和公开
+的对照实现比性能，最后按上游规范提 PR。代码、证据和 PR 全部进公开仓库。工具链是
+[tile-ai/TileFoundry](https://github.com/tile-ai/TileFoundry)——一个分析张量程序开销、
+选择硬件指令并下降成 TIR 的编译器前端，同样开源。
+
 **全程必须使用 TileFoundry：实际编写、分析并测量多个不同的 Sharded/Placed HIR，
 由最终保留的 HIR 导出 production kernel 的结构改动，并把该 HIR 原样放进 PR；只调
 config、launch、tile size 或 stage 不得开 PR。TileFoundry 能力阻塞时记录 finding 并

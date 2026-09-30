@@ -4,7 +4,7 @@ script_path=$(readlink -f -- "${BASH_SOURCE[0]}")
 repo_dir=$(cd -- "$(dirname -- "$script_path")/.." && pwd)
 
 # Foreman sources this file so the exported SSH target and round cwd remain in
-# the pane where Pi starts. Heavy setup runs in a child shell with strict mode.
+# the pane where the agent starts. Heavy setup runs in a child shell with strict mode.
 if [[ ${1:-} != --prepare ]]; then
     [[ ${BASH_SOURCE[0]} != "$0" ]] || {
         echo "setup-worktree.sh must be sourced by Foreman" >&2
@@ -13,7 +13,7 @@ if [[ ${1:-} != --prepare ]]; then
     worker_env=$(bash "$script_path" --prepare) || return
     source "$worker_env" || return
     export TILEOPS_ROUND_HOST TILEOPS_ROUND_SLUG TILEOPS_WORKER_CONTAINER
-    export TILEOPS_SSH_IDENTITY TILEOPS_PI_SSH_TARGET TILEOPS_AGENT_IMAGE
+    export TILEOPS_SSH_IDENTITY TILEOPS_SSH_ALIAS TILEOPS_AGENT_IMAGE
     cd "$TILEOPS_ROUND_HOST" || return
     return
 fi
@@ -55,30 +55,6 @@ fi
     echo "uv is not installed; rerun $repo_dir/setup or set TILEFOUNDRY_UV_BIN" >&2
     exit 1
 }
-pi_command=$(command -v pi || true)
-[[ -n "$pi_command" ]] || {
-    echo "pi is not installed; rerun $repo_dir/setup" >&2
-    exit 1
-}
-pi_cli=$(readlink -f -- "$pi_command")
-pi_ssh_extension=${PI_SSH_EXTENSION:-}
-if [[ -z "$pi_ssh_extension" ]]; then
-    # The published layout moved the examples out of dist/, so walk up from the CLI
-    # until the package root that carries them.
-    pi_root=$(dirname -- "$pi_cli")
-    while [[ "$pi_root" != / ]]; do
-        if [[ -f "$pi_root/examples/extensions/ssh.ts" ]]; then
-            pi_ssh_extension="$pi_root/examples/extensions/ssh.ts"
-            break
-        fi
-        pi_root=$(dirname -- "$pi_root")
-    done
-fi
-[[ -f "$pi_ssh_extension" ]] || {
-    echo "Pi SSH extension not found near $pi_cli; set PI_SSH_EXTENSION" >&2
-    exit 1
-}
-
 for command in docker gh git nvidia-smi python3 ssh ssh-keygen; do
     command -v "$command" >/dev/null 2>&1 || {
         echo "required host command is missing: $command" >&2
@@ -215,7 +191,7 @@ start_container() {
     local host_claude_code host_claude_credentials claude_cli
     local container_exists current_worktree current_round current_foundry current_image current_auth
     local marker port ssh_ready tmp image_id ssh_alias ssh_config_dir ssh_config
-    local ssh_include pi_ssh_target args_tmp proxy_host proxy_value proxy_key
+    local ssh_include args_tmp proxy_host proxy_value proxy_key
     local reserved
     local proxy_name
     local -a auth_mounts auth_env proxy_env
@@ -488,8 +464,7 @@ start_container() {
         printf 'export TILEOPS_ROUND_SLUG=%q\n' "$FOREMAN_TASK"
         printf 'export TILEOPS_WORKER_CONTAINER=%q\n' "$container_name"
         printf 'export TILEOPS_SSH_IDENTITY=%q\n' "$ssh_dir/id_ed25519"
-        pi_ssh_target="$ssh_alias:/workspace/round"
-        printf 'export TILEOPS_PI_SSH_TARGET=%q\n' "$pi_ssh_target"
+        printf 'export TILEOPS_SSH_ALIAS=%q\n' "$ssh_alias"
         printf 'export TILEOPS_AGENT_IMAGE=%q\n' "$agent_image"
         printf 'export TILEOPS_FOUNDRY_SOURCE=%q\n' "$foundry_source"
         printf 'export TILEOPS_FOUNDRY_BASE=%q\n' "$tilefoundry_base"
@@ -510,18 +485,7 @@ start_container() {
     } >"$round_host/environment.md"
 
     args_tmp=$(mktemp "$FOREMAN_AGENT_ARGS_FILE.XXXXXX")
-    if [[ ${TILEOPS_AGENT_KIND:-claude} == pi ]]; then
-        python3 - "$args_tmp" "$pi_ssh_extension" "$pi_ssh_target" <<'PY'
-import json
-import sys
-
-with open(sys.argv[1], "w", encoding="utf-8") as stream:
-    json.dump(["-e", sys.argv[2], "--ssh", sys.argv[3]], stream)
-    stream.write("\n")
-PY
-    else
-        printf '[]\n' >"$args_tmp"
-    fi
+    printf '[]\n' >"$args_tmp"
     mv -- "$args_tmp" "$FOREMAN_AGENT_ARGS_FILE"
 }
 
