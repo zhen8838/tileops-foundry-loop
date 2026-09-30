@@ -86,7 +86,7 @@ for command in docker gh git nvidia-smi python3 ssh ssh-keygen; do
     }
 done
 
-if [[ -n ${TILEOPS_DOCKER_BOOTSTRAP:-} ]]; then "$TILEOPS_DOCKER_BOOTSTRAP"; fi
+if [[ -n ${TILEOPS_DOCKER_BOOTSTRAP:-} ]]; then "$TILEOPS_DOCKER_BOOTSTRAP" >&2; fi
 if [[ -n ${TILEOPS_DOCKER_HOST:-} ]]; then export DOCKER_HOST=$TILEOPS_DOCKER_HOST; fi
 docker image inspect "$agent_image" >/dev/null 2>&1 || {
     echo "missing $agent_image; run $repo_dir/setup first" >&2
