@@ -215,6 +215,7 @@ start_container() {
     local container_exists current_worktree current_round current_foundry current_image current_auth
     local marker port ssh_ready tmp image_id ssh_alias ssh_config_dir ssh_config
     local ssh_include pi_ssh_target args_tmp proxy_host proxy_value proxy_key
+    local reserved
     local proxy_name
     local -a auth_mounts auth_env proxy_env
 
@@ -308,10 +309,38 @@ start_container() {
     fi
 
     if ! $container_exists; then
+        # Off limits: the pair the TileFoundry CI runner holds, a card another user is
+        # computing on, and any card in Exclusive_Process mode -- that mode is first
+        # come first served, so a round that wants it can lose the race to a stranger.
+        reserved=$(
+            printf '%s' "${TILEOPS_GPU_EXCLUDE-4,5}" | tr ',' '\n'
+            nvidia-smi --query-gpu=index,compute_mode --format=csv,noheader,nounits \
+                | awk -F', *' '$2 != "Default" {print $1}'
+            nvidia-smi --query-compute-apps=gpu_uuid,pid --format=csv,noheader \
+                | while IFS=, read -r uuid pid; do
+                    owner=$(ps -o user= -p "${pid// /}" 2>/dev/null | tr -d ' ')
+                    [[ -n "$owner" && "$owner" != "$(id -un)" ]] || continue
+                    nvidia-smi --query-gpu=index,uuid --format=csv,noheader,nounits \
+                        | awk -F', *' -v want="${uuid# }" '$2 == want {print $1}'
+                done
+        )
+        reserved=$(grep -E '^[0-9]+$' <<<"$reserved" | sort -un)
         gpu=$requested_gpu
-        if [[ -z "$gpu" ]]; then
+        if [[ -n "$gpu" ]]; then
+            if grep -qx -- "$gpu" <<<"$reserved"; then
+                echo "TILEOPS_GPU=$gpu is reserved, exclusive, or busy with another user" >&2
+                exit 1
+            fi
+        else
             gpu=$(nvidia-smi --query-gpu=index,memory.used --format=csv,noheader,nounits \
-                | tr -d ' ' | tr ',' ' ' | sort -k2,2n -k1,1n | head -n1 | awk '{print $1}')
+                | tr -d ' ' | tr ',' ' ' | sort -k2,2n -k1,1n \
+                | while read -r index used; do
+                    grep -qx -- "$index" <<<"$reserved" || { echo "$index"; break; }
+                done)
+            [[ -n "$gpu" ]] || {
+                echo "no GPU is free; reserved: $(tr '\n' ' ' <<<"$reserved")" >&2
+                exit 1
+            }
         fi
         [[ "$gpu" =~ ^[0-9]+$ ]] || { echo "TILEOPS_GPU must be numeric" >&2; exit 1; }
         docker run --detach --init --name "$container_name" \
@@ -323,7 +352,7 @@ start_container() {
             --label "tileops.auth=$auth_key" \
             --label "tileops.gpu=$gpu" \
             --add-host "host.docker.internal:host-gateway" \
-            --device "nvidia.com/gpu=$gpu" --ipc=host --shm-size=16g \
+            --runtime=nvidia --ipc=host --shm-size=16g \
             --publish 127.0.0.1::22 \
             --volume "$worktree:/workspace/tileops" \
             --volume "$round_host:/workspace/round" \
@@ -336,6 +365,8 @@ start_container() {
             "${auth_mounts[@]}" \
             --workdir /workspace/round \
             --env "TILEOPS_SSH_PUBLIC_KEY=$public_key" \
+            --env "NVIDIA_VISIBLE_DEVICES=$gpu" \
+            --env NVIDIA_DRIVER_CAPABILITIES=compute,utility \
             --env CUDA_VISIBLE_DEVICES=0 \
             --env GIT_OPTIONAL_LOCKS=0 \
             --env PYTHONUNBUFFERED=1 \
