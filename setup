@@ -29,24 +29,6 @@ done
 [[ -d "$foreman_repo/local" && -x "$foreman_repo/bin/foreman" ]] || \
     fail "Foreman repository is not installed at $foreman_repo"
 
-pi_command=$(command -v pi)
-pi_cli=$(readlink -f -- "$pi_command")
-pi_root=$(cd -- "$(dirname -- "$pi_cli")/.." && pwd)
-pi_ssh_extension=${PI_SSH_EXTENSION:-$pi_root/examples/extensions/ssh.ts}
-[[ -f "$pi_ssh_extension" ]] || {
-    echo "Pi SSH extension not found: $pi_ssh_extension" >&2
-    echo "Set PI_SSH_EXTENSION to the ssh.ts shipped with your Pi install." >&2
-    exit 1
-}
-pi_help=$(pi -e "$pi_ssh_extension" --help 2>&1) || {
-    echo "$pi_help" >&2
-    fail "Pi could not load $pi_ssh_extension"
-}
-grep -q -- '--ssh' <<<"$pi_help" || {
-    echo "Pi did not load --ssh from $pi_ssh_extension" >&2
-    exit 1
-}
-
 if [[ -n ${TILEOPS_DOCKER_BOOTSTRAP:-} ]]; then "$TILEOPS_DOCKER_BOOTSTRAP"; fi
 if [[ -n ${TILEOPS_DOCKER_HOST:-} ]]; then export DOCKER_HOST=$TILEOPS_DOCKER_HOST; fi
 
@@ -92,5 +74,4 @@ tmp=$(mktemp "$project_config.XXXXXX")
 mv -- "$tmp" "$project_config"
 
 printf 'ready: %s\n' "$agent_image"
-printf 'Pi SSH: %s\n' "$pi_ssh_extension"
 printf 'run:   foreman assign solo --project tileops --task <slug> --branch <branch> --prompt "<task>" --kind pi\n'
