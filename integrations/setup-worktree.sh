@@ -193,7 +193,7 @@ start_container() {
     local marker port ssh_ready tmp image_id ssh_alias ssh_config_dir ssh_config
     local ssh_include args_tmp proxy_host proxy_value proxy_key
     local reserved
-    local proxy_name
+    local proxy_name no_proxy_hosts
     local -a auth_mounts auth_env proxy_env
 
     worktree=$(cd -- "$FOREMAN_WORKTREE" && pwd -P)
@@ -266,9 +266,11 @@ start_container() {
         proxy_value=${proxy_value//localhost/$proxy_host}
         proxy_env+=(--env "$proxy_name=$proxy_value")
     done
+    # These reach this machine faster without the proxy: measured 54 MB/s direct
+    # against 1.4 MB/s proxied for files.pythonhosted.org.
+    no_proxy_hosts=${TILEOPS_NO_PROXY:-localhost,127.0.0.1,pypi.org,files.pythonhosted.org,download.pytorch.org}
     for proxy_name in NO_PROXY no_proxy; do
-        proxy_value=${!proxy_name:-}
-        [[ -n "$proxy_value" ]] && proxy_env+=(--env "$proxy_name=$proxy_value")
+        proxy_env+=(--env "$proxy_name=$no_proxy_hosts")
     done
     proxy_key=$(printf '%s\n' "${proxy_env[@]}" | sha256sum | awk '{print $1}')
     auth_key=$(printf '%s\n' "$git_common_dir" "$foundry_git_dir" "$host_git_config" \
@@ -364,6 +366,7 @@ start_container() {
             --env CUDA_VISIBLE_DEVICES=0 \
             --env GIT_OPTIONAL_LOCKS=0 \
             --env PYTHONUNBUFFERED=1 \
+            --env "TILEOPS_AGENT_MODEL=${TILEOPS_AGENT_MODEL:-claude-opus-5}" \
             --env "TILEOPS_PHYSICAL_GPU=$gpu" \
             --env TILELANG_CACHE_DIR=/ci-cache/tilelang \
             --env TILELANG_TMP_DIR=/ci-cache/tilelang/tmp \

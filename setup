@@ -74,4 +74,4 @@ tmp=$(mktemp "$project_config.XXXXXX")
 mv -- "$tmp" "$project_config"
 
 printf 'ready: %s\n' "$agent_image"
-printf 'run:   foreman assign solo --project tileops --task <slug> --branch <branch> --prompt "<task>" --kind claude\n'
+printf 'run:   foreman assign solo --project tileops --task <slug> --branch <branch> --prompt "<task>" --kind claude --model claude-opus-5\n'
