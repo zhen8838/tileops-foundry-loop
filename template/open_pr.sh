@@ -2,7 +2,10 @@
 set -euo pipefail
 
 round_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
-tileops_repo=/workspace/tileops
+# setup-worktree.sh records the worktree this round builds against.
+# shellcheck disable=SC1091
+source "$round_dir/.worker-env"
+tileops_repo=${TILEOPS_TILEOPS_REPO:?.worker-env does not name the TileOPs worktree}
 
 python "$round_dir/check_round.py" \
     --round-dir "$round_dir" \

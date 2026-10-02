@@ -36,23 +36,30 @@ config、launch、tile size 或 stage 不得开 PR。TileFoundry 能力阻塞时
 5. production kernel 按这份 TIR 写，指令、buffer 深度和 operand 布局不得凭空发明；重新
    做 correctness、全部 primary workload benchmark、最强可运行 external baseline 和 profile。
 
-当前目录是 `/workspace/round`，生产代码只写 `/workspace/tileops`。命令直接运行；
+当前目录就是这一轮的 round 目录，生产代码只写 `{{TILEOPS_WORKTREE}}`。命令直接运行；
 TileOPs 已 editable install，不拼 `PYTHONPATH`，不改变 public Op、manifest、workload、
 reference、benchmark 或评估路径。本轮若是新增算子，可以在 `src/tileops/manifest/spec/`
 下加一条自己的 entry，但不得改动已有 entry。
 
+## 命令在哪里执行
+
+你跑在宿主上，文件读写都是本地的。每条 shell 命令会被自动送进这一轮的容器执行——
+`git`、`gh` 和纯文件操作留在宿主，其余（python、pytest、nvcc、tilefoundry、
+nvidia-smi）都在容器里跑。三个目录在容器中挂在同名路径上，所以路径原样可用，不需要
+翻译，也不要自己拼 `ssh` 或 `docker`。
+
 ## TileFoundry 源码
 
-`/workspace/tilefoundry` 是 TileFoundry 在 base `{{TILEFOUNDRY_BASE}}` 上的一份可写
+`{{TILEFOUNDRY_SOURCE}}` 是 TileFoundry 在 base `{{TILEFOUNDRY_BASE}}` 上的一份可写
 checkout，容器里的 `tilefoundry` 就是它的 editable 安装——改完立刻生效，不用重装。
 `tilefoundry tutorial`、`spec` 和 `tests/fixtures/schedule/` 都直接读这份源码。
 
 挡路的 TileFoundry bug 自己修：先把最小复现留在 `work/blocked/<finding-id>/`，再改
-`/workspace/tilefoundry` 并跑该模块自己的 pytest，两者都写进 `findings.json`。修完自己
-收尾——在 `/workspace/tilefoundry`（已在分支 `foundry/{{TASK}}` 上）提交，push 到
+`{{TILEFOUNDRY_SOURCE}}` 并跑该模块自己的 pytest，两者都写进 `findings.json`。修完自己
+收尾——在 `{{TILEFOUNDRY_SOURCE}}`（已在分支 `foundry/{{TASK}}` 上）提交，push 到
 `origin`，用挂载好的 `gh` 先开 issue，再对 `tile-ai/TileFoundry` 开 PR 并引用该 issue。
 
-**动那个仓库之前先读 `/workspace/tilefoundry/CONTRIBUTING.md`**，commit、issue 和 PR 的
+**动那个仓库之前先读 `{{TILEFOUNDRY_SOURCE}}/CONTRIBUTING.md`**，commit、issue 和 PR 的
 标题格式、body 分节、分支命名一律以它为准——它不在你的工作目录里，不会自动进上下文。
 轮次结束还会把整份改动导出成 `foundry.patch` 留档。交付的仍然是 TileOPs 的算子，
 TileFoundry 只是写算子的工具。

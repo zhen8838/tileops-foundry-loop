@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import shlex
 import subprocess
@@ -318,7 +319,11 @@ def validate_round(round_dir: Path, tileops_repo: Path, head: str = "HEAD") -> d
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--round-dir", type=Path, default=Path.cwd())
-    parser.add_argument("--tileops-repo", type=Path, default=Path("/workspace/tileops"))
+    parser.add_argument(
+        "--tileops-repo",
+        type=Path,
+        default=Path(os.environ.get("TILEOPS_TILEOPS_REPO", ".")),
+    )
     parser.add_argument("--head", default="HEAD")
     args = parser.parse_args()
     try:

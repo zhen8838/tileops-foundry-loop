@@ -111,6 +111,7 @@ prepare_tilefoundry() {
     # The editable install must not fetch its build backend mid-round, and must not
     # replace the runner's setuptools either. The backend is staged here and reaches
     # pip through PYTHONPATH for that one command.
+    foundry_source="$foundry_root/source/$FOREMAN_TASK"
     tools_root="$foundry_root/build-tools"
     if [[ ! -f "$tools_root/.complete" ]]; then
         rm -rf -- "$tools_root"
@@ -123,7 +124,6 @@ prepare_tilefoundry() {
 prepare_foundry_source() {
     local base_file base
 
-    foundry_source="$foundry_root/source/$FOREMAN_TASK"
     base_file="$round_host/.foundry-base"
     mkdir -p "$foundry_root/source"
 
@@ -164,6 +164,8 @@ create_round() {
     ROUND_BRANCH=${FOREMAN_BRANCH:-} \
     ROUND_TILEOPS_BASE=$(git -C "$FOREMAN_WORKTREE" rev-parse HEAD) \
     ROUND_TILEFOUNDRY_BASE=$tilefoundry_commit \
+    ROUND_TILEOPS_WORKTREE=$(cd -- "$FOREMAN_WORKTREE" && pwd -P) \
+    ROUND_TILEFOUNDRY_SOURCE=$foundry_source \
         python3 - "$round_host/brief.md" <<'PY'
 import os
 import sys
@@ -177,6 +179,8 @@ values = {
     "BRANCH": os.environ["ROUND_BRANCH"],
     "TILEOPS_BASE": os.environ["ROUND_TILEOPS_BASE"],
     "TILEFOUNDRY_BASE": os.environ["ROUND_TILEFOUNDRY_BASE"],
+    "TILEOPS_WORKTREE": os.environ["ROUND_TILEOPS_WORKTREE"],
+    "TILEFOUNDRY_SOURCE": os.environ["ROUND_TILEFOUNDRY_SOURCE"],
 }
 for key, value in values.items():
     text = text.replace("{{" + key + "}}", value)
@@ -188,7 +192,6 @@ start_container() {
     local worktree worktree_key container_name container_deps container_tools
     local ssh_dir tilelang_cache triton_cache public_key requested_gpu gpu
     local git_common_dir host_git_config host_gh_config host_gh_bin host_ssh_dir auth_key
-    local host_claude_code host_claude_credentials claude_cli
     local container_exists current_worktree current_round current_foundry current_image current_auth
     local marker port ssh_ready tmp image_id ssh_alias ssh_config_dir ssh_config
     local ssh_include args_tmp proxy_host proxy_value proxy_key
@@ -214,13 +217,6 @@ start_container() {
     public_key=$(<"$ssh_dir/id_ed25519.pub")
 
     git_common_dir=$(git -C "$worktree" rev-parse --path-format=absolute --git-common-dir)
-    host_claude_code=${TILEOPS_HOST_CLAUDE_CODE:-$(
-        claude_cli=$(command -v claude || true)
-        [[ -n "$claude_cli" ]] && cd -- "$(dirname -- "$(readlink -f -- "$claude_cli")")/.." && pwd
-    )}
-    host_claude_credentials=${TILEOPS_HOST_CLAUDE_CREDENTIALS:-$HOME/.claude/.credentials.json}
-    [[ -x "$host_claude_code/bin/claude.exe" ]] || host_claude_code=
-    [[ -f "$host_claude_credentials" ]] || host_claude_credentials=
     host_git_config=${TILEOPS_HOST_GIT_CONFIG:-$HOME/.gitconfig}
     host_gh_config=${TILEOPS_HOST_GH_CONFIG:-$HOME/.config/gh}
     host_gh_bin=${TILEOPS_HOST_GH_BIN:-$(command -v gh || true)}
@@ -246,15 +242,6 @@ start_container() {
         auth_mounts+=(--volume "$host_ssh_dir:$host_ssh_dir:ro")
         auth_env+=(--env "TILEOPS_HOST_SSH_DIR=$host_ssh_dir")
     fi
-    # Claude Code ships one self-contained binary, so the host copy runs here as is.
-    # IS_SANDBOX lets it skip permission prompts although the container user is root.
-    if [[ -n "$host_claude_code" && -n "$host_claude_credentials" ]]; then
-        auth_mounts+=(
-            --volume "$host_claude_code:/opt/claude-code:ro"
-            --volume "$host_claude_credentials:/root/.claude/.credentials.json"
-        )
-        auth_env+=(--env IS_SANDBOX=1)
-    fi
 
     # The host proxy listens on loopback. Rootless Docker exposes that loopback through
     # 10.0.2.2; regular Docker users can override the address with TILEOPS_PROXY_HOST.
@@ -274,7 +261,6 @@ start_container() {
     done
     proxy_key=$(printf '%s\n' "${proxy_env[@]}" | sha256sum | awk '{print $1}')
     auth_key=$(printf '%s\n' "$git_common_dir" "$foundry_git_dir" "$host_git_config" \
-        "$host_claude_code" "$host_claude_credentials" \
         "$host_gh_config" "$host_gh_bin" "$host_ssh_dir" "$proxy_key" \
         | sha256sum | awk '{print $1}')
 
@@ -350,24 +336,24 @@ start_container() {
             --add-host "host.docker.internal:host-gateway" \
             --runtime=nvidia --ipc=host --shm-size=16g \
             --publish 127.0.0.1::22 \
-            --volume "$worktree:/workspace/tileops" \
-            --volume "$round_host:/workspace/round" \
-            --volume "$foundry_source:/workspace/tilefoundry" \
+            --volume "$worktree:$worktree" \
+            --volume "$round_host:$round_host" \
+            --volume "$foundry_source:$foundry_source" \
             --volume "$foundry_git_dir:$foundry_git_dir" \
             --volume "$foundry_root/deps:/opt/tilefoundry/deps:ro" \
             --volume "$foundry_root/build-tools:/opt/tilefoundry/build-tools:ro" \
             --volume "$tilelang_cache:/ci-cache/tilelang" \
             --volume "$triton_cache:/ci-cache/triton" \
             "${auth_mounts[@]}" \
-            --workdir /workspace/round \
+            --workdir "$round_host" \
             --env "TILEOPS_SSH_PUBLIC_KEY=$public_key" \
             --env "NVIDIA_VISIBLE_DEVICES=$gpu" \
             --env NVIDIA_DRIVER_CAPABILITIES=compute,utility \
             --env CUDA_VISIBLE_DEVICES=0 \
             --env GIT_OPTIONAL_LOCKS=0 \
             --env PYTHONUNBUFFERED=1 \
-            --env "TILEOPS_AGENT_MODEL=${TILEOPS_AGENT_MODEL:-claude-opus-5}" \
             --env "TILEOPS_PHYSICAL_GPU=$gpu" \
+            --env "TILEOPS_SAFE_DIRS=$worktree:$round_host:$foundry_source" \
             --env TILELANG_CACHE_DIR=/ci-cache/tilelang \
             --env TILELANG_TMP_DIR=/ci-cache/tilelang/tmp \
             --env TRITON_CACHE_DIR=/ci-cache/triton \
@@ -385,13 +371,13 @@ start_container() {
         docker exec "$container_name" bash -lc \
             "python -m pip install --quiet --root-user-action=ignore --no-deps '$container_deps'/*.whl"
         docker exec --env "PYTHONPATH=$container_tools" \
-            --workdir /workspace/tilefoundry "$container_name" \
+            --workdir "$foundry_source" "$container_name" \
             python -m pip install --quiet --root-user-action=ignore \
             --no-deps --no-build-isolation --editable .
-        docker exec --workdir /workspace/tileops "$container_name" \
+        docker exec --workdir "$worktree" "$container_name" \
             python -m pip install --quiet --root-user-action=ignore --no-deps --editable .
         docker exec "$container_name" python -c \
-            'import pathlib, tilefoundry; p=pathlib.Path(tilefoundry.__file__).resolve(); assert str(p).startswith("/workspace/tilefoundry/"), p'
+            "import pathlib, tilefoundry; p=pathlib.Path(tilefoundry.__file__).resolve(); assert str(p).startswith('$foundry_source/'), p"
         docker exec "$container_name" touch "$marker"
     fi
 
@@ -429,7 +415,7 @@ start_container() {
             'test "$CUDA_HOME" = /usr/local/cuda &&
              test "$(command -v nvcc)" = /usr/local/cuda/bin/nvcc &&
              test "$TILELANG_CACHE_DIR" = /ci-cache/tilelang &&
-             git -C /workspace/tileops status --short >/dev/null' >/dev/null 2>&1; then
+             git -C '"$worktree"' status --short >/dev/null' >/dev/null 2>&1; then
             ssh_ready=true
             break
         fi
@@ -446,20 +432,6 @@ start_container() {
         }
     fi
 
-    # `herdr agent start --kind claude` runs whatever `claude` is on PATH. This one
-    # runs the round's own Claude Code, inside the container, in the round directory.
-    mkdir -p "$round_host/.bin"
-    tmp=$(mktemp "$round_host/.bin/claude.XXXXXX")
-    {
-        printf '#!/usr/bin/env bash\n'
-        printf 'set -euo pipefail\n'
-        printf 'remote="cd /workspace/round && exec claude --dangerously-skip-permissions"\n'
-        printf 'for argument in "$@"; do remote+=" $(printf %%q "$argument")"; done\n'
-        printf 'exec ssh -t %q "$remote"\n' "$ssh_alias"
-    } >"$tmp"
-    chmod 0755 "$tmp"
-    mv -- "$tmp" "$round_host/.bin/claude"
-
     worker_env="$round_host/.worker-env"
     tmp=$(mktemp "$worker_env.XXXXXX")
     {
@@ -468,10 +440,10 @@ start_container() {
         printf 'export TILEOPS_WORKER_CONTAINER=%q\n' "$container_name"
         printf 'export TILEOPS_SSH_IDENTITY=%q\n' "$ssh_dir/id_ed25519"
         printf 'export TILEOPS_SSH_ALIAS=%q\n' "$ssh_alias"
+        printf 'export TILEOPS_TILEOPS_REPO=%q\n' "$worktree"
         printf 'export TILEOPS_AGENT_IMAGE=%q\n' "$agent_image"
         printf 'export TILEOPS_FOUNDRY_SOURCE=%q\n' "$foundry_source"
         printf 'export TILEOPS_FOUNDRY_BASE=%q\n' "$tilefoundry_base"
-        printf 'export PATH=%q:$PATH\n' "$round_host/.bin"
     } >"$tmp"
     chmod 0600 "$tmp"
     mv -- "$tmp" "$worker_env"
@@ -481,9 +453,9 @@ start_container() {
         printf -- '- container: `%s`\n' "$container_name"
         printf -- '- image: `%s`\n' "$image_id"
         printf -- '- GPU: `%s`\n' "$gpu"
-        printf -- '- TileFoundry: `/workspace/tilefoundry` (base `%s`)\n' "$tilefoundry_base"
-        printf -- '- TileOPs: `/workspace/tileops`\n'
-        printf -- '- round: `/workspace/round`\n'
+        printf -- '- TileFoundry: `%s` (base `%s`)\n' "$foundry_source" "$tilefoundry_base"
+        printf -- '- TileOPs: `%s`\n' "$worktree"
+        printf -- '- round: `%s`\n' "$round_host"
         printf -- '- SSH: `root@127.0.0.1:%s`\n' "$port"
     } >"$round_host/environment.md"
 
