@@ -50,11 +50,12 @@ checkout，容器里的 `tilefoundry` 就是它的 editable 安装——改完�
 挡路的 TileFoundry bug 自己修：先把最小复现留在 `work/blocked/<finding-id>/`，再改
 `/workspace/tilefoundry` 并跑该模块自己的 pytest，两者都写进 `findings.json`。修完自己
 收尾——在 `/workspace/tilefoundry`（已在分支 `foundry/{{TASK}}` 上）提交，push 到
-`origin`，用挂载好的 `gh` 先开 issue
-（贴上最小复现和它的原始输出），再对 `tile-ai/TileFoundry` 开 PR 并引用该 issue，title
-用 `fix(<area>): <祈使句>`，body 分 Why / What / Contract / Risk 四节。轮次结束还会把整
-份改动导出成 `foundry.patch` 留档。交付的仍然是 TileOPs 的算子，TileFoundry 只是写算子
-的工具。
+`origin`，用挂载好的 `gh` 先开 issue，再对 `tile-ai/TileFoundry` 开 PR 并引用该 issue。
+
+**动那个仓库之前先读 `/workspace/tilefoundry/CONTRIBUTING.md`**，commit、issue 和 PR 的
+标题格式、body 分节、分支命名一律以它为准——它不在你的工作目录里，不会自动进上下文。
+轮次结束还会把整份改动导出成 `foundry.patch` 留档。交付的仍然是 TileOPs 的算子，
+TileFoundry 只是写算子的工具。
 
 ## Round 交付物
 
