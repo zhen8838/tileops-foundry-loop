@@ -57,9 +57,11 @@ foreman assign solo \
   --branch perf/fused-moe-r1 \
   --prompt "用 TileFoundry 优化 fused MoE，并完成验证与 PR" \
   --kind claude \
-  --model openai/gpt-5.6-sol \
   --effort high
 ```
+
+模型由 round 目录的 `.claude/settings.json` 钉为 `claude-opus-5-5`，只作用于这一轮的
+会话；要换就在命令里加 `--model`，它优先于这份设置。
 
 hook 会先生成 `rounds/fused-moe-r1/brief.md`，再启动 Agent。Foreman 只给 Agent 一句
 固定指令：读取当前目录的 `brief.md`；任务、环境、约束和交付物全部在 brief 内。
