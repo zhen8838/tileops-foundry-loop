@@ -54,11 +54,15 @@ cp .env.example .env
 foreman assign solo \
   --project tileops \
   --task fused-moe-r1 \
-  --branch perf/fused-moe-r1 \
-  --prompt "用 TileFoundry 优化 fused MoE，并完成验证与 PR" \
+  --branch feat/moe/fused-moe-r1 \
+  --prompt "按 #2270 给 FusedMoEFwdOp 加 swigluoai 激活；只做这一个 op。" \
   --kind claude \
   --effort high
 ```
+
+`--prompt` 只写一句：引用 issue 号，并说明这一轮做 issue 里的哪一部分。它填进 brief 的
+`{{PROMPT}}`；目标、数据、验收线和落点留在 issue 里，brief 会让 Agent 先读完 issue 和
+评论，不在 prompt 里再写一份。
 
 模型由 round 目录的 `.claude/settings.json` 钉为 `claude-opus-5-5`，只作用于这一轮的
 会话；要换就在命令里加 `--model`，它优先于这份设置。

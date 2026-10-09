@@ -14,6 +14,10 @@ config、launch、tile size 或 stage 不得开 PR。TileFoundry 能力阻塞时
 
 > {{PROMPT}}
 
+上面这句引用的 issue 是本轮需求的唯一来源：开工前用 `gh issue view <号> --repo
+tile-ai/TileOPs --comments` 读完正文和全部评论，目标、验收线、对照实现和落点以它为准。
+这句只划定本轮在 issue 里做哪一部分。
+
 | 环境 | 值 |
 | --- | --- |
 | branch | `{{BRANCH}}` |
